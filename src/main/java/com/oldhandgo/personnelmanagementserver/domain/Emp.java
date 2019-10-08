@@ -2,10 +2,17 @@ package com.oldhandgo.personnelmanagementserver.domain;
 
 /**
  * @author shiro
- * @create 2019-10-08 16:11
  */
-public class Emp {
 
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+
+@Data
+@Entity
+public class Emp {
+    @Id
     private int id;
 
     private String ename;//姓名
