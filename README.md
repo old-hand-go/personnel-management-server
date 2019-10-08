@@ -60,3 +60,6 @@
 # Lombok
 
 `@Data`添加equals，toString，get，set方法。
+
+# 解决代码冲突
+https://blog.csdn.net/sszgg2006/article/details/73342566
