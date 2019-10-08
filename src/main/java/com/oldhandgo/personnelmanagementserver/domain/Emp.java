@@ -5,9 +5,10 @@ package com.oldhandgo.personnelmanagementserver.domain;
  */
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Data
 @Entity
