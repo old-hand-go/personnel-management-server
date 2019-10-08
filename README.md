@@ -56,3 +56,7 @@
 |              exceptionSorter              | 根据dbType自动识别 |          当数据库抛出一些不可恢复的异常时，抛弃连接          |
 |                  filters                  |                    | 属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat 日志用的filter:log4j 防御sql注入的filter:wall |
 |               proxyFilters                |                    | 类型是List<com.alibaba.druid.filter.Filter>，如果同时配置了filters和proxyFilters，是组合关系，并非替换关系 |
+
+# Lombok
+
+`@Data`添加equals，toString，get，set方法。
