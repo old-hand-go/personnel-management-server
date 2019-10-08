@@ -17,6 +17,8 @@ public class Emp {
 
     private String ename;//姓名
 
+    private String epwd;//密码
+
     private String ex;//性别
 
     private String edata;//出生日期
