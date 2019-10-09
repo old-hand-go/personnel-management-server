@@ -10,9 +10,18 @@
     </parent>
     <groupId>com.oldhandgo</groupId>
     <artifactId>personnel-management-server</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>common</module>
+        <module>logging</module>
+        <module>system</module>
+        <module>tools</module>
+        <module>generator</module>
+    </modules>
     <name>personnel-management-server</name>
     <description>企业人员管理系统后端部分。</description>
+
 
     <properties>
         <java.version>11</java.version>
