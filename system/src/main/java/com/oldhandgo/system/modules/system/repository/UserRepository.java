@@ -10,14 +10,6 @@ import java.util.List;
  */
 public interface UserRepository extends JpaRepository<User, Long> {
     /**
-     * 查询姓名为userName的所有人
-     *
-     * @param userName 姓名
-     * @return 查询结果
-     */
-    List<User> findByUserName(String userName);
-
-    /**
      * 根据邮箱查询
      *
      * @param email 邮箱
