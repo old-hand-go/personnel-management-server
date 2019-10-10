@@ -1,27 +1,25 @@
 package com.oldhandgo.system.modules.system.service;
 
-
 import com.oldhandgo.system.modules.system.service.dto.UserDTO;
 
 /**
  * @author dormir
  */
 public interface UserService {
+
     /**
      * 根据ID查询用户
      *
-     * @param id
+     * @param id 用户id
      * @return 查询结果
      */
     UserDTO findById(long id);
 
-
     /**
-     * 根据用户姓名查询用户
+     * 根据用户邮箱查询用户
      *
-     * @param userName 用户姓名
+     * @param email 用户邮箱
      * @return 查询结果
-     * @throws Exception
      */
-    UserDTO findByUserName(String userName) throws Exception;
+    UserDTO findByEmail(String email);
 }
