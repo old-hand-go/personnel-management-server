@@ -1,14 +1,14 @@
 package com.oldhandgo.system.modules.system.repository;
 
 import com.oldhandgo.system.modules.system.domain.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 /**
  * @author dormir
  */
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     /**
      * 查询姓名为userName的所有人
      *
