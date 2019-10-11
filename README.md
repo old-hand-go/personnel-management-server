@@ -1,33 +1,31 @@
 # personnel-management-server
 企业人员管理系统后端部分。
 
+
+
+# 项目进度
+
+- [ ] 用户管理：提供用户的相关配置，新增用户后，默认密码为123456
+- [ ] 角色管理：对权限与菜单进行分配，可根据部门设置角色的数据权限
+- [ ] 权限管理：权限细化到接口，可以理解成按钮权限
+- [ ] 菜单管理：已实现菜单动态路由，后端可配置化，支持多级菜单
+- [ ] 部门管理：可配置系统组织架构，树形表格展示
+- [ ] 岗位管理：配置各个部门的职位
+- [ ] 字典管理：应广大码友的要求加入字典管理，可维护常用一些固定的数据，如：状态，性别等
+- [ ] 操作日志：记录用户操作的日志
+- [ ] 异常日志：记录异常日志，方便开发人员定位错误
+- [ ] 系统缓存：使用jedis将缓存操作可视化，并提供对redis的基本操作，可根据需求自行扩展
+- [x] SQL监控：采用druid 监控数据库访问性能，默认用户名admin，密码123456
+
 # 文件结构
 
-## 代码层
+## 模块
 
-实体类domain
+### 代码层
 
-数据访问层(Dao)repository
+### 资源文件层
 
-数据服务层service
-
-数据服务的实现接口service.impl
-
-前端控制器controller
-
-工具类utils
-
-常量接口类constant
-
-配置信息类config
-
-数据传输类vo
-
-## 资源文件层
-
-# 配置文件
-
-## Druid配置
+# Druid配置
 
 |                   配置                    |       缺省值       |                             说明                             |
 | :---------------------------------------: | :----------------: | :----------------------------------------------------------: |
@@ -57,7 +55,7 @@
 |                  filters                  |                    | 属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat 日志用的filter:log4j 防御sql注入的filter:wall |
 |               proxyFilters                |                    | 类型是List<com.alibaba.druid.filter.Filter>，如果同时配置了filters和proxyFilters，是组合关系，并非替换关系 |
 
-# Lombok
+# Lombok使用方法
 
 ## @Getter / @Setter
 
@@ -80,4 +78,7 @@
 包含@ToString, @EqualsAndHashCode, 所有属性的@Getter, 所有non-final属性的@Setter和@RequiredArgsConstructor的组合，通常情况下，基本上使用这个注解就足够了。
 
 # 解决代码冲突
-https://blog.csdn.net/sszgg2006/article/details/73342566
+
+1. 点击 VCS
+2. 点击 Update Project
+3. 选择 Branch Default 和 Using Stash
