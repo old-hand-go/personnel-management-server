@@ -54,9 +54,9 @@ public class VerifyCodeUtils {
      *
      * @param width        创建图像的宽度
      * @param height       创建图像的高度
-     * @param outputStream
+     * @param outputStream 输出流
      * @param code         验证码
-     * @throws IOException
+     * @throws IOException 是由失败或中断的I/O操作产生的异常。
      */
     public static void outputImage(int width, int height, OutputStream outputStream, String code) throws IOException {
         int verifySize = code.length();
@@ -205,7 +205,7 @@ public class VerifyCodeUtils {
              * [   sin(theta)     cos(theta)    y-x*sin-y*cos  ]
              * [       0              0               1        ]
              */
-            affineTransform.setToRotation(Math.PI / 4 * rand.nextDouble() * (rand.nextBoolean() ? 1 : -1), (width / verifySize) * i + fontSize / 2, height / 2);
+            affineTransform.setToRotation(Math.PI / 4 * rand.nextDouble() * (rand.nextBoolean() ? 1 : -1), (int) (width / verifySize) * i + (int) (fontSize / 2), (int) (height / 2));
             graphics.setTransform(affineTransform);
 
             /*
@@ -296,47 +296,80 @@ public class VerifyCodeUtils {
     }
 
     private static void shearX(Graphics graphics, int width, int height, Color color) {
-
         int period = random.nextInt(2);
-
-        boolean borderGap = true;
         int frames = 1;
         int phase = random.nextInt(2);
 
         for (int i = 0; i < height; i++) {
-            double d = (double) (period >> 1)
+            double dx = (double) (period >> 1)
                     * Math.sin((double) i / (double) period
                     + (6.2831853071795862D * (double) phase)
                     / (double) frames);
-            graphics.copyArea(0, i, width, 1, (int) d, 0);
-            if (borderGap) {
-                graphics.setColor(color);
-                graphics.drawLine((int) d, i, 0, i);
-                graphics.drawLine((int) d + width, i, width, i);
-            }
+            /*
+             * 按dx和dy指定的距离复制组件的区域
+             * 此方法会从指定的点x和点y向下和向右复制
+             *
+             * public abstract void copyArea​(int x, int y, int width, int height, int dx, int dy)
+             * x 源矩形的x坐标
+             * y 源矩形的y坐标
+             * width 源矩形的宽度
+             * height 源矩形的高度
+             * dx 复制像素的水平距离
+             * dy 复制像素的垂直距离
+             */
+            graphics.copyArea(0, i, width, 1, (int) dx, 0);
+            graphics.setColor(color);
+            /*
+             *使用当前颜色在此图形的坐标系中，在(x1, y1)以及(x2, y2)这些点之间绘制一条线
+             *
+             * public abstract void drawLine​(int x1, int y1, int x2, int y2)
+             * x1 第一点的x坐标
+             * y1 第一点的y坐标
+             * x2 第二点的x坐标
+             * y2 第二点的y坐标
+             */
+            graphics.drawLine((int) dx, i, 0, i);
+            graphics.drawLine((int) dx + width, i, width, i);
         }
 
     }
 
     private static void shearY(Graphics graphics, int width, int height, Color color) {
-
-        int period = random.nextInt(40) + 10; // 50;
-
-        boolean borderGap = true;
+        // 最大50
+        int period = random.nextInt(40) + 10;
         int frames = 20;
         int phase = 7;
+
         for (int i = 0; i < width; i++) {
-            double d = (double) (period >> 1)
+            double dy = (double) (period >> 1)
                     * Math.sin((double) i / (double) period
                     + (6.2831853071795862D * (double) phase)
                     / (double) frames);
-            graphics.copyArea(i, 0, 1, height, 0, (int) d);
-            if (borderGap) {
-                graphics.setColor(color);
-                graphics.drawLine(i, (int) d, i, 0);
-                graphics.drawLine(i, (int) d + height, i, height);
-            }
-
+            /*
+             * 按dx和dy指定的距离复制组件的区域
+             * 此方法会从指定的点x和点y向下和向右复制
+             *
+             * public abstract void copyArea​(int x, int y, int width, int height, int dx, int dy)
+             * x 源矩形的x坐标
+             * y 源矩形的y坐标
+             * width 源矩形的宽度
+             * height 源矩形的高度
+             * dx 复制像素的水平距离
+             * dy 复制像素的垂直距离
+             */
+            graphics.copyArea(i, 0, 1, height, 0, (int) dy);
+            graphics.setColor(color);
+            /*
+             *使用当前颜色在此图形的坐标系中，在(x1, y1)以及(x2, y2)这些点之间绘制一条线
+             *
+             * public abstract void drawLine​(int x1, int y1, int x2, int y2)
+             * x1 第一点的x坐标
+             * y1 第一点的y坐标
+             * x2 第二点的x坐标
+             * y2 第二点的y坐标
+             */
+            graphics.drawLine(i, (int) dy, i, 0);
+            graphics.drawLine(i, (int) dy + height, i, height);
         }
     }
 }
