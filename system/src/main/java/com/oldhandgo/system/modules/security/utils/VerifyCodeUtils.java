@@ -245,6 +245,11 @@ public class VerifyCodeUtils {
      * @return Color类型的颜色
      */
     private static Color getRandomColor(int fc, int bc) {
+        if (fc > bc) {
+            fc = fc ^ bc;
+            bc = fc ^ bc;
+            fc = fc ^ bc;
+        }
         if (fc > 255) {
             fc = 255;
         }
