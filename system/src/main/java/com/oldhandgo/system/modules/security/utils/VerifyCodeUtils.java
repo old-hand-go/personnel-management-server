@@ -6,7 +6,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -39,12 +38,9 @@ public class VerifyCodeUtils {
         }
         int codesLen = sources.length();
 
-        // 取当前毫秒数作为随机数种子
-        Random rand = new Random(System.currentTimeMillis());
-
         StringBuilder verifyCode = new StringBuilder(verifySize);
         for (int i = 0; i < verifySize; i++) {
-            verifyCode.append(sources.charAt(rand.nextInt(codesLen - 1)));
+            verifyCode.append(sources.charAt(random.nextInt(codesLen - 1)));
         }
         return verifyCode.toString();
     }
@@ -67,8 +63,6 @@ public class VerifyCodeUtils {
          */
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        Random rand = new Random();
-
         /*
          * 创建一个Graphics2D，可用于绘制为此BufferedImage
          * Graphics类在几何形状提供更复杂的控制，坐标转换，颜色管理和文本布局
@@ -84,15 +78,8 @@ public class VerifyCodeUtils {
          */
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Color[] colors = new Color[5];
         // 白，青，灰，浅灰，洋红，橙，粉，黄
         Color[] colorSpaces = new Color[]{Color.WHITE, Color.CYAN, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.YELLOW};
-        float[] fractions = new float[colors.length];
-        for (int i = 0; i < colors.length; i++) {
-            colors[i] = colorSpaces[rand.nextInt(colorSpaces.length)];
-            fractions[i] = rand.nextFloat();
-        }
-        Arrays.sort(fractions);
 
         // 设置边框色
         graphics.setColor(Color.GRAY);
@@ -117,9 +104,7 @@ public class VerifyCodeUtils {
          */
         graphics.fillRect(0, 2, width, height - 4);
 
-        // 绘制干扰线
-        Random random = new Random();
-        // 设置线条的颜色
+        // 绘制干扰线 设置线条的颜色
         graphics.setColor(getRandomColor(160, 200));
         for (int i = 0; i < 20; i++) {
             int x = random.nextInt(width - 1);
@@ -205,7 +190,7 @@ public class VerifyCodeUtils {
              * [   sin(theta)     cos(theta)    y-x*sin-y*cos  ]
              * [       0              0               1        ]
              */
-            affineTransform.setToRotation(Math.PI / 4 * rand.nextDouble() * (rand.nextBoolean() ? 1 : -1), (int) (width / verifySize) * i + (int) (fontSize / 2), (int) (height / 2));
+            affineTransform.setToRotation(Math.PI / 4 * random.nextDouble() * (random.nextBoolean() ? 1 : -1), ((float) width / verifySize) * i + ((float) fontSize / 2), ((float) height / 2));
             graphics.setTransform(affineTransform);
 
             /*
@@ -291,11 +276,11 @@ public class VerifyCodeUtils {
     }
 
     private static void shear(Graphics graphics, int width, int height, Color color) {
-        shearX(graphics, width, height, color);
-        shearY(graphics, width, height, color);
+        shearAbscissa(graphics, width, height, color);
+        shearOrdinate(graphics, width, height, color);
     }
 
-    private static void shearX(Graphics graphics, int width, int height, Color color) {
+    private static void shearAbscissa(Graphics graphics, int width, int height, Color color) {
         int period = random.nextInt(2);
         int frames = 1;
         int phase = random.nextInt(2);
@@ -334,7 +319,7 @@ public class VerifyCodeUtils {
 
     }
 
-    private static void shearY(Graphics graphics, int width, int height, Color color) {
+    private static void shearOrdinate(Graphics graphics, int width, int height, Color color) {
         // 最大50
         int period = random.nextInt(40) + 10;
         int frames = 20;
