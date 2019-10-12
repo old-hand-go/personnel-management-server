@@ -25,5 +25,4 @@ public interface UserService {
      */
     UserDTO findByEmail(String email);
 
-    List findByUid(String uid);
 }
