@@ -7,7 +7,6 @@ import com.oldhandgo.system.modules.system.repository.UserRepository;
 import com.oldhandgo.system.modules.system.service.UserService;
 import com.oldhandgo.system.modules.system.service.dto.UserDTO;
 import com.oldhandgo.system.modules.system.service.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
