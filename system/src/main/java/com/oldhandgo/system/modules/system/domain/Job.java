@@ -14,12 +14,12 @@ import java.util.Objects;
  */
 @ToString
 @Entity
-public class Department {
+public class Job {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private String departmentName;
-    private Long pid;
+    private String sort;
+    private Long deptId;
     private Byte isEnabled;
 
     @Id
@@ -53,23 +53,23 @@ public class Department {
     }
 
     @Basic
-    @Column(name = "department_name")
-    public String getDepartmentName() {
-        return departmentName;
+    @Column(name = "sort")
+    public String getSort() {
+        return sort;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 
     @Basic
-    @Column(name = "pid")
-    public Long getPid() {
-        return pid;
+    @Column(name = "dept_id")
+    public Long getDeptId() {
+        return deptId;
     }
 
-    public void setPid(Long pid) {
-        this.pid = pid;
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
     }
 
     @Basic
@@ -90,17 +90,17 @@ public class Department {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Department that = (Department) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(departmentName, that.departmentName) &&
-                Objects.equals(pid, that.pid) &&
-                Objects.equals(isEnabled, that.isEnabled);
+        Job job = (Job) o;
+        return Objects.equals(id, job.id) &&
+                Objects.equals(createTime, job.createTime) &&
+                Objects.equals(updateTime, job.updateTime) &&
+                Objects.equals(sort, job.sort) &&
+                Objects.equals(deptId, job.deptId) &&
+                Objects.equals(isEnabled, job.isEnabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, departmentName, pid, isEnabled);
+        return Objects.hash(id, createTime, updateTime, sort, deptId, isEnabled);
     }
 }
