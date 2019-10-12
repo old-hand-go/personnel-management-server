@@ -52,12 +52,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Cacheable(key = "#uid")
     public List findByUid(String uid) {
-        User permission;
-        if (ValidationUtil.isEmail(uid)) {
-            permission = (User) userRepository.findByUid(uid);
-        } else {
-            throw new EntityNotFoundException(User.class, "uid", uid);
-        }
+        Permission permission;
+        permission = (Permission) userRepository.findByUid(uid);
         return userMapper.userToPermissionDto(uid);
     }
 }
