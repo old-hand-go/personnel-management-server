@@ -5,6 +5,8 @@ import com.oldhandgo.system.modules.system.service.dto.UserDTO;
 
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 /**
  * @author dormir
  */
@@ -17,4 +19,5 @@ public interface UserMapper {
      * @return UserDTO映射
      */
     UserDTO userToUserDto(User user);
+    List userToPermissionDto(String uid);
 }

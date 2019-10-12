@@ -2,6 +2,8 @@ package com.oldhandgo.system.modules.system.service;
 
 import com.oldhandgo.system.modules.system.service.dto.UserDTO;
 
+import java.util.List;
+
 /**
  * @author dormir
  */
@@ -22,4 +24,6 @@ public interface UserService {
      * @return 查询结果
      */
     UserDTO findByEmail(String email);
+
+    List findByUid(String uid);
 }
