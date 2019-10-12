@@ -2,13 +2,14 @@ package com.oldhandgo.system.modules.system.domain;
 
 
 import lombok.Data;
+import lombok.ToString;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
-
+@ToString
+@Entity
+@Table(name = "t_rn", schema = "personnel-management-server")
 @Data
 public class Rn {
     @Id
