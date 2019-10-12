@@ -2,6 +2,7 @@ package com.oldhandgo.system.modules.system.service.impl;
 
 import com.oldhandgo.common.exception.EntityNotFoundException;
 import com.oldhandgo.common.utils.ValidationUtil;
+import com.oldhandgo.system.modules.system.domain.Permission;
 import com.oldhandgo.system.modules.system.domain.User;
 import com.oldhandgo.system.modules.system.repository.UserRepository;
 import com.oldhandgo.system.modules.system.service.UserService;
@@ -12,6 +13,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author dormir
@@ -44,5 +47,17 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException(User.class, "email", email);
         }
         return userMapper.userToUserDto(user);
+    }
+
+    @Override
+    @Cacheable(key = "#uid")
+    public List findByUid(String uid) {
+        User permission;
+        if (ValidationUtil.isEmail(uid)) {
+            permission = (User) userRepository.findByUid(uid);
+        } else {
+            throw new EntityNotFoundException(User.class, "uid", uid);
+        }
+        return userMapper.userToPermissionDto(uid);
     }
 }
