@@ -48,12 +48,4 @@ public class UserServiceImpl implements UserService {
         }
         return userMapper.userToUserDto(user);
     }
-
-    @Override
-    @Cacheable(key = "#uid")
-    public List findByUid(String uid) {
-        Permission permission;
-        permission = (Permission) userRepository.findByUid(uid);
-        return userMapper.userToPermissionDto(uid);
-    }
 }
