@@ -14,12 +14,10 @@ public class UserDTO implements Serializable {
     private Timestamp createTime;
     private Timestamp updateTime;
     private String email;
-    private String userName;
-    private Timestamp entryTime;
     private String phone;
-    private String address;
+    private String userName;
     private String passWord;
-    private Timestamp lastPasswordResetTime;
+    private String address;
     private Long deptId;
     private Long jobId;
     private Byte isEnabled;
