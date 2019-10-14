@@ -14,7 +14,6 @@ public class UserDTO implements Serializable {
     private Timestamp createTime;
     private Timestamp updateTime;
     private String email;
-    private String phone;
     private String userName;
     private String passWord;
     private String address;

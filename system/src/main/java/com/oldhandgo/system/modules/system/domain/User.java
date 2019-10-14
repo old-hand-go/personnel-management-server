@@ -16,7 +16,6 @@ public class User {
     private Timestamp createTime;
     private Timestamp updateTime;
     private String email;
-    private String phone;
     private String userName;
     private String passWord;
     private String address;
@@ -62,16 +61,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    @Basic
-    @Column(name = "phone")
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     @Basic
@@ -147,7 +136,6 @@ public class User {
                 Objects.equals(createTime, user.createTime) &&
                 Objects.equals(updateTime, user.updateTime) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(phone, user.phone) &&
                 Objects.equals(userName, user.userName) &&
                 Objects.equals(passWord, user.passWord) &&
                 Objects.equals(address, user.address) &&
@@ -158,6 +146,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, email, phone, userName, passWord, address, deptId, jobId, isEnabled);
+        return Objects.hash(id, createTime, updateTime, email, userName, passWord, address, deptId, jobId, isEnabled);
     }
 }
