@@ -22,7 +22,6 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     private final Timestamp updateTime;
     private final String email;
-    private final String phone;
     private final String userName;
     @JsonIgnore
     private final String passWord;
