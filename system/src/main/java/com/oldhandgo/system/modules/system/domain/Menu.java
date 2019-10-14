@@ -1,7 +1,5 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,22 +8,21 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
 public class Menu {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private Byte isFrame;
-    private String menuName;
     private String component;
-    private String compinentName;
-    private Long pid;
+    private String componentName;
+    private String menuName;
     private String sort;
-    private Byte isCache;
+    private Long pid;
+    private Byte isFrame;
     private Byte isHidden;
+    private Byte isCache;
 
     @Id
     @Column(name = "id")
@@ -58,13 +55,23 @@ public class Menu {
     }
 
     @Basic
-    @Column(name = "is_frame")
-    public Byte getIsFrame() {
-        return isFrame;
+    @Column(name = "component")
+    public String getComponent() {
+        return component;
     }
 
-    public void setIsFrame(Byte isFrame) {
-        this.isFrame = isFrame;
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    @Basic
+    @Column(name = "component_name")
+    public String getComponentName() {
+        return componentName;
+    }
+
+    public void setComponentName(String componentName) {
+        this.componentName = componentName;
     }
 
     @Basic
@@ -78,23 +85,13 @@ public class Menu {
     }
 
     @Basic
-    @Column(name = "component")
-    public String getComponent() {
-        return component;
+    @Column(name = "sort")
+    public String getSort() {
+        return sort;
     }
 
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
-    @Basic
-    @Column(name = "compinent_name")
-    public String getCompinentName() {
-        return compinentName;
-    }
-
-    public void setCompinentName(String compinentName) {
-        this.compinentName = compinentName;
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 
     @Basic
@@ -108,23 +105,13 @@ public class Menu {
     }
 
     @Basic
-    @Column(name = "sort")
-    public String getSort() {
-        return sort;
+    @Column(name = "is_frame")
+    public Byte getIsFrame() {
+        return isFrame;
     }
 
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
-
-    @Basic
-    @Column(name = "is_cache")
-    public Byte getIsCache() {
-        return isCache;
-    }
-
-    public void setIsCache(Byte isCache) {
-        this.isCache = isCache;
+    public void setIsFrame(Byte isFrame) {
+        this.isFrame = isFrame;
     }
 
     @Basic
@@ -135,6 +122,16 @@ public class Menu {
 
     public void setIsHidden(Byte isHidden) {
         this.isHidden = isHidden;
+    }
+
+    @Basic
+    @Column(name = "is_cache")
+    public Byte getIsCache() {
+        return isCache;
+    }
+
+    public void setIsCache(Byte isCache) {
+        this.isCache = isCache;
     }
 
     @Override
@@ -149,18 +146,18 @@ public class Menu {
         return Objects.equals(id, menu.id) &&
                 Objects.equals(createTime, menu.createTime) &&
                 Objects.equals(updateTime, menu.updateTime) &&
-                Objects.equals(isFrame, menu.isFrame) &&
-                Objects.equals(menuName, menu.menuName) &&
                 Objects.equals(component, menu.component) &&
-                Objects.equals(compinentName, menu.compinentName) &&
-                Objects.equals(pid, menu.pid) &&
+                Objects.equals(componentName, menu.componentName) &&
+                Objects.equals(menuName, menu.menuName) &&
                 Objects.equals(sort, menu.sort) &&
-                Objects.equals(isCache, menu.isCache) &&
-                Objects.equals(isHidden, menu.isHidden);
+                Objects.equals(pid, menu.pid) &&
+                Objects.equals(isFrame, menu.isFrame) &&
+                Objects.equals(isHidden, menu.isHidden) &&
+                Objects.equals(isCache, menu.isCache);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, isFrame, menuName, component, compinentName, pid, sort, isCache, isHidden);
+        return Objects.hash(id, createTime, updateTime, component, componentName, menuName, sort, pid, isFrame, isHidden, isCache);
     }
 }

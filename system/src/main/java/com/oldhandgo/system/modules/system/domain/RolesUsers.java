@@ -1,23 +1,20 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
-@Table(name = "roles_users", schema = "personnel-management-server")
+@Table(name = "roles_users", schema = "personnel_management_server")
 public class RolesUsers {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private Long userId;
     private Long roleId;
+    private Long userId;
 
     @Id
     @Column(name = "id")
@@ -50,16 +47,6 @@ public class RolesUsers {
     }
 
     @Basic
-    @Column(name = "user_id")
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    @Basic
     @Column(name = "role_id")
     public Long getRoleId() {
         return roleId;
@@ -67,6 +54,16 @@ public class RolesUsers {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    @Basic
+    @Column(name = "user_id")
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -81,12 +78,12 @@ public class RolesUsers {
         return Objects.equals(id, that.id) &&
                 Objects.equals(createTime, that.createTime) &&
                 Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(userId, that.userId) &&
-                Objects.equals(roleId, that.roleId);
+                Objects.equals(roleId, that.roleId) &&
+                Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, userId, roleId);
+        return Objects.hash(id, createTime, updateTime, roleId, userId);
     }
 }

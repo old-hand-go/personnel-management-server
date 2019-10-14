@@ -1,7 +1,5 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,21 +8,18 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
 public class User {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
     private String email;
-    private String userName;
-    private Timestamp entryTime;
     private String phone;
-    private String address;
+    private String userName;
     private String passWord;
-    private Timestamp lastPasswordResetTime;
+    private String address;
     private Long deptId;
     private Long jobId;
     private Byte isEnabled;
@@ -70,26 +65,6 @@ public class User {
     }
 
     @Basic
-    @Column(name = "user_name")
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Basic
-    @Column(name = "entry_time")
-    public Timestamp getEntryTime() {
-        return entryTime;
-    }
-
-    public void setEntryTime(Timestamp entryTime) {
-        this.entryTime = entryTime;
-    }
-
-    @Basic
     @Column(name = "phone")
     public String getPhone() {
         return phone;
@@ -100,13 +75,13 @@ public class User {
     }
 
     @Basic
-    @Column(name = "address")
-    public String getAddress() {
-        return address;
+    @Column(name = "user_name")
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Basic
@@ -120,13 +95,13 @@ public class User {
     }
 
     @Basic
-    @Column(name = "last_password_reset_time")
-    public Timestamp getLastPasswordResetTime() {
-        return lastPasswordResetTime;
+    @Column(name = "address")
+    public String getAddress() {
+        return address;
     }
 
-    public void setLastPasswordResetTime(Timestamp lastPasswordResetTime) {
-        this.lastPasswordResetTime = lastPasswordResetTime;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Basic
@@ -172,12 +147,10 @@ public class User {
                 Objects.equals(createTime, user.createTime) &&
                 Objects.equals(updateTime, user.updateTime) &&
                 Objects.equals(email, user.email) &&
-                Objects.equals(userName, user.userName) &&
-                Objects.equals(entryTime, user.entryTime) &&
                 Objects.equals(phone, user.phone) &&
-                Objects.equals(address, user.address) &&
+                Objects.equals(userName, user.userName) &&
                 Objects.equals(passWord, user.passWord) &&
-                Objects.equals(lastPasswordResetTime, user.lastPasswordResetTime) &&
+                Objects.equals(address, user.address) &&
                 Objects.equals(deptId, user.deptId) &&
                 Objects.equals(jobId, user.jobId) &&
                 Objects.equals(isEnabled, user.isEnabled);
@@ -185,6 +158,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, email, userName, entryTime, phone, address, passWord, lastPasswordResetTime, deptId, jobId, isEnabled);
+        return Objects.hash(id, createTime, updateTime, email, phone, userName, passWord, address, deptId, jobId, isEnabled);
     }
 }

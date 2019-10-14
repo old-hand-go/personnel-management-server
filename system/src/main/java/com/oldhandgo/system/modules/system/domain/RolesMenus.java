@@ -1,23 +1,20 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
-@Table(name = "roles_menus", schema = "personnel-management-server")
+@Table(name = "roles_menus", schema = "personnel_management_server")
 public class RolesMenus {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private Long menuId;
     private Long roleId;
+    private Long menuId;
 
     @Id
     @Column(name = "id")
@@ -50,16 +47,6 @@ public class RolesMenus {
     }
 
     @Basic
-    @Column(name = "menu_id")
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
-
-    @Basic
     @Column(name = "role_id")
     public Long getRoleId() {
         return roleId;
@@ -67,6 +54,16 @@ public class RolesMenus {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    @Basic
+    @Column(name = "menu_id")
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
     }
 
     @Override
@@ -81,12 +78,12 @@ public class RolesMenus {
         return Objects.equals(id, that.id) &&
                 Objects.equals(createTime, that.createTime) &&
                 Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(menuId, that.menuId) &&
-                Objects.equals(roleId, that.roleId);
+                Objects.equals(roleId, that.roleId) &&
+                Objects.equals(menuId, that.menuId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, menuId, roleId);
+        return Objects.hash(id, createTime, updateTime, roleId, menuId);
     }
 }

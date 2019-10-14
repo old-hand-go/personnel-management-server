@@ -1,17 +1,14 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
-@Table(name = "roles_permissions", schema = "personnel-management-server")
+@Table(name = "roles_permissions", schema = "personnel_management_server")
 public class RolesPermissions {
     private Long id;
     private Timestamp createTime;

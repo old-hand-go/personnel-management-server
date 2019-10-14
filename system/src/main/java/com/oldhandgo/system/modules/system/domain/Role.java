@@ -1,7 +1,5 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,18 +8,17 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
 public class Role {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
     private String roleName;
-    private String remark;
+    private Short roleLevel;
     private String dataScope;
-    private Short level;
+    private String remark;
 
     @Id
     @Column(name = "id")
@@ -64,13 +61,13 @@ public class Role {
     }
 
     @Basic
-    @Column(name = "remark")
-    public String getRemark() {
-        return remark;
+    @Column(name = "role_level")
+    public Short getRoleLevel() {
+        return roleLevel;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setRoleLevel(Short roleLevel) {
+        this.roleLevel = roleLevel;
     }
 
     @Basic
@@ -84,13 +81,13 @@ public class Role {
     }
 
     @Basic
-    @Column(name = "level")
-    public Short getLevel() {
-        return level;
+    @Column(name = "remark")
+    public String getRemark() {
+        return remark;
     }
 
-    public void setLevel(Short level) {
-        this.level = level;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     @Override
@@ -106,13 +103,13 @@ public class Role {
                 Objects.equals(createTime, role.createTime) &&
                 Objects.equals(updateTime, role.updateTime) &&
                 Objects.equals(roleName, role.roleName) &&
-                Objects.equals(remark, role.remark) &&
+                Objects.equals(roleLevel, role.roleLevel) &&
                 Objects.equals(dataScope, role.dataScope) &&
-                Objects.equals(level, role.level);
+                Objects.equals(remark, role.remark);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, roleName, remark, dataScope, level);
+        return Objects.hash(id, createTime, updateTime, roleName, roleLevel, dataScope, remark);
     }
 }
