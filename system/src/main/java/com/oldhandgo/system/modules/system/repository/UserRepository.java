@@ -2,11 +2,12 @@ package com.oldhandgo.system.modules.system.repository;
 
 import com.oldhandgo.system.modules.system.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, PagingAndSortingRepository<User, Long> {
     /**
      * 根据邮箱查询
      *
@@ -14,5 +15,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return 查询结果
      */
     User findByEmail(String email);
-
 }

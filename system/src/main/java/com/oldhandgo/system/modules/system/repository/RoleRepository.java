@@ -2,14 +2,14 @@ package com.oldhandgo.system.modules.system.repository;
 
 import com.oldhandgo.system.modules.system.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * @author dormirr
  */
-public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor {
+public interface RoleRepository extends JpaRepository<Role, Long>, PagingAndSortingRepository<Role, Long> {
 
     /**
      * 根据角色名字查询角色
