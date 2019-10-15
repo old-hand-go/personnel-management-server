@@ -1,7 +1,7 @@
 package com.oldhandgo.system.modules.system.service.impl;
 
 import com.oldhandgo.common.exception.EntityNotFoundException;
-import com.oldhandgo.common.utils.ValidationUtil;
+import com.oldhandgo.common.utils.ValidationUtils;
 import com.oldhandgo.system.SystemApplication;
 import com.oldhandgo.system.modules.system.domain.User;
 import com.oldhandgo.system.modules.system.repository.UserRepository;
@@ -22,9 +22,9 @@ public class UserServiceImplTest {
 
     @Test
     public void findByEmail() {
-        String email = "1018729292@qq.com";
+        String email = "zhangtianci.cn@qq.com";
         User user;
-        if (ValidationUtil.isEmail(email)) {
+        if (ValidationUtils.isEmail(email)) {
             user = userRepository.findByEmail(email);
         } else {
             throw new EntityNotFoundException(User.class, "email", email);
