@@ -7,5 +7,5 @@ public interface DepartmentRepository extends JpaRepository<Department,Long> {
 /*
 * 根据id查询
 * */
-    Department findDepartment(long id);
+    Department findDepartmentById(long id);
 }
