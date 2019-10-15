@@ -1,26 +1,23 @@
 package com.oldhandgo.tools.domain;
 
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
-@Table(name = "verification_code", schema = "personnel-management-server")
+@Table(name = "verification_code", schema = "personnel_management_server")
 public class VerificationCode {
     private Long id;
-    private String codeValue;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private Byte isStatus;
-    private String type;
-    private String userValue;
+    private String codeValue;
+    private Byte isType;
+    private String codeUser;
     private String scenes;
+    private Byte isStatus;
 
     @Id
     @Column(name = "id")
@@ -30,16 +27,6 @@ public class VerificationCode {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Basic
-    @Column(name = "code_value")
-    public String getCodeValue() {
-        return codeValue;
-    }
-
-    public void setCodeValue(String codeValue) {
-        this.codeValue = codeValue;
     }
 
     @Basic
@@ -63,33 +50,33 @@ public class VerificationCode {
     }
 
     @Basic
-    @Column(name = "is_status")
-    public Byte getIsStatus() {
-        return isStatus;
+    @Column(name = "code_value")
+    public String getCodeValue() {
+        return codeValue;
     }
 
-    public void setIsStatus(Byte isStatus) {
-        this.isStatus = isStatus;
-    }
-
-    @Basic
-    @Column(name = "type")
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setCodeValue(String codeValue) {
+        this.codeValue = codeValue;
     }
 
     @Basic
-    @Column(name = "user_value")
-    public String getUserValue() {
-        return userValue;
+    @Column(name = "is_type")
+    public Byte getIsType() {
+        return isType;
     }
 
-    public void setUserValue(String userValue) {
-        this.userValue = userValue;
+    public void setIsType(Byte isType) {
+        this.isType = isType;
+    }
+
+    @Basic
+    @Column(name = "code_user")
+    public String getCodeUser() {
+        return codeUser;
+    }
+
+    public void setCodeUser(String codeUser) {
+        this.codeUser = codeUser;
     }
 
     @Basic
@@ -102,6 +89,16 @@ public class VerificationCode {
         this.scenes = scenes;
     }
 
+    @Basic
+    @Column(name = "is_status")
+    public Byte getIsStatus() {
+        return isStatus;
+    }
+
+    public void setIsStatus(Byte isStatus) {
+        this.isStatus = isStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -112,17 +109,17 @@ public class VerificationCode {
         }
         VerificationCode that = (VerificationCode) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(codeValue, that.codeValue) &&
                 Objects.equals(createTime, that.createTime) &&
                 Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(isStatus, that.isStatus) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(userValue, that.userValue) &&
-                Objects.equals(scenes, that.scenes);
+                Objects.equals(codeValue, that.codeValue) &&
+                Objects.equals(isType, that.isType) &&
+                Objects.equals(codeUser, that.codeUser) &&
+                Objects.equals(scenes, that.scenes) &&
+                Objects.equals(isStatus, that.isStatus);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, codeValue, createTime, updateTime, isStatus, type, userValue, scenes);
+        return Objects.hash(id, createTime, updateTime, codeValue, isType, codeUser, scenes, isStatus);
     }
 }

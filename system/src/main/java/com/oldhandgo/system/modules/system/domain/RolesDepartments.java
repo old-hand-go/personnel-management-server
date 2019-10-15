@@ -1,23 +1,20 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
-@Table(name = "roles_departments", schema = "personnel-management-server")
+@Table(name = "roles_departments", schema = "personnel_management_server")
 public class RolesDepartments {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private Long departmentId;
     private Long roleId;
+    private Long departmentId;
 
     @Id
     @Column(name = "id")
@@ -50,16 +47,6 @@ public class RolesDepartments {
     }
 
     @Basic
-    @Column(name = "department_id")
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
-    }
-
-    @Basic
     @Column(name = "role_id")
     public Long getRoleId() {
         return roleId;
@@ -67,6 +54,16 @@ public class RolesDepartments {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    @Basic
+    @Column(name = "department_id")
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
@@ -81,12 +78,12 @@ public class RolesDepartments {
         return Objects.equals(id, that.id) &&
                 Objects.equals(createTime, that.createTime) &&
                 Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(departmentId, that.departmentId) &&
-                Objects.equals(roleId, that.roleId);
+                Objects.equals(roleId, that.roleId) &&
+                Objects.equals(departmentId, that.departmentId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, departmentId, roleId);
+        return Objects.hash(id, createTime, updateTime, roleId, departmentId);
     }
 }

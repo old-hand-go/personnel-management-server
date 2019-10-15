@@ -1,7 +1,5 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,17 +8,17 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
 public class Job {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private String sort;
+    private String jobName;
     private Long deptId;
     private Byte isEnabled;
+    private String sort;
 
     @Id
     @Column(name = "id")
@@ -53,13 +51,13 @@ public class Job {
     }
 
     @Basic
-    @Column(name = "sort")
-    public String getSort() {
-        return sort;
+    @Column(name = "job_name")
+    public String getJobName() {
+        return jobName;
     }
 
-    public void setSort(String sort) {
-        this.sort = sort;
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
     @Basic
@@ -82,6 +80,16 @@ public class Job {
         this.isEnabled = isEnabled;
     }
 
+    @Basic
+    @Column(name = "sort")
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -94,13 +102,14 @@ public class Job {
         return Objects.equals(id, job.id) &&
                 Objects.equals(createTime, job.createTime) &&
                 Objects.equals(updateTime, job.updateTime) &&
-                Objects.equals(sort, job.sort) &&
+                Objects.equals(jobName, job.jobName) &&
                 Objects.equals(deptId, job.deptId) &&
-                Objects.equals(isEnabled, job.isEnabled);
+                Objects.equals(isEnabled, job.isEnabled) &&
+                Objects.equals(sort, job.sort);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, sort, deptId, isEnabled);
+        return Objects.hash(id, createTime, updateTime, jobName, deptId, isEnabled, sort);
     }
 }

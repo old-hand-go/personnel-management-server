@@ -2,8 +2,6 @@ package com.oldhandgo.system.modules.system.service;
 
 import com.oldhandgo.system.modules.system.service.dto.UserDTO;
 
-import java.util.List;
-
 /**
  * @author dormir
  */

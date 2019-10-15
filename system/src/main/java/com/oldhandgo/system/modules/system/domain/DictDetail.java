@@ -1,23 +1,20 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@ToString
 @Entity
-@Table(name = "dict_detail", schema = "personnel-management-server")
+@Table(name = "dict_detail", schema = "personnel_management_server")
 public class DictDetail {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private String dictDetailValue;
     private String label;
+    private String dictValue;
     private String sort;
     private Long dictId;
 
@@ -52,16 +49,6 @@ public class DictDetail {
     }
 
     @Basic
-    @Column(name = "dict_detail_value")
-    public String getDictDetailValue() {
-        return dictDetailValue;
-    }
-
-    public void setDictDetailValue(String dictDetailValue) {
-        this.dictDetailValue = dictDetailValue;
-    }
-
-    @Basic
     @Column(name = "label")
     public String getLabel() {
         return label;
@@ -69,6 +56,16 @@ public class DictDetail {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    @Basic
+    @Column(name = "dict_value")
+    public String getDictValue() {
+        return dictValue;
+    }
+
+    public void setDictValue(String dictValue) {
+        this.dictValue = dictValue;
     }
 
     @Basic
@@ -103,14 +100,14 @@ public class DictDetail {
         return Objects.equals(id, that.id) &&
                 Objects.equals(createTime, that.createTime) &&
                 Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(dictDetailValue, that.dictDetailValue) &&
                 Objects.equals(label, that.label) &&
+                Objects.equals(dictValue, that.dictValue) &&
                 Objects.equals(sort, that.sort) &&
                 Objects.equals(dictId, that.dictId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, dictDetailValue, label, sort, dictId);
+        return Objects.hash(id, createTime, updateTime, label, dictValue, sort, dictId);
     }
 }

@@ -7,7 +7,6 @@
         <artifactId>personnel-management-server</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.oldhandgo</groupId>
     <artifactId>common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>common</name>
@@ -18,7 +17,6 @@
     </properties>
 
     <dependencies>
-
     </dependencies>
 
     <build>
