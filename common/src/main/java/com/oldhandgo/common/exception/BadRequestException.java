@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 /**
- * 错误请求异常
+ * 通用异常
  *
  * @author dormirr
  */
