@@ -23,18 +23,12 @@ public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificat
     Role findByRoleName(String roleName);
 
     /**
-     * @param id
-     * @return
-     */
-    Set<Role> findByUsers_Id(Long id);
-
-    /**
      * 删除角色对应的权限
      *
      * @param id 权限ID
      */
     @Modifying
-    @Query(value = "delete from roles_permissions where permission_id = ?1", nativeQuery = true)
+    @Query(value = "delete from personnel_management_server.roles_permissions where permission_id = ?1", nativeQuery = true)
     void untiedPermission(Long id);
 
     /**
@@ -43,6 +37,6 @@ public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificat
      * @param id 菜单ID
      */
     @Modifying
-    @Query(value = "delete from roles_menus where menu_id = ?1", nativeQuery = true)
+    @Query(value = "delete from personnel_management_server.roles_menus where menu_id = ?1", nativeQuery = true)
     void untiedMenu(Long id);
 }
