@@ -22,7 +22,6 @@
     <name>personnel-management-server</name>
     <description>企业人员管理系统后端部分。</description>
 
-
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -48,7 +47,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -111,7 +109,6 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.8.1</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -122,5 +119,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
