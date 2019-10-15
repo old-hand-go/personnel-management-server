@@ -3,7 +3,7 @@ package com.oldhandgo.common.utils;
 /**
  * @author dormir
  */
-public class ValidationUtil {
+public class ValidationUtils {
     /**
      * 判断邮箱是否合法
      *
@@ -14,7 +14,7 @@ public class ValidationUtil {
         if (string == null) {
             return false;
         }
-        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        String regEx1 = "^([a-z0-9A-Z]+[-|.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
         return string.matches(regEx1);
     }
 }
