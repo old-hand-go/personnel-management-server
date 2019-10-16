@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+
+/**
+ * @author dormirr
+ */
 @Data
 public class DepartmentDTO implements Serializable {
     private Long id;
