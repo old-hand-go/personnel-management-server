@@ -8,19 +8,12 @@ import com.oldhandgo.system.modules.system.service.dto.UserDTO;
 public interface UserService {
 
     /**
-     * 根据ID查询用户
+     * 根据邮箱查询
      *
-     * @param id 用户id
+     * @param email     邮箱
+     * @param isEnabled 开启的用户 必为1
      * @return 查询结果
      */
-    UserDTO findById(long id);
-
-    /**
-     * 根据用户邮箱查询用户
-     *
-     * @param email 用户邮箱
-     * @return 查询结果
-     */
-    UserDTO findByEmail(String email);
+    UserDTO findByEmailAndIsEnabled(String email, Byte isEnabled);
 
 }
