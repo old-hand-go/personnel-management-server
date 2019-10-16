@@ -2,7 +2,6 @@ package com.oldhandgo.system.modules.security.security;
 
 import com.oldhandgo.system.modules.security.utils.JwtTokenUtils;
 import io.jsonwebtoken.ExpiredJwtException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +22,6 @@ import java.io.IOException;
  *
  * @author dormirr
  */
-@Slf4j
 @Component
 public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
@@ -39,17 +37,16 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-
         final String requestHeader = request.getHeader(this.tokenHeader);
 
         String username = null;
         String authToken = null;
-        if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
+        if (requestHeader != null && requestHeader.startsWith("Bearer")) {
             authToken = requestHeader.substring(7);
             try {
                 username = jwtTokenUtils.getUsernameFromToken(authToken);
             } catch (ExpiredJwtException e) {
-                log.error(e.getMessage());
+                System.err.println(e.getMessage());
             }
         }
 
