@@ -7,8 +7,6 @@ import com.oldhandgo.system.modules.system.repository.UserRepository;
 import com.oldhandgo.system.modules.system.service.UserService;
 import com.oldhandgo.system.modules.system.service.dto.UserDTO;
 import com.oldhandgo.system.modules.system.service.mapper.UserMapper;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author dormir
  */
 @Service
-@CacheConfig(cacheNames = "users")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -29,20 +26,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Cacheable(key = "#id")
-    public UserDTO findById(long id) {
-        return null;
-    }
-
-    @Override
-    @Cacheable(key = "#email")
-    public UserDTO findByEmail(String email) {
-        User user;
+    public UserDTO findByEmailAndIsEnabled(String email, Byte isEnabled) {
+        User user = null;
         if (ValidationUtils.isEmail(email)) {
-            user = userRepository.findByEmail(email);
-        } else {
-            throw new EntityNotFoundException(User.class, "email", email);
+            user = userRepository.findByEmailAndIsEnabled(email, isEnabled).orElse(null);
         }
-        return userMapper.userToUserDto(user);
+        if (user != null) {
+            return userMapper.userToUserDto(user);
+        } else {
+            throw new EntityNotFoundException(User.class, "邮箱", email);
+        }
     }
 }
