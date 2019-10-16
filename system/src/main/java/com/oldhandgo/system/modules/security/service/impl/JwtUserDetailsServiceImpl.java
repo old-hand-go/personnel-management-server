@@ -1,5 +1,6 @@
 package com.oldhandgo.system.modules.security.service.impl;
 
+import com.oldhandgo.common.exception.BadRequestException;
 import com.oldhandgo.system.modules.security.security.JwtUser;
 import com.oldhandgo.system.modules.system.service.UserService;
 import com.oldhandgo.system.modules.system.service.dto.UserDTO;
@@ -18,23 +19,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
-
     private final UserService userService;
+    private final JwtPermissionServiceImpl jwtPermissionServiceImpl;
 
-    public JwtUserDetailsServiceImpl(UserService userService) {
+    public JwtUserDetailsServiceImpl(UserService userService, JwtPermissionServiceImpl jwtPermissionServiceImpl) {
         this.userService = userService;
+        this.jwtPermissionServiceImpl = jwtPermissionServiceImpl;
     }
 
-
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserDTO userDTO = userService.findByEmail(s);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        UserDTO userDTO = userService.findByEmailAndIsEnabled(userName, (byte) 1);
         if (userDTO == null) {
-
+            throw new BadRequestException("账号不存在");
         } else {
             return createJwtUser(userDTO);
         }
-        return null;
     }
 
     public UserDetails createJwtUser(UserDTO userDTO) {
