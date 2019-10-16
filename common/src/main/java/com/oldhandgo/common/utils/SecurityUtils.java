@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author dormirr
  */
 public class SecurityUtils {
+
     /**
      * @return 用户详细信息
      */

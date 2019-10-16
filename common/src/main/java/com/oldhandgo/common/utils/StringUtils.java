@@ -11,7 +11,7 @@ import java.util.Date;
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
-     * 分割
+     * 分割符
      */
     private static final char SEPARATOR = '_';
 
@@ -115,7 +115,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
         return sb.toString();
     }
-
 
     /**
      * 获得当天是周几
