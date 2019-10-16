@@ -28,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private final JwtUserDetailsServiceImpl jwtUserDetailsServiceImpl;
 
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String loginPath;
 
     public SecurityConfig(JwtAuthenticationEntryPoint unauthorizedHandler, JwtUserDetailsServiceImpl jwtUserDetailsServiceImpl, JwtAuthorizationTokenFilter authenticationTokenFilter) {
-        this.unauthorizedHandler = unauthorizedHandler;
+        this.jwtAuthenticationEntryPoint = unauthorizedHandler;
         this.jwtUserDetailsServiceImpl = jwtUserDetailsServiceImpl;
         this.authenticationTokenFilter = authenticationTokenFilter;
     }
@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
 
                 // 授权异常
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
 
                 // 不创建会话
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -98,10 +98,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth/" + loginPath).anonymous()
                 .antMatchers("/auth/vCode").anonymous()
 
-                // 接口限流测试
-                .antMatchers("/test/**").anonymous()
-                // 文件
-                .antMatchers("/file/**").anonymous()
                 // 放行OPTIONS请求
                 .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
                 .antMatchers("/druid/**").anonymous()
