@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * @author 田禄
+ * @author dormirr
  */
 public interface DepartmentRepository extends JpaRepository<Department, Long>, PagingAndSortingRepository<Department, Long> {
 
