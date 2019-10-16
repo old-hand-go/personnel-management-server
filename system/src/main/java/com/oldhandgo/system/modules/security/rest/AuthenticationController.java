@@ -11,6 +11,7 @@ import com.oldhandgo.system.modules.security.security.JwtUser;
 import com.oldhandgo.system.modules.security.service.impl.JwtUserDetailsServiceImpl;
 import com.oldhandgo.system.modules.security.utils.JwtTokenUtils;
 import com.oldhandgo.system.modules.security.utils.VerifyCodeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -19,13 +20,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 /**
  * 安全认证控制器
  *
  * @author dormirr
  */
+@Slf4j
 @RestController
 @RequestMapping("auth")
 public class AuthenticationController {
@@ -47,6 +48,16 @@ public class AuthenticationController {
      */
     @PostMapping(value = "${jwt.auth.path}")
     public ResponseEntity login(@Validated @RequestBody AuthorizationUser authorizationUser) {
+//        // 查询验证码
+//        String code = redisService.getCodeVal(authorizationUser.getUuid());
+//        // 清除验证码
+//        redisService.delete(authorizationUser.getUuid());
+//        if (StringUtils.isBlank(code)) {
+//            throw new BadRequestException("验证码已过期");
+//        }
+//        if (StringUtils.isBlank(authorizationUser.getCode()) || !authorizationUser.getCode().equalsIgnoreCase(code)) {
+//            throw new BadRequestException("验证码错误");
+//        }
         final JwtUser jwtUser = (JwtUser) jwtUserDetailsServiceImpl.loadUserByUsername(authorizationUser.getUsername());
         if (!jwtUser.getPassword().equals(EncryptUtils.encryptPassword(authorizationUser.getPassword()))) {
             throw new AccountExpiredException("密码错误");

@@ -17,17 +17,26 @@ import java.util.Collection;
 public class JwtUser implements UserDetails {
     @JsonIgnore
     private final Long id;
+
     @JsonIgnore
     private final Timestamp createTime;
+
     @JsonIgnore
     private final Timestamp updateTime;
+
     private final String email;
+
     private final String userName;
+
     @JsonIgnore
     private final String passWord;
+
     private final String address;
+
     private final Long deptId;
+
     private final Long jobId;
+
     private final Byte isEnabled;
 
     @Override

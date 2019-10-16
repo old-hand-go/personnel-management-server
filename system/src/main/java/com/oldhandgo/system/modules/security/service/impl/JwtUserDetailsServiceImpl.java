@@ -20,11 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
     private final UserService userService;
-    private final JwtPermissionServiceImpl jwtPermissionServiceImpl;
 
-    public JwtUserDetailsServiceImpl(UserService userService, JwtPermissionServiceImpl jwtPermissionServiceImpl) {
+    public JwtUserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
-        this.jwtPermissionServiceImpl = jwtPermissionServiceImpl;
     }
 
     @Override
