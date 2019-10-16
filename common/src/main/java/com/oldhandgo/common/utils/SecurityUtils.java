@@ -1,6 +1,5 @@
 package com.oldhandgo.common.utils;
 
-
 import cn.hutool.json.JSONObject;
 import com.oldhandgo.common.exception.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,7 @@ public class SecurityUtils {
      * @return 用户详细信息
      */
     public static UserDetails getUserDetails() {
-        UserDetails userDetails = null;
+        UserDetails userDetails;
         try {
             userDetails = (UserDetails) org
                     .springframework

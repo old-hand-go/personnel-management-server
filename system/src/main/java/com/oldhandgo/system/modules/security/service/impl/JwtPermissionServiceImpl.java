@@ -1,6 +1,6 @@
 package com.oldhandgo.system.modules.security.service.impl;
 
-import org.springframework.cache.annotation.CacheConfig;
+import com.oldhandgo.system.modules.system.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
  * @author dormirr
  */
 @Service
-@CacheConfig(cacheNames = "role")
 public class JwtPermissionServiceImpl {
+    private final RoleRepository roleRepository;
 
+    public JwtPermissionServiceImpl(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 }
