@@ -1,5 +1,8 @@
 package com.oldhandgo.common.utils;
 
+import com.oldhandgo.common.exception.BadRequestException;
+import org.hibernate.exception.ConstraintViolationException;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -22,5 +25,23 @@ public class ThrowableUtils {
             throwable.printStackTrace(pw);
             return sw.toString();
         }
+    }
+
+    /**
+     * 引发外键异常
+     *
+     * @param e   异常
+     * @param msg 信息
+     */
+    public static void throwForeignKeyException(Throwable e, String msg) {
+        Throwable t = e.getCause();
+        while ((t != null) && !(t instanceof ConstraintViolationException)) {
+            t = t.getCause();
+        }
+        if (t != null) {
+            throw new BadRequestException(msg);
+        }
+        assert false;
+        throw new BadRequestException("删除失败：" + t.getMessage());
     }
 }
