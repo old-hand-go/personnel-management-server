@@ -1,36 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>com.oldhandgo</groupId>
         <artifactId>personnel-management-server</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <artifactId>system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>system</name>
+    <name>系统核心模块</name>
     <description>系统核心模块</description>
 
     <properties>
         <java.version>11</java.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <quartz.version>2.3.1</quartz.version>
     </properties>
 
     <dependencies>
+        <!-- 系统模块 -->
+        <dependency>
+            <groupId>com.oldhandgo</groupId>
+            <artifactId>generator</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.oldhandgo</groupId>
             <artifactId>tools</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <!-- JVM的JSON Web令牌支持 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
+            <version>${jjwt.version}</version>
         </dependency>
+
+        <!-- 计划任务 -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.3.1</version>
+            <version>${quartz.version}</version>
         </dependency>
     </dependencies>
 
