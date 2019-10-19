@@ -14,7 +14,7 @@ public class VerificationCode {
     private Timestamp createTime;
     private Timestamp updateTime;
     private String codeValue;
-    private Boolean isType;
+    private String isType;
     private String codeUser;
     private String scenes;
     private Boolean isStatus;
@@ -61,11 +61,11 @@ public class VerificationCode {
 
     @Basic
     @Column(name = "is_type")
-    public Boolean getType() {
+    public String getType() {
         return isType;
     }
 
-    public void setType(Boolean type) {
+    public void setType(String type) {
         isType = type;
     }
 

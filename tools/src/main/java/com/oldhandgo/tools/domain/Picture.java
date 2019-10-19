@@ -1,4 +1,4 @@
-package com.oldhandgo.system.modules.system.domain;
+package com.oldhandgo.tools.domain;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

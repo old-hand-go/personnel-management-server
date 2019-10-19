@@ -1,4 +1,7 @@
-package com.oldhandgo.system.modules.system.domain;
+package com.oldhandgo.tools.domain;
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -145,5 +148,19 @@ public class LocalStorage {
     @Override
     public int hashCode() {
         return Objects.hash(id, createTime, updateTime, realName, fileName, suffix, size, type, filePath, operate);
+    }
+
+    public LocalStorage(String realName, String fileName, String suffix, String size, String type, String filePath, String operate) {
+        this.realName = realName;
+        this.fileName = fileName;
+        this.suffix = suffix;
+        this.size = size;
+        this.type = type;
+        this.filePath = filePath;
+        this.operate = operate;
+    }
+
+    public void copy(LocalStorage source) {
+        BeanUtil.copyProperties(source, this, CopyOptions.create().setIgnoreNullValue(true));
     }
 }
