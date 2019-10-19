@@ -17,7 +17,7 @@ public class Job {
     private Timestamp updateTime;
     private String jobName;
     private Long deptId;
-    private Byte isEnabled;
+    private Boolean isEnabled;
     private String sort;
 
     @Id
@@ -72,12 +72,12 @@ public class Job {
 
     @Basic
     @Column(name = "is_enabled")
-    public Byte getIsEnabled() {
+    public Boolean getEnabled() {
         return isEnabled;
     }
 
-    public void setIsEnabled(Byte isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
     }
 
     @Basic

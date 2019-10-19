@@ -1,4 +1,4 @@
-package com.oldhandgo.system.modules.system.domain;
+package com.oldhandgo.system.modules.monitor.domain;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -11,13 +11,13 @@ import java.util.Objects;
  * @author dormirr
  */
 @Entity
-public class Department {
+public class Visits {
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
-    private String departmentName;
-    private Long pid;
-    private Boolean isEnabled;
+    private Long ipCounts;
+    private Long pvCounts;
+    private String weekDay;
 
     @Id
     @Column(name = "id")
@@ -50,33 +50,33 @@ public class Department {
     }
 
     @Basic
-    @Column(name = "department_name")
-    public String getDepartmentName() {
-        return departmentName;
+    @Column(name = "ip_counts")
+    public Long getIpCounts() {
+        return ipCounts;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
-    }
-
-    @Basic
-    @Column(name = "pid")
-    public Long getPid() {
-        return pid;
-    }
-
-    public void setPid(Long pid) {
-        this.pid = pid;
+    public void setIpCounts(Long ipCounts) {
+        this.ipCounts = ipCounts;
     }
 
     @Basic
-    @Column(name = "is_enabled")
-    public Boolean getEnabled() {
-        return isEnabled;
+    @Column(name = "pv_counts")
+    public Long getPvCounts() {
+        return pvCounts;
     }
 
-    public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
+    public void setPvCounts(Long pvCounts) {
+        this.pvCounts = pvCounts;
+    }
+
+    @Basic
+    @Column(name = "week_day")
+    public String getWeekDay() {
+        return weekDay;
+    }
+
+    public void setWeekDay(String weekDay) {
+        this.weekDay = weekDay;
     }
 
     @Override
@@ -87,17 +87,17 @@ public class Department {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Department that = (Department) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(departmentName, that.departmentName) &&
-                Objects.equals(pid, that.pid) &&
-                Objects.equals(isEnabled, that.isEnabled);
+        Visits visits = (Visits) o;
+        return Objects.equals(id, visits.id) &&
+                Objects.equals(createTime, visits.createTime) &&
+                Objects.equals(updateTime, visits.updateTime) &&
+                Objects.equals(ipCounts, visits.ipCounts) &&
+                Objects.equals(pvCounts, visits.pvCounts) &&
+                Objects.equals(weekDay, visits.weekDay);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, departmentName, pid, isEnabled);
+        return Objects.hash(id, createTime, updateTime, ipCounts, pvCounts, weekDay);
     }
 }

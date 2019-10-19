@@ -21,7 +21,7 @@ public class User {
     private String address;
     private Long deptId;
     private Long jobId;
-    private Byte isEnabled;
+    private Boolean isEnabled;
 
     @Id
     @Column(name = "id")
@@ -115,12 +115,12 @@ public class User {
 
     @Basic
     @Column(name = "is_enabled")
-    public Byte getIsEnabled() {
+    public Boolean getEnabled() {
         return isEnabled;
     }
 
-    public void setIsEnabled(Byte isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
     }
 
     @Override

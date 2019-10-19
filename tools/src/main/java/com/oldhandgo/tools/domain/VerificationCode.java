@@ -14,10 +14,10 @@ public class VerificationCode {
     private Timestamp createTime;
     private Timestamp updateTime;
     private String codeValue;
-    private Byte isType;
+    private Boolean isType;
     private String codeUser;
     private String scenes;
-    private Byte isStatus;
+    private Boolean isStatus;
 
     @Id
     @Column(name = "id")
@@ -61,12 +61,12 @@ public class VerificationCode {
 
     @Basic
     @Column(name = "is_type")
-    public Byte getIsType() {
+    public Boolean getType() {
         return isType;
     }
 
-    public void setIsType(Byte isType) {
-        this.isType = isType;
+    public void setType(Boolean type) {
+        isType = type;
     }
 
     @Basic
@@ -91,12 +91,12 @@ public class VerificationCode {
 
     @Basic
     @Column(name = "is_status")
-    public Byte getIsStatus() {
+    public Boolean getStatus() {
         return isStatus;
     }
 
-    public void setIsStatus(Byte isStatus) {
-        this.isStatus = isStatus;
+    public void setStatus(Boolean status) {
+        isStatus = status;
     }
 
     @Override

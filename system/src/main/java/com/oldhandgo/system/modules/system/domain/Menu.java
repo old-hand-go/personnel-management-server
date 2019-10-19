@@ -20,9 +20,9 @@ public class Menu {
     private String menuName;
     private String sort;
     private Long pid;
-    private Byte isFrame;
-    private Byte isHidden;
-    private Byte isCache;
+    private Boolean isFrame;
+    private Boolean isHidden;
+    private Boolean isCache;
 
     @Id
     @Column(name = "id")
@@ -106,32 +106,32 @@ public class Menu {
 
     @Basic
     @Column(name = "is_frame")
-    public Byte getIsFrame() {
+    public Boolean getFrame() {
         return isFrame;
     }
 
-    public void setIsFrame(Byte isFrame) {
-        this.isFrame = isFrame;
+    public void setFrame(Boolean frame) {
+        isFrame = frame;
     }
 
     @Basic
     @Column(name = "is_hidden")
-    public Byte getIsHidden() {
+    public Boolean getHidden() {
         return isHidden;
     }
 
-    public void setIsHidden(Byte isHidden) {
-        this.isHidden = isHidden;
+    public void setHidden(Boolean hidden) {
+        isHidden = hidden;
     }
 
     @Basic
     @Column(name = "is_cache")
-    public Byte getIsCache() {
+    public Boolean getCache() {
         return isCache;
     }
 
-    public void setIsCache(Byte isCache) {
-        this.isCache = isCache;
+    public void setCache(Boolean cache) {
+        isCache = cache;
     }
 
     @Override
