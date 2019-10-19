@@ -19,6 +19,9 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
     @Value("${file.path}")
     private String path;
 
+    @Value("${file.avatar}")
+    private String avatar;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -30,7 +33,9 @@ public class ConfigurerAdapter implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String avatarUtl = "file:" + avatar.replace("\\", "/");
         String pathUtl = "file:" + path.replace("\\", "/");
+        registry.addResourceHandler("/avatar/**").addResourceLocations(avatarUtl).setCachePeriod(0);
         registry.addResourceHandler("/file/**").addResourceLocations(pathUtl).setCachePeriod(0);
         registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
     }
