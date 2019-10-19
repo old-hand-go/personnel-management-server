@@ -95,8 +95,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).anonymous()
 
+                //验证
                 .antMatchers(HttpMethod.POST, "/auth/" + loginPath).anonymous()
                 .antMatchers("/auth/vCode").anonymous()
+
+                // swagger start
+                .antMatchers("/swagger-ui.html").anonymous()
+                .antMatchers("/swagger-resources/**").anonymous()
+                .antMatchers("/webjars/**").anonymous()
+                .antMatchers("/*/api-docs").anonymous()
+                // swagger end
+
+                // 接口限流测试
+                .antMatchers("/test/**").anonymous()
+                // 文件
+                .antMatchers("/avatar/**").anonymous()
+                .antMatchers("/file/**").anonymous()
 
                 // 放行OPTIONS请求
                 .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()
