@@ -10,12 +10,10 @@ public interface VerificationCodeRepository extends JpaRepository<VerificationCo
 
     /**
      * 获取有效的验证码
-     *
-     * @param scenes    业务场景，如重置密码，重置邮箱
-     * @param isType    验证码类型 1验证码 2邮件验证
-     * @param codeValue 验证码
-     * @param isStatus  1有效 0过期
-     * @return 验证码
+     * @param scenes 业务场景，如重置密码，重置邮箱等等
+     * @param type
+     * @param value
+     * @return
      */
-    VerificationCode findByScenesAndIsTypeAndCodeValueAndIsStatus(String scenes, Byte isType, String codeValue, Byte isStatus);
+    VerificationCode findByScenesAndTypeAndValueAndStatusIsTrue(String scenes, String type, String value);
 }
