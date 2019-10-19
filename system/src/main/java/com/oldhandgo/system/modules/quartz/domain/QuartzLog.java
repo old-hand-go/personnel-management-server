@@ -12,7 +12,7 @@ import java.util.Objects;
 public class QuartzLog {
     private Long id;
     private Timestamp createTime;
-    private Timestamp updateTime;
+    private Long updateTime;
     private String baenName;
     private String cronExpression;
     private String jobName;
@@ -44,11 +44,11 @@ public class QuartzLog {
 
     @Basic
     @Column(name = "update_time")
-    public Timestamp getUpdateTime() {
+    public Long getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
     }
 

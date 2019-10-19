@@ -10,6 +10,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "quartz_job", schema = "personnel_management_server")
 public class QuartzJob {
+    public static final String JOB_KEY = "JOB_KEY";
     private Long id;
     private Timestamp createTime;
     private Timestamp updateTime;
@@ -146,4 +147,6 @@ public class QuartzJob {
     public int hashCode() {
         return Objects.hash(id, createTime, updateTime, beanName, cronExpression, isPause, jobName, methodName, params, remark);
     }
+
+    public interface Update{}
 }
