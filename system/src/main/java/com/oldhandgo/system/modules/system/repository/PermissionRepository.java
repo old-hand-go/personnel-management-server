@@ -2,6 +2,7 @@ package com.oldhandgo.system.modules.system.repository;
 
 import com.oldhandgo.system.modules.system.domain.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 /**
  * @author dormirr
  */
-public interface PermissionRepository extends JpaRepository<Permission, Long>, PagingAndSortingRepository<Permission, Long> {
+public interface PermissionRepository extends JpaRepository<Permission, Long>, JpaSpecificationExecutor {
 
     /**
      * 根据权限名称查询信息

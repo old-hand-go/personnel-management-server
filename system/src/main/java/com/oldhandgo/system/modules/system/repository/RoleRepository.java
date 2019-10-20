@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.Set;
+
 /**
  * @author dormirr
  */
@@ -18,6 +20,8 @@ public interface RoleRepository extends JpaRepository<Role, Long>, PagingAndSort
      * @return 角色
      */
     Role findByRoleName(String roleName);
+
+    Set<Role> findByUsers_Id(Long id);
 
     /**
      * 删除角色对应的权限

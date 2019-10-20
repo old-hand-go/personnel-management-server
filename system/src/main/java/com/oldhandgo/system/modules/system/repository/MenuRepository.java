@@ -2,15 +2,16 @@ package com.oldhandgo.system.modules.system.repository;
 
 import com.oldhandgo.system.modules.system.domain.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * @author dormirr
  */
-public interface MenuRepository extends JpaRepository<Menu, Long>, PagingAndSortingRepository<Menu, Long> {
+public interface MenuRepository extends JpaRepository<Menu, Long>, JpaSpecificationExecutor {
 
     /**
      * 根据菜单名称查询菜单
@@ -36,4 +37,6 @@ public interface MenuRepository extends JpaRepository<Menu, Long>, PagingAndSort
      * @return 所属菜单
      */
     List<Menu> findAllByPidOrderBySortAsc(Long pid);
+
+    LinkedHashSet<Menu> findByRoles_IdOrderBySortAsc(Long RolesId);
 }
