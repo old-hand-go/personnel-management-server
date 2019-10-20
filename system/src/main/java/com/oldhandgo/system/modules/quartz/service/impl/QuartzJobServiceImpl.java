@@ -11,7 +11,9 @@ import com.oldhandgo.system.modules.quartz.service.QuartzJobService;
 import com.oldhandgo.system.modules.quartz.service.dto.JobQueryCriteria;
 import com.oldhandgo.system.modules.quartz.utils.QuartzManage;
 import org.quartz.CronExpression;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,6 +25,7 @@ import java.util.Optional;
  * @author dormirr
  */
 @Service(value = "quartzJobService")
+@CacheConfig(cacheNames = "quartzJob")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class QuartzJobServiceImpl implements QuartzJobService {
 
@@ -39,6 +42,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     }
 
     @Override
+    @Cacheable
     public Object queryAll(JobQueryCriteria criteria, Pageable pageable) {
         return PageUtils.toPage(quartzJobRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable));
     }
@@ -49,6 +53,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     }
 
     @Override
+    @Cacheable(key = "#p0")
     public QuartzJob findById(Long id) {
         Optional<QuartzJob> quartzJob = quartzJobRepository.findById(id);
         ValidationUtils.isNull(quartzJob, "QuartzJob", "id", id);
@@ -56,6 +61,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public QuartzJob create(QuartzJob resources) {
         if (!CronExpression.isValidExpression(resources.getCronExpression())) {
@@ -67,6 +73,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void update(QuartzJob resources) {
         if (resources.getId().equals(1L)) {
@@ -80,16 +87,17 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     public void updateIsPause(QuartzJob quartzJob) {
         if (quartzJob.getId().equals(1L)) {
             throw new BadRequestException("该任务不可操作");
         }
-        if (quartzJob.getIsPause()) {
+        if (quartzJob.getPause()) {
             quartzManage.resumeJob(quartzJob);
-            quartzJob.setIsPause(false);
+            quartzJob.setPause(false);
         } else {
             quartzManage.pauseJob(quartzJob);
-            quartzJob.setIsPause(true);
+            quartzJob.setPause(true);
         }
         quartzJobRepository.save(quartzJob);
     }
@@ -103,6 +111,7 @@ public class QuartzJobServiceImpl implements QuartzJobService {
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void delete(QuartzJob quartzJob) {
         if (quartzJob.getId().equals(1L)) {
