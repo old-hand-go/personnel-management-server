@@ -1,11 +1,16 @@
 package com.oldhandgo.system.modules.system.domain;
 
+import cn.hutool.core.util.ObjectUtil;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * @author dormirr
  */
+@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "user_avatar", schema = "personnel_management_server")
 public class UserAvatar {
@@ -54,23 +59,10 @@ public class UserAvatar {
         this.size = size;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        UserAvatar that = (UserAvatar) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(realName, that.realName) &&
-                Objects.equals(avatarPath, that.avatarPath) &&
-                Objects.equals(size, that.size);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, realName, avatarPath, size);
+    public UserAvatar(UserAvatar userAvatar, String realName, String path, String size) {
+        this.id = ObjectUtil.isNotEmpty(userAvatar) ? userAvatar.getId() : null;
+        this.realName = realName;
+        this.avatarPath = path;
+        this.size = size;
     }
 }

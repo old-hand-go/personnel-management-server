@@ -1,13 +1,15 @@
 package com.oldhandgo.system.modules.system.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author dormirr
  */
+@Data
 @Entity
 public class User {
     private Long id;
@@ -123,6 +125,10 @@ public class User {
     @JoinColumn(name = "dept_id")
     private Department department;
 
+    @OneToOne
+    @JoinColumn(name = "avatar_id")
+    private UserAvatar userAvatar;
+
     @Basic
     @Column(name = "avatar_id")
     public Long getAvatarId() {
@@ -141,32 +147,5 @@ public class User {
 
     public void setDeptId(Long deptId) {
         this.deptId = deptId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(createTime, user.createTime) &&
-                Objects.equals(updateTime, user.updateTime) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(userName, user.userName) &&
-                Objects.equals(passWord, user.passWord) &&
-                Objects.equals(address, user.address) &&
-                Objects.equals(avatarId, user.avatarId) &&
-                Objects.equals(jobId, user.jobId) &&
-                Objects.equals(isEnabled, user.isEnabled) &&
-                Objects.equals(deptId, user.deptId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, email, userName, passWord, address, avatarId, jobId, isEnabled, deptId);
     }
 }
