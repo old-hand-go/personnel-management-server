@@ -15,7 +15,6 @@ import com.oldhandgo.system.modules.security.service.impl.JwtUserDetailsServiceI
 import com.oldhandgo.system.modules.security.utils.JwtTokenUtils;
 import com.oldhandgo.system.modules.security.utils.VerifyCodeUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -34,6 +33,7 @@ import java.io.ByteArrayOutputStream;
 @RestController
 @RequestMapping("auth")
 public class AuthenticationController {
+
     @Value("${jwt.header}")
     private String tokenHeader;
     private final JwtTokenUtils jwtTokenUtils;
@@ -52,7 +52,6 @@ public class AuthenticationController {
      * @param authorizationUser 授权用户
      * @return 授权
      */
-    @Log("用户登录")
     @PostMapping(value = "${jwt.auth.path}")
     public ResponseEntity login(@Validated @RequestBody AuthorizationUser authorizationUser) {
         // 查询验证码
