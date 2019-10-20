@@ -21,15 +21,15 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
      * @param isEnabled 开启的用户 必为1
      * @return 查询结果
      */
-    Optional<User> findByEmailAndIsEnabled(String email, Byte isEnabled);
+    Optional<User> findByEmailAndIsEnabled(String email, Boolean isEnabled);
 
     /**
-     * findByUsername
+     * 根据用户名查询用户
      *
-     * @param username
-     * @return
+     * @param userName 用户名
+     * @return 结果
      */
-    User findByUsername(String username);
+    User findByUserName(String userName);
 
 
     /**
@@ -50,7 +50,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
      * @param url
      */
     @Modifying
-    @Query(value = "update personnel_management_server.user set  avatar= ?2 where user_name = ?1", nativeQuery = true)
+    @Query(value = "update personnel_management_server.user set  avatar_id= ?2 where user_name = ?1", nativeQuery = true)
     void updateAvatar(String username, String url);
 
     /**

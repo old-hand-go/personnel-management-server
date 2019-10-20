@@ -1,21 +1,23 @@
 package com.oldhandgo.system.modules.system.service.mapper;
 
+import com.oldhandgo.common.mapper.EntityMapper;
 import com.oldhandgo.system.modules.system.domain.User;
 import com.oldhandgo.system.modules.system.service.dto.UserDTO;
-
 import org.mapstruct.Mapper;
-
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 /**
- * @author dormir
+ * @author dormirr
  */
-@Mapper(componentModel = "spring")
-public interface UserMapper {
+@Mapper(componentModel = "spring", uses = {RoleMapper.class, DeptMapper.class, JobMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface UserMapper extends EntityMapper<UserDTO, User> {
+
     /**
-     * UserDTO映射
-     *
-     * @param user User实体类
-     * @return UserDTO映射
+     * @param user
+     * @return
      */
-    UserDTO userToUserDto(User user);
+    @Override
+    @Mapping(source = "user.userAvatar.realName", target = "avatar")
+    UserDTO toDto(User user);
 }
