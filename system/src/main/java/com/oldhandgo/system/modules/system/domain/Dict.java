@@ -1,10 +1,8 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -67,6 +65,9 @@ public class Dict {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    @OneToMany(mappedBy = "dict", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<DictDetail> dictDetails;
 
     @Override
     public boolean equals(Object o) {

@@ -1,9 +1,6 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -16,9 +13,9 @@ public class Job {
     private Timestamp createTime;
     private Timestamp updateTime;
     private String jobName;
-    private Long deptId;
     private Boolean isEnabled;
     private String sort;
+    private Department departmentByDeptId;
 
     @Id
     @Column(name = "id")
@@ -61,16 +58,6 @@ public class Job {
     }
 
     @Basic
-    @Column(name = "dept_id")
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
-
-    @Basic
     @Column(name = "is_enabled")
     public Boolean getEnabled() {
         return isEnabled;
@@ -90,6 +77,10 @@ public class Job {
         this.sort = sort;
     }
 
+    @OneToOne
+    @JoinColumn(name = "dept_id")
+    private Department department;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -103,13 +94,22 @@ public class Job {
                 Objects.equals(createTime, job.createTime) &&
                 Objects.equals(updateTime, job.updateTime) &&
                 Objects.equals(jobName, job.jobName) &&
-                Objects.equals(deptId, job.deptId) &&
                 Objects.equals(isEnabled, job.isEnabled) &&
                 Objects.equals(sort, job.sort);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, jobName, deptId, isEnabled, sort);
+        return Objects.hash(id, createTime, updateTime, jobName, isEnabled, sort);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "dept_id", referencedColumnName = "id")
+    public Department getDepartmentByDeptId() {
+        return departmentByDeptId;
+    }
+
+    public void setDepartmentByDeptId(Department departmentByDeptId) {
+        this.departmentByDeptId = departmentByDeptId;
     }
 }

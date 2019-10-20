@@ -1,11 +1,9 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author dormirr
@@ -19,9 +17,10 @@ public class User {
     private String userName;
     private String passWord;
     private String address;
-    private Long deptId;
+    private Long avatarId;
     private Long jobId;
     private Boolean isEnabled;
+    private Long deptId;
 
     @Id
     @Column(name = "id")
@@ -93,15 +92,12 @@ public class User {
         this.address = address;
     }
 
-    @Basic
-    @Column(name = "dept_id")
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
+    @ManyToMany
+    @JoinTable(name = "roles_users", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private Set<Role> roles;
+    @OneToOne
+    @JoinColumn(name = "job_id")
+    private Job job;
 
     @Basic
     @Column(name = "job_id")
@@ -123,6 +119,30 @@ public class User {
         isEnabled = enabled;
     }
 
+    @OneToOne
+    @JoinColumn(name = "dept_id")
+    private Department department;
+
+    @Basic
+    @Column(name = "avatar_id")
+    public Long getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(Long avatarId) {
+        this.avatarId = avatarId;
+    }
+
+    @Basic
+    @Column(name = "dept_id")
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -139,13 +159,14 @@ public class User {
                 Objects.equals(userName, user.userName) &&
                 Objects.equals(passWord, user.passWord) &&
                 Objects.equals(address, user.address) &&
-                Objects.equals(deptId, user.deptId) &&
+                Objects.equals(avatarId, user.avatarId) &&
                 Objects.equals(jobId, user.jobId) &&
-                Objects.equals(isEnabled, user.isEnabled);
+                Objects.equals(isEnabled, user.isEnabled) &&
+                Objects.equals(deptId, user.deptId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, email, userName, passWord, address, deptId, jobId, isEnabled);
+        return Objects.hash(id, createTime, updateTime, email, userName, passWord, address, avatarId, jobId, isEnabled, deptId);
     }
 }

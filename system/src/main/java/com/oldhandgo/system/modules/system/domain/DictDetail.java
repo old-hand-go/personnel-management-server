@@ -16,7 +16,7 @@ public class DictDetail {
     private String label;
     private String dictValue;
     private String sort;
-    private Long dictId;
+    private Dict dictByDictId;
 
     @Id
     @Column(name = "id")
@@ -78,15 +78,12 @@ public class DictDetail {
         this.sort = sort;
     }
 
-    @Basic
-    @Column(name = "dict_id")
-    public Long getDictId() {
-        return dictId;
-    }
-
-    public void setDictId(Long dictId) {
-        this.dictId = dictId;
-    }
+    /**
+     * 字典id
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dict_id")
+    private Dict dict;
 
     @Override
     public boolean equals(Object o) {
@@ -102,12 +99,21 @@ public class DictDetail {
                 Objects.equals(updateTime, that.updateTime) &&
                 Objects.equals(label, that.label) &&
                 Objects.equals(dictValue, that.dictValue) &&
-                Objects.equals(sort, that.sort) &&
-                Objects.equals(dictId, that.dictId);
+                Objects.equals(sort, that.sort);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, label, dictValue, sort, dictId);
+        return Objects.hash(id, createTime, updateTime, label, dictValue, sort);
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "dict_id", referencedColumnName = "id")
+    public Dict getDictByDictId() {
+        return dictByDictId;
+    }
+
+    public void setDictByDictId(Dict dictByDictId) {
+        this.dictByDictId = dictByDictId;
     }
 }

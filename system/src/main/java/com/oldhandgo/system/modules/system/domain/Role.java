@@ -1,11 +1,11 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author dormirr
@@ -89,6 +89,22 @@ public class Role {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
+
+    @ManyToMany
+    @JoinTable(name = "roles_permissions", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id", referencedColumnName = "id")})
+    private Set<Permission> permissions;
+
+    @ManyToMany
+    @JoinTable(name = "roles_menus", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "menu_id", referencedColumnName = "id")})
+    private Set<Menu> menus;
+
+    @ManyToMany
+    @JoinTable(name = "roles_departments", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "department_id", referencedColumnName = "id")})
+    private Set<Department> departments;
 
     @Override
     public boolean equals(Object o) {

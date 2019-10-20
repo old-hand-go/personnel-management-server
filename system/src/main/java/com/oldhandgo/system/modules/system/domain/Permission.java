@@ -1,11 +1,11 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author dormirr
@@ -78,6 +78,10 @@ public class Permission {
     public void setPid(Long pid) {
         this.pid = pid;
     }
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "permissions")
+    private Set<Role> roles;
 
     @Override
     public boolean equals(Object o) {
