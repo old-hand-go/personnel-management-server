@@ -26,11 +26,6 @@
         <!-- 系统模块 -->
         <dependency>
             <groupId>com.oldhandgo</groupId>
-            <artifactId>generator</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.oldhandgo</groupId>
             <artifactId>tools</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
