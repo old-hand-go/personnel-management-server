@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author dormirr
@@ -14,29 +13,28 @@ import java.util.Optional;
 public interface MenuRepository extends JpaRepository<Menu, Long>, JpaSpecificationExecutor {
 
     /**
-     * 根据菜单名称查询菜单
+     * findByName
      *
-     * @param menuName 菜单名称
-     * @return 菜单
+     * @param name
+     * @return
      */
-    Optional<Menu> findByMenuName(String menuName);
-
+    Menu findByName(String name);
 
     /**
-     * 根据部门名称查询菜单
+     * findByName
      *
-     * @param componentName 部门名称
-     * @return 菜单
+     * @param name
+     * @return
      */
-    Optional<Menu> findByComponentName(String componentName);
+    Menu findByComponentName(String name);
 
     /**
-     * 根据上级菜单查询所属菜单
+     * findByPid
      *
-     * @param pid 上级菜单ID
-     * @return 所属菜单
+     * @param pid
+     * @return
      */
-    List<Menu> findAllByPidOrderBySortAsc(Long pid);
+    List<Menu> findByPid(long pid);
 
-    LinkedHashSet<Menu> findByRoles_IdOrderBySortAsc(Long RolesId);
+    LinkedHashSet<Menu> findByRoles_IdOrderBySortAsc(Long id);
 }

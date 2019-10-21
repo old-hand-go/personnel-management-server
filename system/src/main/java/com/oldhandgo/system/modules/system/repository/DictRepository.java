@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @author dormirr
  */
 public interface DictRepository extends JpaRepository<Dict, Long>, JpaSpecificationExecutor {
+
 }

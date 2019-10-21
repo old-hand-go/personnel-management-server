@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
-import java.util.Optional;
 
 /**
  * @author dormirr
@@ -15,32 +14,29 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor {
 
     /**
-     * 根据邮箱查询
+     * findByUsername
      *
-     * @param email     邮箱
-     * @param isEnabled 开启的用户 必为1
-     * @return 查询结果
+     * @param username
+     * @return
      */
-    Optional<User> findByEmailAndIsEnabled(String email, Boolean isEnabled);
+    User findByUsername(String username);
 
     /**
-     * 根据用户名查询用户
+     * findByEmail
      *
-     * @param userName 用户名
-     * @return 结果
+     * @param email
+     * @return
      */
-    User findByUserName(String userName);
-
+    User findByEmail(String email);
 
     /**
      * 修改密码
      *
      * @param username
      * @param pass
-     * @param lastPasswordResetTime
      */
     @Modifying
-    @Query(value = "update personnel_management_server.user set pass_word = ?2 , update_time = ?3 where email = ?1", nativeQuery = true)
+    @Query(value = "update user set password = ?2 , last_password_reset_time = ?3 where username = ?1", nativeQuery = true)
     void updatePass(String username, String pass, Date lastPasswordResetTime);
 
     /**
@@ -50,7 +46,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
      * @param url
      */
     @Modifying
-    @Query(value = "update personnel_management_server.user set  avatar_id= ?2 where user_name = ?1", nativeQuery = true)
+    @Query(value = "update user set avatar = ?2 where username = ?1", nativeQuery = true)
     void updateAvatar(String username, String url);
 
     /**
@@ -60,6 +56,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
      * @param email
      */
     @Modifying
-    @Query(value = "update personnel_management_server.user set email = ?2 where user_name = ?1", nativeQuery = true)
+    @Query(value = "update user set email = ?2 where username = ?1", nativeQuery = true)
     void updateEmail(String username, String email);
 }

@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  * @author dormirr
  */
 public interface JobRepository extends JpaRepository<Job, Long>, JpaSpecificationExecutor {
+
 }

@@ -3,11 +3,8 @@ package com.oldhandgo.system.modules.system.repository;
 import com.oldhandgo.system.modules.system.domain.Permission;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
-import java.util.Optional;
-
 
 /**
  * @author dormirr
@@ -15,18 +12,16 @@ import java.util.Optional;
 public interface PermissionRepository extends JpaRepository<Permission, Long>, JpaSpecificationExecutor {
 
     /**
-     * 根据权限名称查询信息
-     *
-     * @param permissionName 权限名称
-     * @return 权限表
+     * findByName
+     * @param name
+     * @return
      */
-    Optional<Permission> findByPermissionName(String permissionName);
+    Permission findByName(String name);
 
     /**
-     * 根据上级权限查询下级权限
-     *
-     * @param pid 上级权限ID
-     * @return 下级权限
+     * findByPid
+     * @param pid
+     * @return
      */
-    List<Permission> findAllByPid(long pid);
+    List<Permission> findByPid(long pid);
 }

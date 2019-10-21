@@ -14,29 +14,19 @@ import java.util.Set;
 public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor {
 
     /**
-     * 根据角色名字查询角色
-     *
-     * @param roleName 角色名字
-     * @return 角色
+     * findByName
+     * @param name
+     * @return
      */
-    Role findByRoleName(String roleName);
+    Role findByName(String name);
 
     Set<Role> findByUsers_Id(Long id);
-    /**
-     * 删除角色对应的权限
-     *
-     * @param id 权限ID
-     */
+
     @Modifying
-    @Query(value = "delete from personnel_management_server.roles_permissions where permission_id = ?1", nativeQuery = true)
+    @Query(value = "delete from roles_permissions where permission_id = ?1", nativeQuery = true)
     void untiedPermission(Long id);
 
-    /**
-     * 删除角色对应的菜单权限
-     *
-     * @param id 菜单ID
-     */
     @Modifying
-    @Query(value = "delete from personnel_management_server.roles_menus where menu_id = ?1", nativeQuery = true)
+    @Query(value = "delete from roles_menus where menu_id = ?1", nativeQuery = true)
     void untiedMenu(Long id);
 }
