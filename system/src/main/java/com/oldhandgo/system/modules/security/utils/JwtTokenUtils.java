@@ -1,7 +1,10 @@
 package com.oldhandgo.system.modules.security.utils;
 
 import com.oldhandgo.system.modules.security.security.JwtUser;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Clock;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClock;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,7 +49,7 @@ public class JwtTokenUtils implements Serializable {
      * @param token 令牌
      * @return 创建日期
      */
-    public Date getIssuedAtDateFromToken(String token) {
+    private Date getIssuedAtDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getIssuedAt);
     }
 
@@ -56,7 +59,7 @@ public class JwtTokenUtils implements Serializable {
      * @param token 令牌
      * @return 到期日期
      */
-    public Date getExpirationDateFromToken(String token) {
+    private Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
@@ -68,7 +71,7 @@ public class JwtTokenUtils implements Serializable {
      * @param <T>            声明类型
      * @return 声明
      */
-    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+    private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
@@ -193,7 +196,7 @@ public class JwtTokenUtils implements Serializable {
         JwtUser jwtUser = (JwtUser) userDetails;
         final Date created = getIssuedAtDateFromToken(token);
         return (!isTokenExpired(token)
-                && !isCreatedBeforeLastPasswordReset(created, jwtUser.getUpdateTime())
+                && !isCreatedBeforeLastPasswordReset(created, jwtUser.getLastPasswordResetDate())
         );
     }
 
