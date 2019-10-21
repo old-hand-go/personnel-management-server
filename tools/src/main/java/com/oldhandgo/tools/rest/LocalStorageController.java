@@ -1,5 +1,6 @@
 package com.oldhandgo.tools.rest;
 
+import com.oldhandgo.logging.log.Log;
 import com.oldhandgo.tools.domain.LocalStorage;
 import com.oldhandgo.tools.service.LocalStorageService;
 import com.oldhandgo.tools.service.dto.LocalStorageQueryCriteria;
@@ -63,6 +64,7 @@ public class LocalStorageController {
      * @param ids 图片
      * @return 结果
      */
+    @Log("删除图片")
     @DeleteMapping(value = "/localStorage")
     public ResponseEntity deleteAll(@RequestBody Long[] ids) {
         localStorageService.deleteAll(ids);

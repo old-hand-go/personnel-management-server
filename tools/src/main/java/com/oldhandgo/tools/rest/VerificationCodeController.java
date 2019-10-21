@@ -36,7 +36,7 @@ public class VerificationCodeController {
     public ResponseEntity resetPass(@RequestParam String email) throws Exception {
         VerificationCode code = new VerificationCode();
         code.setType("email");
-        code.setCodeUser(email);
+        code.setValue(email);
         code.setScenes(ElAdminConstant.RESET_MAIL);
         EmailVo emailVo = verificationCodeService.sendEmail(code);
         emailService.send(emailVo,emailService.find());

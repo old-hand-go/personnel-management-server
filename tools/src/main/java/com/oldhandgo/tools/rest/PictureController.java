@@ -1,10 +1,10 @@
 package com.oldhandgo.tools.rest;
 
 import com.oldhandgo.common.utils.SecurityUtils;
+import com.oldhandgo.logging.log.Log;
 import com.oldhandgo.tools.domain.Picture;
 import com.oldhandgo.tools.service.PictureService;
 import com.oldhandgo.tools.service.dto.PictureQueryCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +28,7 @@ public class PictureController {
         this.pictureService = pictureService;
     }
 
+    @Log("查询图片")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_SELECT')")
     @GetMapping(value = "/pictures")
     public ResponseEntity getRoles(PictureQueryCriteria criteria, Pageable pageable) {
@@ -40,10 +41,11 @@ public class PictureController {
      * @param file 文件
      * @return 上传是否成功
      */
+    @Log("上传图片")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_UPLOAD')")
     @PostMapping(value = "/pictures")
     public ResponseEntity upload(@RequestParam MultipartFile file) {
-        String userName = SecurityUtils.getUserName();
+        String userName = SecurityUtils.getUsername();
         Picture picture = pictureService.upload(file, userName);
         Map<String, Object> map = new HashMap<>(3);
         map.put("errno", 0);
@@ -58,6 +60,7 @@ public class PictureController {
      * @param id 图片ID
      * @return 结果
      */
+    @Log("删除图片")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_DELETE')")
     @DeleteMapping(value = "/pictures/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
@@ -71,6 +74,7 @@ public class PictureController {
      * @param ids 图片ID
      * @return 结果
      */
+    @Log("删除图片")
     @PreAuthorize("hasAnyRole('ADMIN','PICTURE_ALL','PICTURE_DELETE')")
     @DeleteMapping(value = "/pictures")
     public ResponseEntity deleteAll(@RequestBody Long[] ids) {
