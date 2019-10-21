@@ -1,161 +1,75 @@
 package com.oldhandgo.system.modules.quartz.domain;
 
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
  * @author dormirr
  */
 @Entity
-@Table(name = "quartz_log", schema = "personnel_management_server")
-public class QuartzLog {
-    private Long id;
-    private Timestamp createTime;
-    private Long updateTime;
-    private String baenName;
-    private String cronExpression;
-    private String jobName;
-    private Boolean isSuccess;
-    private String methodName;
-    private String params;
-    private Long jobTime;
-    private String exceptionDetail;
+@Data
+@Table(name = "quartz_log")
+public class QuartzLog implements Serializable {
 
     @Id
-    @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    @Basic
-    @Column(name = "update_time")
-    public Long getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Long updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Basic
-    @Column(name = "baen_name")
-    public String getBaenName() {
-        return baenName;
-    }
-
-    public void setBaenName(String baenName) {
-        this.baenName = baenName;
-    }
-
-    @Basic
-    @Column(name = "cron_expression")
-    public String getCronExpression() {
-        return cronExpression;
-    }
-
-    public void setCronExpression(String cronExpression) {
-        this.cronExpression = cronExpression;
-    }
-
-    @Basic
+    /**
+     * 任务名称
+     */
     @Column(name = "job_name")
-    public String getJobName() {
-        return jobName;
-    }
+    private String jobName;
 
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
+    /**
+     * Bean名称
+     */
+    @Column(name = "baen_name")
+    private String beanName;
 
-    @Basic
-    @Column(name = "is_success")
-    public Boolean getSuccess() {
-        return isSuccess;
-    }
-
-    public void setSuccess(Boolean success) {
-        isSuccess = success;
-    }
-
-    @Basic
+    /**
+     * 方法名称
+     */
     @Column(name = "method_name")
-    public String getMethodName() {
-        return methodName;
-    }
+    private String methodName;
 
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
-
-    @Basic
+    /**
+     * 参数
+     */
     @Column(name = "params")
-    public String getParams() {
-        return params;
-    }
+    private String params;
 
-    public void setParams(String params) {
-        this.params = params;
-    }
+    /**
+     * cron表达式
+     */
+    @Column(name = "cron_expression")
+    private String cronExpression;
 
-    @Basic
-    @Column(name = "job_time")
-    public Long getJobTime() {
-        return jobTime;
-    }
+    /**
+     * 状态
+     */
+    @Column(name = "is_success")
+    private Boolean isSuccess;
 
-    public void setJobTime(Long jobTime) {
-        this.jobTime = jobTime;
-    }
+    /**
+     * 异常详细
+     */
+    @Column(name = "exception_detail", columnDefinition = "text")
+    private String exceptionDetail;
 
-    @Basic
-    @Column(name = "exception_detail")
-    public String getExceptionDetail() {
-        return exceptionDetail;
-    }
+    /**
+     * 耗时（毫秒）
+     */
+    private Long time;
 
-    public void setExceptionDetail(String exceptionDetail) {
-        this.exceptionDetail = exceptionDetail;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        QuartzLog quartzLog = (QuartzLog) o;
-        return Objects.equals(id, quartzLog.id) &&
-                Objects.equals(createTime, quartzLog.createTime) &&
-                Objects.equals(updateTime, quartzLog.updateTime) &&
-                Objects.equals(baenName, quartzLog.baenName) &&
-                Objects.equals(cronExpression, quartzLog.cronExpression) &&
-                Objects.equals(jobName, quartzLog.jobName) &&
-                Objects.equals(isSuccess, quartzLog.isSuccess) &&
-                Objects.equals(methodName, quartzLog.methodName) &&
-                Objects.equals(params, quartzLog.params) &&
-                Objects.equals(jobTime, quartzLog.jobTime) &&
-                Objects.equals(exceptionDetail, quartzLog.exceptionDetail);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, baenName, cronExpression, jobName, isSuccess, methodName, params, jobTime, exceptionDetail);
-    }
+    /**
+     * 创建日期
+     */
+    @CreationTimestamp
+    @Column(name = "create_time")
+    private Timestamp createTime;
 }
