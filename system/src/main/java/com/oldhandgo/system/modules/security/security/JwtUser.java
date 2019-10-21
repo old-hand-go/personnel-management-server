@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 /**
  * @author dormirr
@@ -15,62 +17,63 @@ import java.util.Collection;
 @Getter
 @AllArgsConstructor
 public class JwtUser implements UserDetails {
+
     @JsonIgnore
     private final Long id;
 
-    @JsonIgnore
-    private final Timestamp createTime;
+    private final String username;
 
     @JsonIgnore
-    private final Timestamp updateTime;
+    private final String password;
+
+    private final String avatar;
 
     private final String email;
 
-    private final String userName;
+    private final String phone;
+
+    private final String dept;
+
+    private final String job;
 
     @JsonIgnore
-    private final String passWord;
+    private final Collection<GrantedAuthority> authorities;
 
-    private final String address;
+    private final boolean enabled;
+    @JsonIgnore
+    private final Date lastPasswordResetDate;
+    private Timestamp createTime;
 
-    private final Long deptId;
-
-    private final Long jobId;
-
-    private final Byte isEnabled;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return passWord;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
     @Override
     public boolean isEnabled() {
-        return isEnabled == 1;
+        return enabled;
+    }
+
+    public Collection getRoles() {
+        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
     }
 }
