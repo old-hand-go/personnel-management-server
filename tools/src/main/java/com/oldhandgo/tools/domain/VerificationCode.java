@@ -1,136 +1,64 @@
 package com.oldhandgo.tools.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
  * @author dormirr
  */
-@NoArgsConstructor
+@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "verification_code", schema = "personnel_management_server")
 public class VerificationCode {
-    private Long id;
-    private Timestamp createTime;
-    private Timestamp updateTime;
-    private String codeValue;
-    private String isType;
-    private String codeUser;
-    private String scenes;
-    private Boolean isStatus;
 
     @Id
-    @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String code;
 
-    @Basic
+    /**
+     * 使用场景，自己定义
+     */
+    private String scenes;
+
+    /**
+     * true 为有效，false 为无效，验证时状态+时间+具体的邮箱或者手机号
+     */
+    private Boolean status = true;
+
+
+    /**
+     * 类型 ：phone 和 email
+     */
+    @NotBlank
+    private String type;
+
+    /**
+     * 具体的phone与email
+     */
+    @NotBlank
+    private String value;
+
+    /**
+     * 创建日期
+     */
+    @CreationTimestamp
     @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    @Basic
-    @Column(name = "update_time")
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Basic
-    @Column(name = "code_value")
-    public String getCodeValue() {
-        return codeValue;
-    }
-
-    public void setCodeValue(String codeValue) {
-        this.codeValue = codeValue;
-    }
-
-    @Basic
-    @Column(name = "is_type")
-    public String getType() {
-        return isType;
-    }
-
-    public void setType(String type) {
-        isType = type;
-    }
-
-    @Basic
-    @Column(name = "code_user")
-    public String getCodeUser() {
-        return codeUser;
-    }
-
-    public void setCodeUser(String codeUser) {
-        this.codeUser = codeUser;
-    }
-
-    @Basic
-    @Column(name = "scenes")
-    public String getScenes() {
-        return scenes;
-    }
-
-    public void setScenes(String scenes) {
-        this.scenes = scenes;
-    }
-
-    @Basic
-    @Column(name = "is_status")
-    public Boolean getStatus() {
-        return isStatus;
-    }
-
-    public void setStatus(Boolean status) {
-        isStatus = status;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        VerificationCode that = (VerificationCode) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(codeValue, that.codeValue) &&
-                Objects.equals(isType, that.isType) &&
-                Objects.equals(codeUser, that.codeUser) &&
-                Objects.equals(scenes, that.scenes) &&
-                Objects.equals(isStatus, that.isStatus);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, codeValue, isType, codeUser, scenes, isStatus);
-    }
+    private Timestamp createTime;
 
     public VerificationCode(String code, String scenes, @NotBlank String type, @NotBlank String value) {
-        this.codeValue = code;
+        this.code = code;
         this.scenes = scenes;
-        this.isType = type;
-        this.codeUser = value;
+        this.type = type;
+        this.value = value;
     }
 }

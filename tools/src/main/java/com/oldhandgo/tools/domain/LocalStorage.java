@@ -2,161 +2,76 @@ package com.oldhandgo.tools.domain;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
  * @author dormirr
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "local_storage", schema = "personnel_management_server")
 public class LocalStorage {
+
+    // ID
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-    private Timestamp createTime;
-    private Timestamp updateTime;
+
+    // 真实文件名
+    @Column(name = "real_name")
     private String realName;
-    private String fileName;
+
+    // 文件名
+    @Column(name = "name")
+    private String name;
+
+    // 后缀
+    @Column(name = "suffix")
     private String suffix;
-    private String size;
+
+    // 路径
+    @Column(name = "path")
+    private String path;
+
+    // 类型
+    @Column(name = "type")
     private String type;
-    private String filePath;
+
+    // 大小
+    @Column(name = "size")
+    private String size;
+
+    // 操作人
+    @Column(name = "operate")
     private String operate;
 
-    @Id
-    @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Basic
+    // 创建日期
     @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+    @CreationTimestamp
+    private Timestamp createTime;
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    @Basic
+    // 修改日期
     @Column(name = "update_time")
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
+    @UpdateTimestamp
+    private Timestamp updateTime;
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Basic
-    @Column(name = "real_name")
-    public String getRealName() {
-        return realName;
-    }
-
-    public void setRealName(String realName) {
+    public LocalStorage(String realName, String name, String suffix, String path, String type, String size, String operate) {
         this.realName = realName;
-    }
-
-    @Basic
-    @Column(name = "file_name")
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    @Basic
-    @Column(name = "suffix")
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setSuffix(String suffix) {
+        this.name = name;
         this.suffix = suffix;
-    }
-
-    @Basic
-    @Column(name = "size")
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    @Basic
-    @Column(name = "type")
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
+        this.path = path;
         this.type = type;
-    }
-
-    @Basic
-    @Column(name = "file_path")
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    @Basic
-    @Column(name = "operate")
-    public String getOperate() {
-        return operate;
-    }
-
-    public void setOperate(String operate) {
-        this.operate = operate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        LocalStorage that = (LocalStorage) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(realName, that.realName) &&
-                Objects.equals(fileName, that.fileName) &&
-                Objects.equals(suffix, that.suffix) &&
-                Objects.equals(size, that.size) &&
-                Objects.equals(type, that.type) &&
-                Objects.equals(filePath, that.filePath) &&
-                Objects.equals(operate, that.operate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, realName, fileName, suffix, size, type, filePath, operate);
-    }
-
-    public LocalStorage(String realName, String fileName, String suffix, String size, String type, String filePath, String operate) {
-        this.realName = realName;
-        this.fileName = fileName;
-        this.suffix = suffix;
         this.size = size;
-        this.type = type;
-        this.filePath = filePath;
         this.operate = operate;
     }
 
