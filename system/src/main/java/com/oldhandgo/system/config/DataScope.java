@@ -1,7 +1,7 @@
 package com.oldhandgo.system.config;
 
 import com.oldhandgo.common.utils.SecurityUtils;
-import com.oldhandgo.system.modules.system.domain.Department;
+import com.oldhandgo.system.modules.system.domain.Dept;
 import com.oldhandgo.system.modules.system.service.DeptService;
 import com.oldhandgo.system.modules.system.service.RoleService;
 import com.oldhandgo.system.modules.system.service.UserService;
@@ -21,37 +21,48 @@ import java.util.Set;
  */
 @Component
 public class DataScope {
-    private final String[] scopeType = {"全部", "本级", "自定义"};
-    private final UserService userService;
-    private final RoleService roleService;
-    private final DeptService departmentService;
 
-    public DataScope(UserService userService, RoleService roleService, DeptService departmentService) {
+    private final String[] scopeType = {"全部", "本级", "自定义"};
+
+    private final UserService userService;
+
+    private final RoleService roleService;
+
+    private final DeptService deptService;
+
+    public DataScope(UserService userService, RoleService roleService, DeptService deptService) {
         this.userService = userService;
         this.roleService = roleService;
-        this.departmentService = departmentService;
+        this.deptService = deptService;
     }
 
-    public Set<Long> getDepartmentIds() {
-        UserDTO userDTO = userService.findByName(SecurityUtils.getUsername());
+    public Set<Long> getDeptIds() {
+
+        UserDTO user = userService.findByName(SecurityUtils.getUsername());
+
         // 用于存储部门id
         Set<Long> deptIds = new HashSet<>();
+
         // 查询用户角色
-        List<RoleSmallDTO> roleSet = roleService.findByUsers_Id(userDTO.getId());
+        List<RoleSmallDTO> roleSet = roleService.findByUsers_Id(user.getId());
+
         for (RoleSmallDTO role : roleSet) {
+
             if (scopeType[0].equals(role.getDataScope())) {
                 return new HashSet<>();
             }
+
             // 存储本级的数据权限
             if (scopeType[1].equals(role.getDataScope())) {
-                deptIds.add(userDTO.getDept().getId());
+                deptIds.add(user.getDept().getId());
             }
+
             // 存储自定义的数据权限
             if (scopeType[2].equals(role.getDataScope())) {
-                Set<Department> depts = departmentService.findByRoleIds(role.getId());
-                for (Department dept : depts) {
+                Set<Dept> depts = deptService.findByRoleIds(role.getId());
+                for (Dept dept : depts) {
                     deptIds.add(dept.getId());
-                    List<Department> deptChildren = departmentService.findByPid(dept.getId());
+                    List<Dept> deptChildren = deptService.findByPid(dept.getId());
                     if (deptChildren != null && deptChildren.size() != 0) {
                         deptIds.addAll(getDeptChildren(deptChildren));
                     }
@@ -61,12 +72,13 @@ public class DataScope {
         return deptIds;
     }
 
-    public List<Long> getDeptChildren(List<Department> deptList) {
+
+    public List<Long> getDeptChildren(List<Dept> deptList) {
         List<Long> list = new ArrayList<>();
         deptList.forEach(dept -> {
                     if (dept != null && dept.getEnabled()) {
-                        List<Department> depts = departmentService.findByPid(dept.getId());
-                        if (deptList.size() != 0) {
+                        List<Dept> depts = deptService.findByPid(dept.getId());
+                        if (deptList != null && deptList.size() != 0) {
                             list.addAll(getDeptChildren(depts));
                         }
                         list.add(dept.getId());
