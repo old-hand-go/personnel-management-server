@@ -33,7 +33,7 @@ public class DataScope {
     }
 
     public Set<Long> getDepartmentIds() {
-        UserDTO userDTO = userService.findByName(SecurityUtils.getUserName());
+        UserDTO userDTO = userService.findByName(SecurityUtils.getUsername());
         // 用于存储部门id
         Set<Long> deptIds = new HashSet<>();
         // 查询用户角色
