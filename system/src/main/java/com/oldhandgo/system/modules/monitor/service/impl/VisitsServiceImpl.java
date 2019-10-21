@@ -1,6 +1,7 @@
 package com.oldhandgo.system.modules.monitor.service.impl;
 
 import com.oldhandgo.common.utils.StringUtils;
+import com.oldhandgo.logging.repository.LogRepository;
 import com.oldhandgo.system.modules.monitor.domain.Visits;
 import com.oldhandgo.system.modules.monitor.repository.VisitsRepository;
 import com.oldhandgo.system.modules.monitor.service.VisitsService;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +27,11 @@ public class VisitsServiceImpl implements VisitsService {
 
     private final VisitsRepository visitsRepository;
 
-//    private final LogRepository logRepository;
+    private final LogRepository logRepository;
 
-    public VisitsServiceImpl(VisitsRepository visitsRepository) {
+    public VisitsServiceImpl(VisitsRepository visitsRepository, LogRepository logRepository) {
         this.visitsRepository = visitsRepository;
+        this.logRepository = logRepository;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class VisitsServiceImpl implements VisitsService {
             visits.setWeekDay(StringUtils.getWeekDay());
             visits.setPvCounts(1L);
             visits.setIpCounts(1L);
-            visits.setUpdateTime(Timestamp.valueOf(String.valueOf(localDate)));
+            visits.setDate(localDate.toString());
             visitsRepository.save(visits);
         }
     }
@@ -52,8 +53,8 @@ public class VisitsServiceImpl implements VisitsService {
         LocalDate localDate = LocalDate.now();
         Visits visits = visitsRepository.findByDate(localDate.toString());
         visits.setPvCounts(visits.getPvCounts() + 1);
-//        long ipCounts = logRepository.findIp(localDate.toString(), localDate.plusDays(1).toString());
-//        visits.setIpCounts(ipCounts);
+        long ipCounts = logRepository.findIp(localDate.toString(), localDate.plusDays(1).toString());
+        visits.setIpCounts(ipCounts);
         visitsRepository.save(visits);
     }
 

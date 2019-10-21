@@ -3,7 +3,6 @@ package com.oldhandgo.system.modules.monitor.service.impl;
 import com.oldhandgo.common.utils.PageUtils;
 import com.oldhandgo.system.modules.monitor.domain.vo.RedisVo;
 import com.oldhandgo.system.modules.monitor.service.RedisService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,11 +21,14 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisServiceImpl implements RedisService {
 
-    @Autowired
-    RedisTemplate redisTemplate;
+    private final RedisTemplate redisTemplate;
 
     @Value("${loginCode.expiration}")
     private Long expiration;
+
+    public RedisServiceImpl(RedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     @Override
     public Page<RedisVo> findByKey(String key, Pageable pageable) {
@@ -33,12 +36,12 @@ public class RedisServiceImpl implements RedisService {
         if (!"*".equals(key)) {
             key = "*" + key + "*";
         }
-        for (Object s : redisTemplate.keys(key)) {
+        for (Object s : Objects.requireNonNull(redisTemplate.keys(key))) {
             // 过滤掉权限的缓存
-            if (s.toString().contains("role::loadPermissionByUser") || s.toString().indexOf("user::loadUserByUsername") != -1) {
+            if (s.toString().contains("role::loadPermissionByUser") || s.toString().contains("user::loadUserByUsername")) {
                 continue;
             }
-            RedisVo redisVo = new RedisVo(s.toString(), redisTemplate.opsForValue().get(s.toString()).toString());
+            RedisVo redisVo = new RedisVo(s.toString(), Objects.requireNonNull(redisTemplate.opsForValue().get(s.toString())).toString());
             redisVos.add(redisVo);
         }
         return new PageImpl<RedisVo>(
@@ -54,13 +57,13 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public void flushdb() {
-        redisTemplate.getConnectionFactory().getConnection().flushDb();
+        Objects.requireNonNull(redisTemplate.getConnectionFactory()).getConnection().flushDb();
     }
 
     @Override
     public String getCodeVal(String key) {
         try {
-            return redisTemplate.opsForValue().get(key).toString();
+            return Objects.requireNonNull(redisTemplate.opsForValue().get(key)).toString();
         } catch (Exception e) {
             return "";
         }
