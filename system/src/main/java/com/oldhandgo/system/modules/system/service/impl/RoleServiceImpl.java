@@ -64,8 +64,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public RoleDTO create(Role resources) {
-        if (roleRepository.findByRoleName(resources.getRoleName()) != null) {
-            throw new EntityExistException(Role.class, "username", resources.getRoleName());
+        if (roleRepository.findByName(resources.getName()) != null) {
+            throw new EntityExistException(Role.class, "username", resources.getName());
         }
         return roleMapper.toDto(roleRepository.save(resources));
     }
@@ -79,17 +79,17 @@ public class RoleServiceImpl implements RoleService {
 
         Role role = optionalRole.get();
 
-        Role role1 = roleRepository.findByRoleName(resources.getRoleName());
+        Role role1 = roleRepository.findByName(resources.getName());
 
         if (role1 != null && !role1.getId().equals(role.getId())) {
-            throw new EntityExistException(Role.class, "username", resources.getRoleName());
+            throw new EntityExistException(Role.class, "username", resources.getName());
         }
 
-        role.setRoleName(resources.getRoleName());
+        role.setName(resources.getName());
         role.setRemark(resources.getRemark());
         role.setDataScope(resources.getDataScope());
-        role.setDepartments(resources.getDepartments());
-        role.setRoleLevel(resources.getRoleLevel());
+        role.setDepts(resources.getDepts());
+        role.setLevel(resources.getLevel());
         roleRepository.save(role);
     }
 

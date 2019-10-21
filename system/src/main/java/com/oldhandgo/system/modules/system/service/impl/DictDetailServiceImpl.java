@@ -9,7 +9,6 @@ import com.oldhandgo.system.modules.system.service.DictDetailService;
 import com.oldhandgo.system.modules.system.service.dto.DictDetailDTO;
 import com.oldhandgo.system.modules.system.service.dto.DictDetailQueryCriteria;
 import com.oldhandgo.system.modules.system.service.mapper.DictDetailMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,15 +18,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @author dormirr
+ */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class DictDetailServiceImpl implements DictDetailService {
 
-    @Autowired
-    private DictDetailRepository dictDetailRepository;
+    private final DictDetailRepository dictDetailRepository;
 
-    @Autowired
-    private DictDetailMapper dictDetailMapper;
+    private final DictDetailMapper dictDetailMapper;
+
+    public DictDetailServiceImpl(DictDetailRepository dictDetailRepository, DictDetailMapper dictDetailMapper) {
+        this.dictDetailRepository = dictDetailRepository;
+        this.dictDetailMapper = dictDetailMapper;
+    }
 
     @Override
     public Map queryAll(DictDetailQueryCriteria criteria, Pageable pageable) {

@@ -3,13 +3,12 @@ package com.oldhandgo.system.modules.system.service.impl;
 import com.oldhandgo.common.exception.BadRequestException;
 import com.oldhandgo.common.utils.QueryHelp;
 import com.oldhandgo.common.utils.ValidationUtils;
-import com.oldhandgo.system.modules.system.domain.Department;
-import com.oldhandgo.system.modules.system.repository.DepartmentRepository;
+import com.oldhandgo.system.modules.system.domain.Dept;
+import com.oldhandgo.system.modules.system.repository.DeptRepository;
 import com.oldhandgo.system.modules.system.service.DeptService;
 import com.oldhandgo.system.modules.system.service.dto.DeptDTO;
 import com.oldhandgo.system.modules.system.service.dto.DeptQueryCriteria;
 import com.oldhandgo.system.modules.system.service.mapper.DeptMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +24,14 @@ import java.util.stream.Collectors;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class DeptServiceImpl implements DeptService {
 
-    @Autowired
-    private DepartmentRepository deptRepository;
+    private final DeptRepository deptRepository;
 
-    @Autowired
-    private DeptMapper deptMapper;
+    private final DeptMapper deptMapper;
+
+    public DeptServiceImpl(DeptRepository deptRepository, DeptMapper deptMapper) {
+        this.deptRepository = deptRepository;
+        this.deptMapper = deptMapper;
+    }
 
     @Override
     public List<DeptDTO> queryAll(DeptQueryCriteria criteria) {
@@ -38,18 +40,18 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public DeptDTO findById(Long id) {
-        Optional<Department> dept = deptRepository.findById(id);
+        Optional<Dept> dept = deptRepository.findById(id);
         ValidationUtils.isNull(dept, "Dept", "id", id);
         return deptMapper.toDto(dept.get());
     }
 
     @Override
-    public List<Department> findByPid(long pid) {
+    public List<Dept> findByPid(long pid) {
         return deptRepository.findByPid(pid);
     }
 
     @Override
-    public Set<Department> findByRoleIds(Long id) {
+    public Set<Dept> findByRoleIds(Long id) {
         return deptRepository.findByRoles_Id(id);
     }
 
@@ -75,9 +77,8 @@ public class DeptServiceImpl implements DeptService {
             }
             if (isChild) {
                 depts.add(deptDTO);
-            } else if (!deptNames.contains(deptRepository.findNameById(deptDTO.getPid()))) {
+            } else if (!deptNames.contains(deptRepository.findNameById(deptDTO.getPid())))
                 depts.add(deptDTO);
-            }
         }
 
         if (CollectionUtils.isEmpty(trees)) {
@@ -94,19 +95,19 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public DeptDTO create(Department resources) {
+    public DeptDTO create(Dept resources) {
         return deptMapper.toDto(deptRepository.save(resources));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void update(Department resources) {
+    public void update(Dept resources) {
         if (resources.getId().equals(resources.getPid())) {
             throw new BadRequestException("上级不能为自己");
         }
-        Optional<Department> optionalDept = deptRepository.findById(resources.getId());
+        Optional<Dept> optionalDept = deptRepository.findById(resources.getId());
         ValidationUtils.isNull(optionalDept, "Dept", "id", resources.getId());
-        Department dept = optionalDept.get();
+        Dept dept = optionalDept.get();
         resources.setId(dept.getId());
         deptRepository.save(resources);
     }

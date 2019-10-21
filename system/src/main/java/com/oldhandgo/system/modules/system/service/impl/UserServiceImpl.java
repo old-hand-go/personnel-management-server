@@ -13,6 +13,7 @@ import com.oldhandgo.system.modules.system.service.dto.RoleSmallDTO;
 import com.oldhandgo.system.modules.system.service.dto.UserDTO;
 import com.oldhandgo.system.modules.system.service.dto.UserQueryCriteria;
 import com.oldhandgo.system.modules.system.service.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,20 +35,20 @@ import java.util.stream.Collectors;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
-    private final UserMapper userMapper;
-    private final RedisService redisService;
-    private final UserAvatarRepository userAvatarRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private RedisService redisService;
+
+    @Autowired
+    private UserAvatarRepository userAvatarRepository;
 
     @Value("${file.avatar}")
     private String avatar;
-
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RedisService redisService, UserAvatarRepository userAvatarRepository) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.redisService = redisService;
-        this.userAvatarRepository = userAvatarRepository;
-    }
 
     @Override
     public Object queryAll(UserQueryCriteria criteria, Pageable pageable) {
@@ -72,16 +73,16 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public UserDTO create(User resources) {
 
-        if (userRepository.findByUserName(resources.getEmail()) != null) {
-            throw new EntityExistException(User.class, "username", resources.getEmail());
+        if (userRepository.findByUsername(resources.getUsername()) != null) {
+            throw new EntityExistException(User.class, "username", resources.getUsername());
         }
 
-        if (userRepository.findByEmailAndIsEnabled(resources.getEmail(), true).isPresent()) {
+        if (userRepository.findByEmail(resources.getEmail()) != null) {
             throw new EntityExistException(User.class, "email", resources.getEmail());
         }
 
         // 默认密码 123456，此密码是加密后的字符
-        resources.setPassWord("e10adc3949ba59abbe56e057f20f883e");
+        resources.setPassword("e10adc3949ba59abbe56e057f20f883e");
         return userMapper.toDto(userRepository.save(resources));
     }
 
@@ -93,11 +94,11 @@ public class UserServiceImpl implements UserService {
 
         User user = userOptional.get();
 
-        User user1 = userRepository.findByUserName(user.getEmail());
-        User user2 = userRepository.findByEmailAndIsEnabled(user.getEmail(), true).get();
+        User user1 = userRepository.findByUsername(user.getUsername());
+        User user2 = userRepository.findByEmail(user.getEmail());
 
         if (user1 != null && !user.getId().equals(user1.getId())) {
-            throw new EntityExistException(User.class, "username", resources.getEmail());
+            throw new EntityExistException(User.class, "username", resources.getUsername());
         }
 
         if (user2 != null && !user.getId().equals(user2.getId())) {
@@ -106,18 +107,19 @@ public class UserServiceImpl implements UserService {
 
         // 如果用户的角色改变了，需要手动清理下缓存
         if (!resources.getRoles().equals(user.getRoles())) {
-            String key = "role::loadPermissionByUser:" + user.getEmail();
+            String key = "role::loadPermissionByUser:" + user.getUsername();
             redisService.delete(key);
             key = "role::findByUsers_Id:" + user.getId();
             redisService.delete(key);
         }
 
-        user.setUserName(resources.getUserName());
+        user.setUsername(resources.getUsername());
         user.setEmail(resources.getEmail());
         user.setEnabled(resources.getEnabled());
         user.setRoles(resources.getRoles());
-        user.setDepartment(resources.getDepartment());
+        user.setDept(resources.getDept());
         user.setJob(resources.getJob());
+        user.setPhone(resources.getPhone());
         userRepository.save(user);
     }
 
@@ -131,9 +133,9 @@ public class UserServiceImpl implements UserService {
     public UserDTO findByName(String userName) {
         User user = null;
         if (ValidationUtils.isEmail(userName)) {
-            user = userRepository.findByEmailAndIsEnabled(userName, true).get();
+            user = userRepository.findByEmail(userName);
         } else {
-            user = userRepository.findByUserName(userName);
+            user = userRepository.findByUsername(userName);
         }
         if (user == null) {
             throw new EntityNotFoundException(User.class, "name", userName);
@@ -151,11 +153,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateAvatar(MultipartFile multipartFile) {
-        User user = userRepository.findByUserName(SecurityUtils.getUserName());
+        User user = userRepository.findByUsername(SecurityUtils.getUsername());
         UserAvatar userAvatar = user.getUserAvatar();
         String oldPath = "";
         if (userAvatar != null) {
-            oldPath = userAvatar.getAvatarPath();
+            oldPath = userAvatar.getPath();
         }
         File file = FileUtils.upload(multipartFile, avatar);
         userAvatar = userAvatarRepository.save(new UserAvatar(userAvatar, file.getName(), file.getPath(), FileUtils.getSize(multipartFile.getSize())));

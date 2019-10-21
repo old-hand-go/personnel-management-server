@@ -49,8 +49,8 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public PermissionDTO create(Permission resources) {
-        if (permissionRepository.findByPermissionName(resources.getPermissionName()) != null) {
-            throw new EntityExistException(Permission.class, "name", resources.getPermissionName());
+        if (permissionRepository.findByName(resources.getName()) != null) {
+            throw new EntityExistException(Permission.class, "name", resources.getName());
         }
         return permissionMapper.toDto(permissionRepository.save(resources));
     }
@@ -66,13 +66,13 @@ public class PermissionServiceImpl implements PermissionService {
 
         Permission permission = optionalPermission.get();
 
-        Permission permission1 = permissionRepository.findByPermissionName(resources.getPermissionName()).get();
+        Permission permission1 = permissionRepository.findByName(resources.getName());
 
-        if (!permission1.getId().equals(permission.getId())) {
-            throw new EntityExistException(Permission.class, "name", resources.getPermissionName());
+        if (permission1 != null && !permission1.getId().equals(permission.getId())) {
+            throw new EntityExistException(Permission.class, "name", resources.getName());
         }
 
-        permission.setPermissionName(resources.getPermissionName());
+        permission.setName(resources.getName());
         permission.setAlias(resources.getAlias());
         permission.setPid(resources.getPid());
         permissionRepository.save(permission);
@@ -83,7 +83,7 @@ public class PermissionServiceImpl implements PermissionService {
         // 递归找出待删除的菜单
         for (Permission permission : permissions) {
             permissionSet.add(permission);
-            List<Permission> permissionList = permissionRepository.findAllByPid(permission.getId());
+            List<Permission> permissionList = permissionRepository.findByPid(permission.getId());
             if (permissionList != null && permissionList.size() != 0) {
                 getDeletePermission(permissionList, permissionSet);
             }
@@ -105,7 +105,7 @@ public class PermissionServiceImpl implements PermissionService {
         List<Map<String, Object>> list = new LinkedList<>();
         permissions.forEach(permission -> {
                     if (permission != null) {
-                        List<Permission> permissionList = permissionRepository.findAllByPid(permission.getId());
+                        List<Permission> permissionList = permissionRepository.findByPid(permission.getId());
                         Map<String, Object> map = new HashMap<>();
                         map.put("id", permission.getId());
                         map.put("label", permission.getAlias());
@@ -121,7 +121,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public List<Permission> findByPid(long pid) {
-        return permissionRepository.findAllByPid(pid);
+        return permissionRepository.findByPid(pid);
     }
 
     @Override

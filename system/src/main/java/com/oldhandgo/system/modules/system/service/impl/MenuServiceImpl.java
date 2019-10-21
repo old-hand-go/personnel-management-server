@@ -65,16 +65,16 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public MenuDTO create(Menu resources) {
-        if (menuRepository.findByMenuName(resources.getMenuName()) != null) {
-            throw new EntityExistException(Menu.class, "name", resources.getMenuName());
+        if (menuRepository.findByName(resources.getName()) != null) {
+            throw new EntityExistException(Menu.class, "name", resources.getName());
         }
         if (StringUtils.isNotBlank(resources.getComponentName())) {
             if (menuRepository.findByComponentName(resources.getComponentName()) != null) {
                 throw new EntityExistException(Menu.class, "componentName", resources.getComponentName());
             }
         }
-        if (resources.getFrame()) {
-            if (!(resources.getMenuPath().toLowerCase().startsWith("http://") || resources.getMenuPath().toLowerCase().startsWith("https://"))) {
+        if (resources.getIFrame()) {
+            if (!(resources.getPath().toLowerCase().startsWith("http://") || resources.getPath().toLowerCase().startsWith("https://"))) {
                 throw new BadRequestException("外链必须以http://或者https://开头");
             }
         }
@@ -89,29 +89,29 @@ public class MenuServiceImpl implements MenuService {
         Optional<Menu> optionalPermission = menuRepository.findById(resources.getId());
         ValidationUtils.isNull(optionalPermission, "Permission", "id", resources.getId());
 
-        if (resources.getFrame()) {
-            if (!(resources.getMenuPath().toLowerCase().startsWith("http://") || resources.getMenuPath().toLowerCase().startsWith("https://"))) {
+        if (resources.getIFrame()) {
+            if (!(resources.getPath().toLowerCase().startsWith("http://") || resources.getPath().toLowerCase().startsWith("https://"))) {
                 throw new BadRequestException("外链必须以http://或者https://开头");
             }
         }
         Menu menu = optionalPermission.get();
-        Menu menu1 = menuRepository.findByMenuName(resources.getMenuName()).get();
+        Menu menu1 = menuRepository.findByName(resources.getName());
 
         if (menu1 != null && !menu1.getId().equals(menu.getId())) {
-            throw new EntityExistException(Menu.class, "name", resources.getMenuName());
+            throw new EntityExistException(Menu.class, "name", resources.getName());
         }
 
         if (StringUtils.isNotBlank(resources.getComponentName())) {
-            menu1 = menuRepository.findByComponentName(resources.getComponentName()).get();
+            menu1 = menuRepository.findByComponentName(resources.getComponentName());
             if (menu1 != null && !menu1.getId().equals(menu.getId())) {
                 throw new EntityExistException(Menu.class, "componentName", resources.getComponentName());
             }
         }
-        menu.setMenuName(resources.getMenuName());
+        menu.setName(resources.getName());
         menu.setComponent(resources.getComponent());
-        menu.setMenuPath(resources.getMenuPath());
+        menu.setPath(resources.getPath());
         menu.setIcon(resources.getIcon());
-        menu.setFrame(resources.getFrame());
+        menu.setIFrame(resources.getIFrame());
         menu.setPid(resources.getPid());
         menu.setSort(resources.getSort());
         menu.setCache(resources.getCache());
@@ -125,7 +125,7 @@ public class MenuServiceImpl implements MenuService {
         // 递归找出待删除的菜单
         for (Menu menu1 : menuList) {
             menuSet.add(menu1);
-            List<Menu> menus = menuRepository.findAllByPidOrderBySortAsc(menu1.getId());
+            List<Menu> menus = menuRepository.findByPid(menu1.getId());
             if (menus != null && menus.size() != 0) {
                 getDeleteMenus(menus, menuSet);
             }
@@ -147,10 +147,10 @@ public class MenuServiceImpl implements MenuService {
         List<Map<String, Object>> list = new LinkedList<>();
         menus.forEach(menu -> {
                     if (menu != null) {
-                        List<Menu> menuList = menuRepository.findAllByPidOrderBySortAsc(menu.getId());
+                        List<Menu> menuList = menuRepository.findByPid(menu.getId());
                         Map<String, Object> map = new HashMap<>();
                         map.put("id", menu.getId());
-                        map.put("label", menu.getMenuName());
+                        map.put("label", menu.getName());
                         if (menuList != null && menuList.size() != 0) {
                             map.put("children", getMenuTree(menuList));
                         }
@@ -163,7 +163,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> findByPid(long pid) {
-        return menuRepository.findAllByPidOrderBySortAsc(pid);
+        return menuRepository.findByPid(pid);
     }
 
     @Override

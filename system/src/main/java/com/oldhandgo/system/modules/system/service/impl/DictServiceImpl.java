@@ -9,7 +9,6 @@ import com.oldhandgo.system.modules.system.service.DictService;
 import com.oldhandgo.system.modules.system.service.dto.DictDTO;
 import com.oldhandgo.system.modules.system.service.dto.DictQueryCriteria;
 import com.oldhandgo.system.modules.system.service.mapper.DictMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,11 +24,14 @@ import java.util.Optional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class DictServiceImpl implements DictService {
 
-    @Autowired
-    private DictRepository dictRepository;
+    private final DictRepository dictRepository;
 
-    @Autowired
-    private DictMapper dictMapper;
+    private final DictMapper dictMapper;
+
+    public DictServiceImpl(DictRepository dictRepository, DictMapper dictMapper) {
+        this.dictRepository = dictRepository;
+        this.dictMapper = dictMapper;
+    }
 
     @Override
     public Object queryAll(DictQueryCriteria dict, Pageable pageable) {

@@ -1,6 +1,6 @@
 package com.oldhandgo.system.modules.system.service;
 
-import com.oldhandgo.system.modules.system.domain.Department;
+import com.oldhandgo.system.modules.system.domain.Dept;
 import com.oldhandgo.system.modules.system.service.dto.DeptDTO;
 import com.oldhandgo.system.modules.system.service.dto.DeptQueryCriteria;
 import org.springframework.cache.annotation.CacheConfig;
@@ -41,7 +41,7 @@ public interface DeptService {
      * @return
      */
     @CacheEvict(allEntries = true)
-    DeptDTO create(Department resources);
+    DeptDTO create(Dept resources);
 
     /**
      * update
@@ -49,7 +49,7 @@ public interface DeptService {
      * @param resources
      */
     @CacheEvict(allEntries = true)
-    void update(Department resources);
+    void update(Dept resources);
 
     /**
      * delete
@@ -75,7 +75,7 @@ public interface DeptService {
      * @return
      */
     @Cacheable
-    List<Department> findByPid(long pid);
+    List<Dept> findByPid(long pid);
 
-    Set<Department> findByRoleIds(Long id);
+    Set<Dept> findByRoleIds(Long id);
 }

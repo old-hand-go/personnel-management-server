@@ -5,12 +5,11 @@ import com.oldhandgo.common.utils.QueryHelp;
 import com.oldhandgo.common.utils.ValidationUtils;
 import com.oldhandgo.system.modules.quartz.service.dto.JobQueryCriteria;
 import com.oldhandgo.system.modules.system.domain.Job;
-import com.oldhandgo.system.modules.system.repository.DepartmentRepository;
+import com.oldhandgo.system.modules.system.repository.DeptRepository;
 import com.oldhandgo.system.modules.system.repository.JobRepository;
 import com.oldhandgo.system.modules.system.service.JobService;
 import com.oldhandgo.system.modules.system.service.dto.JobDTO;
 import com.oldhandgo.system.modules.system.service.mapper.JobMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,21 +27,24 @@ import java.util.Optional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class JobServiceImpl implements JobService {
 
-    @Autowired
-    private JobRepository jobRepository;
+    private final JobRepository jobRepository;
 
-    @Autowired
-    private JobMapper jobMapper;
+    private final JobMapper jobMapper;
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private final DeptRepository deptRepository;
+
+    public JobServiceImpl(JobRepository jobRepository, JobMapper jobMapper, DeptRepository deptRepository) {
+        this.jobRepository = jobRepository;
+        this.jobMapper = jobMapper;
+        this.deptRepository = deptRepository;
+    }
 
     @Override
     public Object queryAll(JobQueryCriteria criteria, Pageable pageable) {
         Page<Job> page = jobRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
         List<JobDTO> jobs = new ArrayList<>();
         for (Job job : page.getContent()) {
-            jobs.add(jobMapper.toDto(job, departmentRepository.findNameById(job.getDepartmentByDeptId().getPid())));
+            jobs.add(jobMapper.toDto(job, deptRepository.findNameById(job.getDept().getPid())));
         }
         return PageUtils.toPage(jobs, page.getTotalElements());
     }
