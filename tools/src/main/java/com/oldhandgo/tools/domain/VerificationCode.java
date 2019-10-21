@@ -1,12 +1,16 @@
 package com.oldhandgo.tools.domain;
 
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
  * @author dormirr
  */
+@NoArgsConstructor
 @Entity
 @Table(name = "verification_code", schema = "personnel_management_server")
 public class VerificationCode {
@@ -121,5 +125,12 @@ public class VerificationCode {
     @Override
     public int hashCode() {
         return Objects.hash(id, createTime, updateTime, codeValue, isType, codeUser, scenes, isStatus);
+    }
+
+    public VerificationCode(String code, String scenes, @NotBlank String type, @NotBlank String value) {
+        this.codeValue = code;
+        this.scenes = scenes;
+        this.isType = type;
+        this.codeUser = value;
     }
 }
