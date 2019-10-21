@@ -30,7 +30,7 @@ public class SecurityUtils {
      *
      * @return 系统用户名称
      */
-    public static String getUserName() {
+    public static String getUsername() {
         Object obj = getUserDetails();
         JSONObject json = new JSONObject(obj);
         return json.get("username", String.class);
