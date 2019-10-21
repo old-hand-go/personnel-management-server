@@ -148,4 +148,7 @@ public class User {
     public void setDeptId(Long deptId) {
         this.deptId = deptId;
     }
+
+    public @interface Update {
+    }
 }
