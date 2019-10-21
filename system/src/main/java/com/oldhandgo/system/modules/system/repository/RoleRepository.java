@@ -2,16 +2,16 @@ package com.oldhandgo.system.modules.system.repository;
 
 import com.oldhandgo.system.modules.system.domain.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Set;
 
 /**
  * @author dormirr
  */
-public interface RoleRepository extends JpaRepository<Role, Long>, PagingAndSortingRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificationExecutor {
 
     /**
      * 根据角色名字查询角色
@@ -22,7 +22,6 @@ public interface RoleRepository extends JpaRepository<Role, Long>, PagingAndSort
     Role findByRoleName(String roleName);
 
     Set<Role> findByUsers_Id(Long id);
-
     /**
      * 删除角色对应的权限
      *
