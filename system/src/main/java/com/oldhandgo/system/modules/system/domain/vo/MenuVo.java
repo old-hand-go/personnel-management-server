@@ -14,11 +14,14 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MenuVo implements Serializable {
-    private Byte isFrame;
 
     private String name;
 
     private String path;
+
+    private Boolean hidden;
+
+    private String redirect;
 
     private String component;
 

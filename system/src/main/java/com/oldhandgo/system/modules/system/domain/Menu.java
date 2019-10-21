@@ -18,6 +18,8 @@ public class Menu {
     private String component;
     private String componentName;
     private String menuName;
+    private String menuPath;
+    private String icon;
     private String sort;
     private Long pid;
     private Boolean isFrame;
@@ -82,6 +84,26 @@ public class Menu {
 
     public void setMenuName(String menuName) {
         this.menuName = menuName;
+    }
+
+    @Basic
+    @Column(name = "menu_path")
+    public String getMenuPath() {
+        return menuPath;
+    }
+
+    public void setMenuPath(String menuPath) {
+        this.menuPath = menuPath;
+    }
+
+    @Basic
+    @Column(name = "icon")
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     @Basic

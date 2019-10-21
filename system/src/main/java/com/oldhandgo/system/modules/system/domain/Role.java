@@ -1,15 +1,16 @@
 package com.oldhandgo.system.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author dormirr
  */
+@Data
 @Entity
 public class Role {
     private Long id;
@@ -105,27 +106,4 @@ public class Role {
     @ManyToMany
     @JoinTable(name = "roles_departments", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "department_id", referencedColumnName = "id")})
     private Set<Department> departments;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Role role = (Role) o;
-        return Objects.equals(id, role.id) &&
-                Objects.equals(createTime, role.createTime) &&
-                Objects.equals(updateTime, role.updateTime) &&
-                Objects.equals(roleName, role.roleName) &&
-                Objects.equals(roleLevel, role.roleLevel) &&
-                Objects.equals(dataScope, role.dataScope) &&
-                Objects.equals(remark, role.remark);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, roleName, roleLevel, dataScope, remark);
-    }
 }

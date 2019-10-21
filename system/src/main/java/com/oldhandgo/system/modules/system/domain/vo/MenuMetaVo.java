@@ -12,7 +12,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class MenuMetaVo implements Serializable {
 
-    private String menuName;
+    private String title;
 
-    private Byte isCache;
+    private String icon;
+
+    private Boolean noCache;
 }
