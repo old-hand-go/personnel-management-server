@@ -40,9 +40,11 @@ public class JwtUser implements UserDetails {
     private final Collection<GrantedAuthority> authorities;
 
     private final boolean enabled;
+
+    private Timestamp createTime;
+
     @JsonIgnore
     private final Date lastPasswordResetDate;
-    private Timestamp createTime;
 
     @JsonIgnore
     @Override

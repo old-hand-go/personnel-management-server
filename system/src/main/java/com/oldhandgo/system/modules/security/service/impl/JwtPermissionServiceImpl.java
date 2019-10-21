@@ -40,7 +40,7 @@ public class JwtPermissionServiceImpl {
         Set<Role> roles = roleRepository.findByUsers_Id(user.getId());
 
         return roles.stream().flatMap(role -> role.getPermissions().stream())
-                .map(permission -> new SimpleGrantedAuthority(permission.getPermissionName()))
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
                 .collect(Collectors.toList());
     }
 }
