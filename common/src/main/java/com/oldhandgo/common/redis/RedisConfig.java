@@ -23,8 +23,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import java.time.Duration;
 
 /**
- * 自动配置
- *
  * @author dormirr
  */
 @Slf4j
@@ -38,7 +36,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 设置 redis 数据默认过期时间，默认1天
      * 设置@cacheable 序列化方式
      *
-     * @return
+     * @return RedisCacheConfiguration
      */
     @Bean
     public RedisCacheConfiguration redisCacheConfiguration() {
@@ -61,13 +59,13 @@ public class RedisConfig extends CachingConfigurerSupport {
         // 全局开启AutoType，不建议使用
         // ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
         // 建议使用这种方式，小范围指定白名单
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.domain");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.system.service.dto");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.service.dto");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.system.domain");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.quartz.domain");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.monitor.domain");
-        ParserConfig.getGlobalInstance().addAccept("me.zhengjie.modules.security.security");
+        ParserConfig.getGlobalInstance().addAccept("com.oldhandgo.domain");
+        ParserConfig.getGlobalInstance().addAccept("com.oldhandgo.modules.system.service.dto");
+        ParserConfig.getGlobalInstance().addAccept("com.oldhandgo.service.dto");
+        ParserConfig.getGlobalInstance().addAccept("com.oldhandgo.modules.system.domain");
+        ParserConfig.getGlobalInstance().addAccept("com.oldhandgo.modules.quartz.domain");
+        ParserConfig.getGlobalInstance().addAccept("com.oldhandgo.modules.monitor.domain");
+        ParserConfig.getGlobalInstance().addAccept("com.oldhandgo.modules.security.security");
         // key的序列化采用StringRedisSerializer
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());
@@ -79,7 +77,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * 自定义缓存key生成策略，默认将使用该策略
      * 使用方法 @Cacheable
      *
-     * @return
+     * @return KeyGenerator
      */
     @Bean
     @Override
