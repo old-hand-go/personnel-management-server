@@ -9,9 +9,9 @@ import java.util.Set;
  * @author dormirr
  */
 @Data
-public class DeptQueryCriteria{
+public class DeptQueryCriteria {
 
-    @Query(type = Query.Type.IN, propName="id")
+    @Query(type = Query.Type.IN, propName = "id")
     private Set<Long> ids;
 
     @Query(type = Query.Type.INNER_LIKE)

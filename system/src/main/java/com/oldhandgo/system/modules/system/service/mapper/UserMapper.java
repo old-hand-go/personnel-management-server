@@ -13,11 +13,6 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", uses = {RoleMapper.class, DeptMapper.class, JobMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper extends EntityMapper<UserDTO, User> {
 
-    /**
-     * @param user
-     * @return
-     */
-    @Override
     @Mapping(source = "user.userAvatar.realName", target = "avatar")
     UserDTO toDto(User user);
 }
