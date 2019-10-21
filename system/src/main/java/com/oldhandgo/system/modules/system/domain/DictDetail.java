@@ -1,82 +1,42 @@
 package com.oldhandgo.system.modules.system.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @author dormirr
  */
 @Entity
-@Table(name = "dict_detail", schema = "personnel_management_server")
-public class DictDetail {
-    private Long id;
-    private Timestamp createTime;
-    private Timestamp updateTime;
-    private String label;
-    private String dictValue;
-    private String sort;
-    private Dict dictByDictId;
+@Data
+@Table(name = "dict_detail")
+public class DictDetail implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
+    @NotNull(groups = Update.class)
+    private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    /**
+     * 字典标签
+     */
+    @Column(name = "label", nullable = false)
+    private String label;
 
-    @Basic
-    @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+    /**
+     * 字典值
+     */
+    @Column(name = "value", nullable = false)
+    private String value;
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    @Basic
-    @Column(name = "update_time")
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Basic
-    @Column(name = "label")
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    @Basic
-    @Column(name = "dict_value")
-    public String getDictValue() {
-        return dictValue;
-    }
-
-    public void setDictValue(String dictValue) {
-        this.dictValue = dictValue;
-    }
-
-    @Basic
+    /**
+     * 排序
+     */
     @Column(name = "sort")
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
+    private String sort = "999";
 
     /**
      * 字典id
@@ -85,35 +45,6 @@ public class DictDetail {
     @JoinColumn(name = "dict_id")
     private Dict dict;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        DictDetail that = (DictDetail) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(updateTime, that.updateTime) &&
-                Objects.equals(label, that.label) &&
-                Objects.equals(dictValue, that.dictValue) &&
-                Objects.equals(sort, that.sort);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, label, dictValue, sort);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "dict_id", referencedColumnName = "id")
-    public Dict getDictByDictId() {
-        return dictByDictId;
-    }
-
-    public void setDictByDictId(Dict dictByDictId) {
-        this.dictByDictId = dictByDictId;
+    public @interface Update {
     }
 }

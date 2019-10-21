@@ -1,115 +1,60 @@
 package com.oldhandgo.system.modules.system.domain;
 
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 /**
  * @author dormirr
  */
 @Entity
-public class Job {
-    private Long id;
-    private Timestamp createTime;
-    private Timestamp updateTime;
-    private String jobName;
-    private Boolean isEnabled;
-    private String sort;
-    private Department departmentByDeptId;
+@Data
+@Table(name = "job")
+public class Job implements Serializable {
 
+    /**
+     * ID
+     */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
+    @NotNull(groups = Update.class)
+    private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    /**
+     * 名称
+     */
+    @Column(name = "name", nullable = false)
+    @NotBlank
+    private String name;
 
-    @Basic
-    @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+    @Column(unique = true)
+    @NotNull
+    private Long sort;
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    @Basic
-    @Column(name = "update_time")
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Basic
-    @Column(name = "job_name")
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    @Basic
-    @Column(name = "is_enabled")
-    public Boolean getEnabled() {
-        return isEnabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
-    }
-
-    @Basic
-    @Column(name = "sort")
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
+    /**
+     * 状态
+     */
+    @Column(name = "enabled", nullable = false)
+    @NotNull
+    private Boolean enabled;
 
     @OneToOne
     @JoinColumn(name = "dept_id")
-    private Department department;
+    private Dept dept;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Job job = (Job) o;
-        return Objects.equals(id, job.id) &&
-                Objects.equals(createTime, job.createTime) &&
-                Objects.equals(updateTime, job.updateTime) &&
-                Objects.equals(jobName, job.jobName) &&
-                Objects.equals(isEnabled, job.isEnabled) &&
-                Objects.equals(sort, job.sort);
-    }
+    /**
+     * 创建日期
+     */
+    @Column(name = "create_time")
+    @CreationTimestamp
+    private Timestamp createTime;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createTime, updateTime, jobName, isEnabled, sort);
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "dept_id", referencedColumnName = "id")
-    public Department getDepartmentByDeptId() {
-        return departmentByDeptId;
-    }
-
-    public void setDepartmentByDeptId(Department departmentByDeptId) {
-        this.departmentByDeptId = departmentByDeptId;
+    public @interface Update {
     }
 }

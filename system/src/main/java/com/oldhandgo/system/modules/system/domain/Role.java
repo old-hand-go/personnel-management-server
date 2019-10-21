@@ -1,95 +1,46 @@
 package com.oldhandgo.system.modules.system.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * @author dormirr
  */
-@Data
 @Entity
-public class Role {
-    private Long id;
-    private Timestamp createTime;
-    private Timestamp updateTime;
-    private String roleName;
-    private Short roleLevel;
-    private String dataScope;
-    private String remark;
+@Table(name = "role")
+@Getter
+@Setter
+public class Role implements Serializable {
 
     @Id
-    @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = {Update.class})
+    private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    @NotBlank
+    private String name;
 
-    @Basic
-    @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    @Basic
-    @Column(name = "update_time")
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Basic
-    @Column(name = "role_name")
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    @Basic
-    @Column(name = "role_level")
-    public Short getRoleLevel() {
-        return roleLevel;
-    }
-
-    public void setRoleLevel(Short roleLevel) {
-        this.roleLevel = roleLevel;
-    }
-
-    @Basic
+    // 数据权限类型 全部 、 本级 、 自定义
     @Column(name = "data_scope")
-    public String getDataScope() {
-        return dataScope;
-    }
+    private String dataScope = "本级";
 
-    public void setDataScope(String dataScope) {
-        this.dataScope = dataScope;
-    }
+    // 数值越小，级别越大
+    @Column(name = "level")
+    private Integer level = 3;
 
-    @Basic
-    @Column(name = "remark")
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
+    @Column
+    private String remark;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
@@ -104,6 +55,40 @@ public class Role {
     private Set<Menu> menus;
 
     @ManyToMany
-    @JoinTable(name = "roles_departments", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "department_id", referencedColumnName = "id")})
-    private Set<Department> departments;
+    @JoinTable(name = "roles_depts", joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "dept_id", referencedColumnName = "id")})
+    private Set<Dept> depts;
+
+    @CreationTimestamp
+    @Column(name = "create_time")
+    private Timestamp createTime;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", remark='" + remark + '\'' +
+                ", createDateTime=" + createTime +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Role role = (Role) o;
+        return Objects.equals(id, role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    public interface Update {
+    }
 }

@@ -9,60 +9,26 @@ import javax.persistence.*;
 /**
  * @author dormirr
  */
+@Entity
+@Table(name = "user_avatar")
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name = "user_avatar", schema = "personnel_management_server")
 public class UserAvatar {
-    private Long id;
-    private String realName;
-    private String avatarPath;
-    private String size;
 
     @Id
-    @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String realName;
 
-    @Basic
-    @Column(name = "real_name")
-    public String getRealName() {
-        return realName;
-    }
+    private String path;
 
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    @Basic
-    @Column(name = "avatar_path")
-    public String getAvatarPath() {
-        return avatarPath;
-    }
-
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
-    }
-
-    @Basic
-    @Column(name = "size")
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
+    private String size;
 
     public UserAvatar(UserAvatar userAvatar, String realName, String path, String size) {
         this.id = ObjectUtil.isNotEmpty(userAvatar) ? userAvatar.getId() : null;
         this.realName = realName;
-        this.avatarPath = path;
+        this.path = path;
         this.size = size;
     }
 }

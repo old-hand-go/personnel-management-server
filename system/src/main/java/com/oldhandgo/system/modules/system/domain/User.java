@@ -1,152 +1,82 @@
 package com.oldhandgo.system.modules.system.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 /**
  * @author dormirr
  */
-@Data
 @Entity
-public class User {
-    private Long id;
-    private Timestamp createTime;
-    private Timestamp updateTime;
-    private String email;
-    private String userName;
-    private String passWord;
-    private String address;
-    private Long avatarId;
-    private Long jobId;
-    private Boolean isEnabled;
-    private Long deptId;
+@Getter
+@Setter
+@Table(name = "user")
+public class User implements Serializable {
 
     @Id
-    @Column(name = "id")
-    public Long getId() {
-        return id;
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(groups = Update.class)
+    private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
-    @Basic
-    @Column(name = "update_time")
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Basic
-    @Column(name = "email")
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Basic
-    @Column(name = "user_name")
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Basic
-    @Column(name = "pass_word")
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    @Basic
-    @Column(name = "address")
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @ManyToMany
-    @JoinTable(name = "roles_users", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private Set<Role> roles;
-    @OneToOne
-    @JoinColumn(name = "job_id")
-    private Job job;
-
-    @Basic
-    @Column(name = "job_id")
-    public Long getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
-    }
-
-    @Basic
-    @Column(name = "is_enabled")
-    public Boolean getEnabled() {
-        return isEnabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "dept_id")
-    private Department department;
+    @NotBlank
+    @Column(unique = true)
+    private String username;
 
     @OneToOne
     @JoinColumn(name = "avatar_id")
     private UserAvatar userAvatar;
 
-    @Basic
-    @Column(name = "avatar_id")
-    public Long getAvatarId() {
-        return avatarId;
-    }
+    @NotBlank
+    @Pattern(regexp = "([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}", message = "格式错误")
+    private String email;
 
-    public void setAvatarId(Long avatarId) {
-        this.avatarId = avatarId;
-    }
+    @NotBlank
+    private String phone;
 
-    @Basic
-    @Column(name = "dept_id")
-    public Long getDeptId() {
-        return deptId;
-    }
+    @NotNull
+    private Boolean enabled;
 
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
+    private String password;
+
+    @CreationTimestamp
+    @Column(name = "create_time")
+    private Timestamp createTime;
+
+    @Column(name = "last_password_reset_time")
+    private Date lastPasswordResetTime;
+
+    @ManyToMany
+    @JoinTable(name = "users_roles", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private Set<Role> roles;
+
+    @OneToOne
+    @JoinColumn(name = "job_id")
+    private Job job;
+
+    @OneToOne
+    @JoinColumn(name = "dept_id")
+    private Dept dept;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", enabled=" + enabled +
+                ", password='" + password + '\'' +
+                ", createTime=" + createTime +
+                ", lastPasswordResetTime=" + lastPasswordResetTime +
+                '}';
     }
 
     public @interface Update {
