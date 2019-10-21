@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 /**
  * @author dormirr
  */
+@CacheConfig(cacheNames = "quartzJob")
 public interface QuartzJobService {
 
     /**
@@ -19,6 +20,7 @@ public interface QuartzJobService {
      * @param pageable 分页
      * @return 查询结果
      */
+    @Cacheable
     Object queryAll(JobQueryCriteria criteria, Pageable pageable);
 
     /**
@@ -36,6 +38,7 @@ public interface QuartzJobService {
      * @param resources 属性
      * @return 结果
      */
+    @CacheEvict(allEntries = true)
     QuartzJob create(QuartzJob resources);
 
     /**
@@ -43,6 +46,7 @@ public interface QuartzJobService {
      *
      * @param resources 属性
      */
+    @CacheEvict(allEntries = true)
     void update(QuartzJob resources);
 
     /**
@@ -50,6 +54,7 @@ public interface QuartzJobService {
      *
      * @param quartzJob 计划任务
      */
+    @CacheEvict(allEntries = true)
     void delete(QuartzJob quartzJob);
 
     /**
@@ -58,6 +63,7 @@ public interface QuartzJobService {
      * @param id 主键
      * @return 结果
      */
+    @Cacheable(key = "#p0")
     QuartzJob findById(Long id);
 
     /**
@@ -65,6 +71,7 @@ public interface QuartzJobService {
      *
      * @param quartzJob 计划任务
      */
+    @CacheEvict(allEntries = true)
     void updateIsPause(QuartzJob quartzJob);
 
     /**

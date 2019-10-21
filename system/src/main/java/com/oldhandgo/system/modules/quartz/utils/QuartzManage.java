@@ -46,7 +46,7 @@ public class QuartzManage {
             scheduler.scheduleJob(jobDetail, cronTrigger);
 
             // 暂停任务
-            if (quartzJob.getPause()) {
+            if (quartzJob.getIsPause()) {
                 pauseJob(quartzJob);
             }
         } catch (Exception e) {
@@ -59,7 +59,6 @@ public class QuartzManage {
      * 更新job cron表达式
      *
      * @param quartzJob 定时任务
-     * @throws SchedulerException 调度异常
      */
     public void updateJobCron(QuartzJob quartzJob) {
         try {
@@ -78,7 +77,7 @@ public class QuartzManage {
 
             scheduler.rescheduleJob(triggerKey, trigger);
             // 暂停任务
-            if (quartzJob.getPause()) {
+            if (quartzJob.getIsPause()) {
                 pauseJob(quartzJob);
             }
         } catch (Exception e) {
@@ -92,7 +91,6 @@ public class QuartzManage {
      * 删除一个job
      *
      * @param quartzJob 定时任务
-     * @throws SchedulerException 调度异常
      */
     public void deleteJob(QuartzJob quartzJob) {
         try {
@@ -109,7 +107,6 @@ public class QuartzManage {
      * 恢复一个job
      *
      * @param quartzJob 定时任务
-     * @throws SchedulerException 调度异常
      */
     public void resumeJob(QuartzJob quartzJob) {
         try {
@@ -131,7 +128,6 @@ public class QuartzManage {
      * 立即执行job
      *
      * @param quartzJob 定时任务
-     * @throws SchedulerException 调度异常
      */
     public void runAJobNow(QuartzJob quartzJob) {
         try {
@@ -155,7 +151,6 @@ public class QuartzManage {
      * 暂停一个job
      *
      * @param quartzJob 定时任务
-     * @throws SchedulerException 调度异常
      */
     public void pauseJob(QuartzJob quartzJob) {
         try {

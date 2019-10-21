@@ -24,7 +24,6 @@ public class ExecutionJob extends QuartzJobBean {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // 建议自定义线程池实现方式，该处仅供参考
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
@@ -37,7 +36,7 @@ public class ExecutionJob extends QuartzJobBean {
 
         QuartzLog log = new QuartzLog();
         log.setJobName(quartzJob.getJobName());
-        log.setBaenName(quartzJob.getBeanName());
+        log.setBeanName(quartzJob.getBeanName());
         log.setMethodName(quartzJob.getMethodName());
         log.setParams(quartzJob.getParams());
         long startTime = System.currentTimeMillis();
@@ -50,18 +49,18 @@ public class ExecutionJob extends QuartzJobBean {
             Future<?> future = executorService.submit(task);
             future.get();
             long times = System.currentTimeMillis() - startTime;
-            log.setUpdateTime(times);
+            log.setTime(times);
             // 任务状态
-            log.setSuccess(true);
+            log.setIsSuccess(true);
             logger.info("任务执行完毕，任务名称：{} 总共耗时：{} 毫秒", quartzJob.getJobName(), times);
         } catch (Exception e) {
             logger.error("任务执行失败，任务名称：{}" + quartzJob.getJobName(), e);
             long times = System.currentTimeMillis() - startTime;
-            log.setUpdateTime(times);
+            log.setTime(times);
             // 任务状态 0：成功 1：失败
-            log.setSuccess(false);
+            log.setIsSuccess(false);
             log.setExceptionDetail(ThrowableUtils.getStackTrace(e));
-            quartzJob.setPause(false);
+            quartzJob.setIsPause(false);
             //更新状态
             quartzJobService.updateIsPause(quartzJob);
         } finally {
