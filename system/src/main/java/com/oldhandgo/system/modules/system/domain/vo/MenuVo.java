@@ -7,8 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 构建前端路由时用到
- *
  * @author dormirr
  */
 @Data
