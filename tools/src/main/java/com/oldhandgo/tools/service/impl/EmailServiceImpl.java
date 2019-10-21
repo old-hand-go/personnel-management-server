@@ -6,11 +6,11 @@ import com.oldhandgo.common.exception.BadRequestException;
 import com.oldhandgo.common.utils.EncryptUtils;
 import com.oldhandgo.tools.domain.EmailConfig;
 import com.oldhandgo.tools.domain.vo.EmailVo;
+import com.oldhandgo.tools.repository.EmailRepository;
 import com.oldhandgo.tools.service.EmailService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.oldhandgo.tools.repository.EmailRepository;
 
 import java.util.Optional;
 
@@ -31,9 +31,9 @@ public class EmailServiceImpl implements EmailService {
     @Transactional(rollbackFor = Exception.class)
     public EmailConfig update(EmailConfig emailConfig, EmailConfig old) {
         try {
-            if (!emailConfig.getEmailPass().equals(old.getEmailPass())) {
+            if (!emailConfig.getPass().equals(old.getPass())) {
                 // 对称加密
-                emailConfig.setEmailPass(EncryptUtils.desEncrypt(emailConfig.getEmailPass()));
+                emailConfig.setPass(EncryptUtils.desEncrypt(emailConfig.getPass()));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,11 +44,7 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public EmailConfig find() {
         Optional<EmailConfig> emailConfig = emailRepository.findById(1L);
-        if (emailConfig.isPresent()) {
-            return emailConfig.get();
-        } else {
-            return new EmailConfig();
-        }
+        return emailConfig.orElseGet(EmailConfig::new);
     }
 
     @Override
@@ -57,29 +53,28 @@ public class EmailServiceImpl implements EmailService {
         if (emailConfig == null) {
             throw new BadRequestException("请先配置，再操作");
         }
-        /**
-         * 封装
-         */
+
+        // 封装
         MailAccount account = new MailAccount();
-        account.setHost(emailConfig.getEmailHost());
-        account.setPort(Integer.parseInt(emailConfig.getEmailHost()));
+        account.setHost(emailConfig.getHost());
+        account.setPort(Integer.parseInt(emailConfig.getPort()));
         account.setAuth(true);
         try {
             // 对称解密
-            account.setPass(EncryptUtils.desDecrypt(emailConfig.getEmailPass()));
+            account.setPass(EncryptUtils.desDecrypt(emailConfig.getPass()));
         } catch (Exception e) {
             throw new BadRequestException(e.getMessage());
         }
-        account.setFrom(emailConfig.getEmailUser() + "<" + emailConfig.getFromUser() + ">");
-        //ssl方式发送
+        account.setFrom(emailConfig.getUser() + "<" + emailConfig.getFromUser() + ">");
+
+        // ssl方式发送
         account.setSslEnable(true);
         String content = emailVo.getContent();
-        /**
-         * 发送
-         */
+
+        // 发送
         try {
             Mail.create(account)
-                    .setTos(emailVo.getTos().toArray(new String[emailVo.getTos().size()]))
+                    .setTos(emailVo.getTos().toArray(new String[0]))
                     .setTitle(emailVo.getSubject())
                     .setContent(content)
                     .setHtml(true)

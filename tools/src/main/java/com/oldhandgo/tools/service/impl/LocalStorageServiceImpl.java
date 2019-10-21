@@ -7,8 +7,6 @@ import com.oldhandgo.tools.service.LocalStorageService;
 import com.oldhandgo.tools.service.dto.LocalStorageDTO;
 import com.oldhandgo.tools.service.dto.LocalStorageQueryCriteria;
 import com.oldhandgo.tools.service.mapper.LocalStorageMapper;
-import org.apache.catalina.security.SecurityUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,6 +66,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
         File file = FileUtils.upload(multipartFile, path + type + File.separator);
         try {
             name = StringUtils.isBlank(name) ? FileUtils.getFileNameNoEx(multipartFile.getOriginalFilename()) : name;
+            assert file != null;
             LocalStorage localStorage = new LocalStorage(
                     file.getName(),
                     name,
@@ -75,7 +74,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
                     file.getPath(),
                     type,
                     FileUtils.getSize(multipartFile.getSize()),
-                    SecurityUtils.getUserName()
+                    SecurityUtils.getUsername()
             );
             return localStorageMapper.toDto(localStorageRepository.save(localStorage));
         } catch (Exception e) {
@@ -103,7 +102,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
         LocalStorage storage = localStorageRepository.findById(id).get();
-        FileUtils.del(storage.getFilePath());
+        FileUtils.del(storage.getPath());
         localStorageRepository.delete(storage);
     }
 
@@ -112,7 +111,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     public void deleteAll(Long[] ids) {
         for (Long id : ids) {
             LocalStorage storage = localStorageRepository.findById(id).get();
-            FileUtils.del(storage.getFilePath());
+            FileUtils.del(storage.getPath());
             localStorageRepository.delete(storage);
         }
     }

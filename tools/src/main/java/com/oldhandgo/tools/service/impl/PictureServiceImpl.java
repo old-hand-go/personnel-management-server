@@ -11,7 +11,6 @@ import com.oldhandgo.tools.repository.PictureRepository;
 import com.oldhandgo.tools.service.PictureService;
 import com.oldhandgo.tools.service.dto.PictureQueryCriteria;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,14 +29,14 @@ import java.util.Optional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class PictureServiceImpl implements PictureService {
 
-    @Autowired
-    private PictureRepository pictureRepository;
+    private static final String SUCCESS = "success";
+    private static final String CODE = "code";
+    private static final String MSG = "message";
+    private final PictureRepository pictureRepository;
 
-    public static final String SUCCESS = "success";
-
-    public static final String CODE = "code";
-
-    public static final String MSG = "message";
+    public PictureServiceImpl(PictureRepository pictureRepository) {
+        this.pictureRepository = pictureRepository;
+    }
 
     @Override
     public Object queryAll(PictureQueryCriteria criteria, Pageable pageable) {
@@ -54,13 +53,13 @@ public class PictureServiceImpl implements PictureService {
         String result = HttpUtil.post(ElAdminConstant.Url.SM_MS_URL, paramMap);
 
         JSONObject jsonObject = JSONUtil.parseObj(result);
-        Picture picture = null;
+        Picture picture;
         if (!jsonObject.get(CODE).toString().equals(SUCCESS)) {
             throw new BadRequestException(TranslatorUtils.translate(jsonObject.get(MSG).toString()));
         }
         //转成实体类
         picture = JSON.parseObject(jsonObject.get("data").toString(), Picture.class);
-        picture.setSize(FileUtils.getSize(Integer.valueOf(picture.getSize())));
+        picture.setSize(FileUtils.getSize(Integer.parseInt(picture.getSize())));
         picture.setUsername(username);
         picture.setFilename(FileUtils.getFileNameNoEx(multipartFile.getOriginalFilename()) + "." + FileUtils.getExtensionName(multipartFile.getOriginalFilename()));
         pictureRepository.save(picture);
@@ -81,7 +80,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional(rollbackFor = Exception.class)
     public void delete(Picture picture) {
         try {
-            String result = HttpUtil.get(picture.getDeleteUrl());
+            String result = HttpUtil.get(picture.getDelete());
             pictureRepository.delete(picture);
         } catch (Exception e) {
             pictureRepository.delete(picture);
