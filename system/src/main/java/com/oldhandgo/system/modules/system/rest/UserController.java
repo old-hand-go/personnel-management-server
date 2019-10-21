@@ -165,7 +165,7 @@ public class UserController {
     @PostMapping(value = "/users/updateEmail/{code}")
     public ResponseEntity updateEmail(@PathVariable String code, @RequestBody User user) {
         UserDetails userDetails = SecurityUtils.getUserDetails();
-        if (!userDetails.getPassword().equals(EncryptUtils.encryptPassword(user.getPassword()))) {
+        if (!userDetails.getPassword().equals(EncryptUtils.encryptPassword(user.getPassWord()))) {
             throw new BadRequestException("密码错误");
         }
         VerificationCode verificationCode = new VerificationCode(code, ElAdminConstant.RESET_MAIL, "email", user.getEmail());
