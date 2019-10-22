@@ -94,16 +94,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/auth/" + loginPath).anonymous()
                 .antMatchers("/auth/vCode").anonymous()
-                // 支付宝回调
-                .antMatchers("/api/aliPay/return").anonymous()
-                .antMatchers("/api/aliPay/notify").anonymous()
-
-                // swagger start
-                .antMatchers("/swagger-ui.html").anonymous()
-                .antMatchers("/swagger-resources/**").anonymous()
-                .antMatchers("/webjars/**").anonymous()
-                .antMatchers("/*/api-docs").anonymous()
-                // swagger end
 
                 // 接口限流测试
                 .antMatchers("/test/**").anonymous()

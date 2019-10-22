@@ -83,11 +83,6 @@ public class LocalStorageServiceImpl implements LocalStorageService {
         }
     }
 
-    public static void main(String[] args) {
-        File file = new File("C:\\Users\\Jie\\Pictures\\Saved Pictures\\demo1.jpg");
-        System.out.println(FileUtils.getType(file));
-    }
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(LocalStorage resources) {

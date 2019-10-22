@@ -78,7 +78,7 @@ public class DataScope {
         deptList.forEach(dept -> {
                     if (dept != null && dept.getEnabled()) {
                         List<Dept> depts = deptService.findByPid(dept.getId());
-                        if (deptList != null && deptList.size() != 0) {
+                        if (deptList.size() != 0) {
                             list.addAll(getDeptChildren(depts));
                         }
                         list.add(dept.getId());
