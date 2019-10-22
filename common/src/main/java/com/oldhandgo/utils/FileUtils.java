@@ -6,6 +6,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.oldhandgo.exception.BadRequestException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.activation.MimetypesFileTypeMap;
@@ -45,6 +46,12 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
     private static final DecimalFormat DF = new DecimalFormat("0.00");
 
     /**
+     * tmp路径
+     */
+    @Value("${file.tmp}")
+    private static String path;
+
+    /**
      * MultipartFile转File
      *
      * @param multipartFile MultipartFile类
@@ -79,6 +86,7 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
             }
         }
     }
+
     /**
      * 获取文件扩展名
      *
@@ -143,10 +151,11 @@ public class FileUtils extends cn.hutool.core.io.FileUtil {
      * @throws Exception 异常
      */
     public static File inputStreamToFile(InputStream inputStream, String name) throws Exception {
-        File file = new File(System.getProperty("java.io.tmpdir") + name);
+        File file = new File(path + name);
         if (file.exists()) {
             return file;
         }
+
         OutputStream os = new FileOutputStream(file);
         int bytesRead;
         byte[] buffer = new byte[8192];
