@@ -31,7 +31,7 @@ CREATE TABLE `dept`
     `enabled`     bit(1)       NOT NULL COMMENT '1开0关',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 13
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='部门表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -44,7 +44,7 @@ LOCK TABLES `dept` WRITE;
 /*!40000 ALTER TABLE `dept`
     DISABLE KEYS */;
 INSERT INTO `dept`
-VALUES (1, 'eladmin', 0, '2019-10-22 14:53:10', ''),
+VALUES (1, '公司', 0, '2019-10-22 14:53:10', ''),
        (2, '研发部', 7, '2019-10-22 14:53:41', ''),
        (5, '运维部', 7, '2019-10-22 14:53:42', ''),
        (6, '测试部', 8, '2019-10-22 14:53:45', ''),
@@ -71,7 +71,7 @@ CREATE TABLE `dict` (
                         `remark` varchar(255) DEFAULT NULL COMMENT '描述',
                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 6
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='字典表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -106,7 +106,7 @@ CREATE TABLE `dict_detail` (
                                KEY `FK5tpkputc6d9nboxojdbgnpmyb` (`dict_id`) USING BTREE,
                                CONSTRAINT `FK5tpkputc6d9nboxojdbgnpmyb` FOREIGN KEY (`dict_id`) REFERENCES `dict` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 15
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='字典详细描述表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -177,7 +177,7 @@ CREATE TABLE `job` (
                        KEY `FKmvhj0rogastlctflsxf1d6k3i` (`dept_id`) USING BTREE,
                        CONSTRAINT `FKmvhj0rogastlctflsxf1d6k3i` FOREIGN KEY (`dept_id`) REFERENCES `dept` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 20
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -219,6 +219,7 @@ CREATE TABLE `local_storage`
     `update_time` datetime     DEFAULT NULL COMMENT '修改日期',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='本地文件表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -256,7 +257,7 @@ CREATE TABLE `log`
     `address`          varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 39
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='日志表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -268,21 +269,6 @@ CREATE TABLE `log`
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log`
     DISABLE KEYS */;
-INSERT INTO `log`
-VALUES (35, '2019-10-22 15:06:31', '用户登录', NULL, 'INFO',
-        'com.oldhandgo.modules.security.rest.AuthenticationController.login()',
-        '{ authorizationUser: {username=admin, password= ******} }', '127.0.0.1', 28, 'admin', ''),
-       (36, '2019-10-22 15:06:47', '查询定时任务', NULL, 'INFO',
-        'com.oldhandgo.modules.quartz.rest.QuartzJobController.getJobs()',
-        '{ criteria: JobQueryCriteria(jobName=null, isSuccess=null) pageable: Page request [number: 0, size 10, sort: id: DESC] }',
-        '127.0.0.1', 23, 'admin', ''),
-       (37, '2019-10-22 15:06:52', '查询图片', NULL, 'INFO', 'com.oldhandgo.rest.PictureController.getRoles()',
-        '{ criteria: PictureQueryCriteria(filename=null, username=null) pageable: Page request [number: 0, size 10, sort: id: DESC] }',
-        '127.0.0.1', 19, 'admin', ''),
-       (38, '2019-10-22 15:07:01', '查询Redis缓存',
-        'com.alibaba.fastjson.JSONException: autoType is not support. me.zhengjie.modules.system.service.dto.DeptDTO\n	at com.alibaba.fastjson.parser.ParserConfig.checkAutoType(ParserConfig.java:1132)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:316)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:1192)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:504)\n	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.deserialze(MapDeserializer.java:64)\n	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.deserialze(MapDeserializer.java:41)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:386)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parse(DefaultJSONParser.java:1367)\n	at com.alibaba.fastjson.parser.deserializer.JavaObjectDeserializer.deserialze(JavaObjectDeserializer.java:51)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:671)\n	at com.alibaba.fastjson.JSON.parseObject(JSON.java:368)\n	at com.alibaba.fastjson.JSON.parseObject(JSON.java:272)\n	at com.alibaba.fastjson.JSON.parseObject(JSON.java:491)\n	at com.oldhandgo.redis.FastJsonRedisSerializer.deserialize(FastJsonRedisSerializer.java:42)\n	at org.springframework.data.redis.core.AbstractOperations.deserializeValue(AbstractOperations.java:335)\n	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:61)\n	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:225)\n	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:185)\n	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:96)\n	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:53)\n	at com.oldhandgo.modules.monitor.service.impl.RedisServiceImpl.findByKey(RedisServiceImpl.java:44)\n	at com.oldhandgo.modules.monitor.rest.RedisController.getRedis(RedisController.java:29)\n	at com.oldhandgo.modules.monitor.rest.RedisController$$FastClassBySpringCGLIB$$fd4efbd5.invoke(<generated>)\n	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)\n	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:750)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)\n	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:88)\n	at com.oldhandgo.aspect.LogAspect.logAround(LogAspect.java:51)\n	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n	at java.base/java.lang.reflect.Method.invoke(Method.java:566)\n	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)\n	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)\n	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)\n	at org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:62)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)\n	at org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor.invoke(MethodSecurityInterceptor.java:69)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)\n	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:93)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)\n	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689)\n	at com.oldhandgo.modules.monitor.rest.RedisController$$EnhancerBySpringCGLIB$$148dde57.getRedis(<generated>)\n	at com.oldhandgo.modules.monitor.rest.RedisController$$FastClassBySpringCGLIB$$fd4efbd5.invoke(<generated>)\n	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)\n	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:750)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)\n	at org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor.invoke(MethodSecurityInterceptor.java:69)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)\n	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689)\n	at com.oldhandgo.modules.monitor.rest.RedisController$$EnhancerBySpringCGLIB$$dc31c008.getRedis(<generated>)\n	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n	at java.base/java.lang.reflect.Method.invoke(Method.java:566)\n	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)\n	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)\n	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)\n	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893)\n	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:798)\n	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)\n	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)\n	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)\n	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)\n	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)\n	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)\n	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)\n	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:113)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:320)\n	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:127)\n	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:91)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:170)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at com.oldhandgo.modules.security.security.JwtAuthorizationTokenFilter.doFilterInternal(JwtAuthorizationTokenFilter.java:68)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:74)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:215)\n	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)\n	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)\n	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)\n	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)\n	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:526)\n	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)\n	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)\n	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\n	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)\n	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)\n	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)\n	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:860)\n	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1589)\n	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)\n	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)\n	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)\n	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)\n	at java.base/java.lang.Thread.run(Thread.java:834)\n',
-        'ERROR', 'com.oldhandgo.modules.monitor.rest.RedisController.getRedis()',
-        '{ key: * pageable: Page request [number: 0, size 10, sort: UNSORTED] }', '127.0.0.1', 95, 'admin', '');
 /*!40000 ALTER TABLE `log`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -310,7 +296,7 @@ CREATE TABLE `menu` (
                         PRIMARY KEY (`id`) USING BTREE,
                         KEY `FKqcf9gem97gqa5qjm4d3elcqt5` (`pid`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 40
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='菜单表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -364,7 +350,7 @@ CREATE TABLE `permission` (
                               `pid`         int(11)    NOT NULL COMMENT '上级权限',
                               PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 60
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='权限表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -487,7 +473,7 @@ CREATE TABLE `quartz_job`
     `update_time`     datetime     DEFAULT NULL COMMENT '创建或更新日期',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 4
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='自动任务表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -528,7 +514,7 @@ CREATE TABLE `quartz_log`
     `time`             bigint(20)   DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 52
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='自动任务日志表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -562,7 +548,7 @@ CREATE TABLE `role` (
                         `level`       int(255)     DEFAULT NULL,
                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 5
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='角色表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -759,7 +745,7 @@ CREATE TABLE `user` (
                         CONSTRAINT `FKfftoc2abhot8f2wu6cl9a5iky` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`),
                         CONSTRAINT `FKpq2dhypk2qgt68nauh2by22jb` FOREIGN KEY (`avatar_id`) REFERENCES `user_avatar` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 7
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -771,7 +757,7 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user`
-VALUES (1, NULL, '2019-10-17 20:04:12', 'zhangtianci@zhangtianci.cn', 1, 'e10adc3949ba59abbe56e057f20f883e', 'admin',
+VALUES (1, 3, '2019-10-17 20:04:12', 'zhangtianci@zhangtianci.cn', 1, 'e10adc3949ba59abbe56e057f20f883e', 'admin',
         '2019-05-18 17:34:21', 2, '17614884176', 11),
        (3, NULL, '2019-10-22 15:03:13', 'test@qq.com', 1, 'e10adc3949ba59abbe56e057f20f883e', 'test',
         '2019-04-01 09:15:24', 2, '17777777777', 12),
@@ -797,7 +783,7 @@ CREATE TABLE `user_avatar`
     `size`      varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 3
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='用户头像表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -809,6 +795,9 @@ CREATE TABLE `user_avatar`
 LOCK TABLES `user_avatar` WRITE;
 /*!40000 ALTER TABLE `user_avatar`
     DISABLE KEYS */;
+INSERT INTO `user_avatar`
+VALUES (3, '灯泡-20191022045108443.png',
+        '/home/dormirr/IdeaProjects/personnel-management-server/avatar/灯泡-20191022045108443.png', '24.38KB   ');
 /*!40000 ALTER TABLE `user_avatar`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -897,7 +886,7 @@ CREATE TABLE `visits`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `UK_11aksgq87euk9bcyeesfs4vtp` (`date`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 99
+  AUTO_INCREMENT = 4
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='访客表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -910,9 +899,9 @@ LOCK TABLES `visits` WRITE;
 /*!40000 ALTER TABLE `visits`
     DISABLE KEYS */;
 INSERT INTO `visits`
-VALUES (96, '2019-10-19 17:17:27', '2019-10-19', 1, 2, 'Sat'),
-       (97, '2019-10-21 14:55:43', '2019-10-21', 1, 9, 'Mon'),
-       (98, '2019-10-22 14:33:34', '2019-10-22', 1, 4, 'Tue');
+VALUES (1, '2019-10-19 17:17:27', '2019-10-19', 1, 2, 'Sat'),
+       (2, '2019-10-21 14:55:43', '2019-10-21', 1, 9, 'Mon'),
+       (3, '2019-10-22 14:33:34', '2019-10-22', 1, 11, 'Tue');
 /*!40000 ALTER TABLE `visits`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -926,4 +915,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-22 15:07:20
+-- Dump completed on 2019-10-22 16:54:41
