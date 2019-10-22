@@ -94,28 +94,27 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public CacheErrorHandler errorHandler() {
         // 异常处理，当Redis发生异常时，打印日志，但是程序正常走
-        log.info("初始化 -> [{}]", "Redis CacheErrorHandler");
+        log.info("初始化 -> [{}]", "Redis缓存错误处理程序");
         return new CacheErrorHandler() {
             @Override
             public void handleCacheGetError(RuntimeException e, Cache cache, Object key) {
-                log.error("Redis occur handleCacheGetError：key -> [{}]", key, e);
+                log.error("Redis发生处理缓存获取错误：key -> [{}]", key, e);
             }
 
             @Override
             public void handleCachePutError(RuntimeException e, Cache cache, Object key, Object value) {
-                log.error("Redis occur handleCachePutError：key -> [{}]；value -> [{}]", key, value, e);
+                log.error("Redis发生处理缓存放置错误：key -> [{}]；value -> [{}]", key, value, e);
             }
 
             @Override
             public void handleCacheEvictError(RuntimeException e, Cache cache, Object key) {
-                log.error("Redis occur handleCacheEvictError：key -> [{}]", key, e);
+                log.error("Redis发生处理缓存清除错误：key -> [{}]", key, e);
             }
 
             @Override
             public void handleCacheClearError(RuntimeException e, Cache cache) {
-                log.error("Redis occur handleCacheClearError：", e);
+                log.error("Redis发生处理缓存清除错误：", e);
             }
         };
     }
-
 }
