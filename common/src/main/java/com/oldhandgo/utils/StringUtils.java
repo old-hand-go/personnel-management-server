@@ -159,7 +159,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             DbConfig config = new DbConfig();
             File file = FileUtils.inputStreamToFile(new ClassPathResource(path).getStream(), name);
             DbSearcher searcher = new DbSearcher(config, file.getPath());
-            Method method = null;
+            Method method;
             switch (algorithm) {
                 case DbSearcher.BTREE_ALGORITHM:
                     method = searcher.getClass().getMethod("btreeSearch", String.class);
@@ -186,6 +186,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
         return "";
     }
+
     /**
      * 获得当天是周几
      *
