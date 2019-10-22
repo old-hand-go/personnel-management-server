@@ -144,18 +144,41 @@ CREATE TABLE `email_config`
     `user`      varchar(255) DEFAULT NULL COMMENT '发件者用户名',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='邮箱配置表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `email_config`
+-- Table structure for table `hibernate_sequence`
 --
 
-LOCK TABLES `email_config` WRITE;
-/*!40000 ALTER TABLE `email_config`
+DROP TABLE IF EXISTS `hibernate_sequence`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hibernate_sequence`
+(
+    `next_not_cached_value` bigint(21)          NOT NULL,
+    `minimum_value`         bigint(21)          NOT NULL,
+    `maximum_value`         bigint(21)          NOT NULL,
+    `start_value`           bigint(21)          NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
+    `increment`             bigint(21)          NOT NULL COMMENT 'increment value',
+    `cache_size`            bigint(21) unsigned NOT NULL,
+    `cycle_option`          tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
+    `cycle_count`           bigint(21)          NOT NULL COMMENT 'How many cycles have been done'
+) ENGINE = InnoDB SEQUENCE=1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hibernate_sequence`
+--
+
+LOCK TABLES `hibernate_sequence` WRITE;
+/*!40000 ALTER TABLE `hibernate_sequence`
     DISABLE KEYS */;
-/*!40000 ALTER TABLE `email_config`
+INSERT INTO `hibernate_sequence`
+VALUES (1, 1, 9223372036854775806, 1, 1, 1000, 0, 0);
+/*!40000 ALTER TABLE `hibernate_sequence`
     ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,6 +254,10 @@ CREATE TABLE `local_storage`
 LOCK TABLES `local_storage` WRITE;
 /*!40000 ALTER TABLE `local_storage`
     DISABLE KEYS */;
+INSERT INTO `local_storage`
+VALUES (1, '头像-20191022060941948.jpg', '头像', 'jpg',
+        '/home/dormirr/IdeaProjects/personnel-management-server/file/图片/头像-20191022060941948.jpg', '图片', '5.07KB   ',
+        'admin', '2019-10-22 18:09:41', '2019-10-22 18:09:41');
 /*!40000 ALTER TABLE `local_storage`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -261,17 +288,6 @@ CREATE TABLE `log`
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='日志表';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `log`
---
-
-LOCK TABLES `log` WRITE;
-/*!40000 ALTER TABLE `log`
-    DISABLE KEYS */;
-/*!40000 ALTER TABLE `log`
-    ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `menu`
@@ -362,59 +378,59 @@ CREATE TABLE `permission` (
 LOCK TABLES `permission` WRITE;
 /*!40000 ALTER TABLE `permission` DISABLE KEYS */;
 INSERT INTO `permission`
-VALUES (1, '超级管理员', '2018-12-03 12:27:48', 'ADMIN', 0),
-       (2, '用户管理', '2018-12-03 12:28:19', 'USER_ALL', 0),
-       (3, '用户查询', '2018-12-03 12:31:35', 'USER_SELECT', 2),
-       (4, '用户创建', '2018-12-03 12:31:35', 'USER_CREATE', 2),
-       (5, '用户编辑', '2018-12-03 12:31:35', 'USER_EDIT', 2),
-       (6, '用户删除', '2018-12-03 12:31:35', 'USER_DELETE', 2),
-       (7, '角色管理', '2018-12-03 12:28:19', 'ROLES_ALL', 0),
-       (8, '角色查询', '2018-12-03 12:31:35', 'ROLES_SELECT', 7),
-       (10, '角色创建', '2018-12-09 20:10:16', 'ROLES_CREATE', 7),
-       (11, '角色编辑', '2018-12-09 20:10:42', 'ROLES_EDIT', 7),
-       (12, '角色删除', '2018-12-09 20:11:07', 'ROLES_DELETE', 7),
-       (13, '权限管理', '2018-12-09 20:11:37', 'PERMISSION_ALL', 0),
-       (14, '权限查询', '2018-12-09 20:11:55', 'PERMISSION_SELECT', 13),
-       (15, '权限创建', '2018-12-09 20:14:10', 'PERMISSION_CREATE', 13),
-       (16, '权限编辑', '2018-12-09 20:15:44', 'PERMISSION_EDIT', 13),
-       (17, '权限删除', '2018-12-09 20:15:59', 'PERMISSION_DELETE', 13),
-       (18, '缓存管理', '2018-12-17 13:53:25', 'REDIS_ALL', 0),
-       (20, '缓存查询', '2018-12-17 13:54:07', 'REDIS_SELECT', 18),
-       (22, '缓存删除', '2018-12-17 13:55:04', 'REDIS_DELETE', 18),
-       (23, '图床管理', '2018-12-27 20:31:49', 'PICTURE_ALL', 0),
-       (24, '查询图片', '2018-12-27 20:32:04', 'PICTURE_SELECT', 23),
-       (25, '上传图片', '2018-12-27 20:32:24', 'PICTURE_UPLOAD', 23),
-       (26, '删除图片', '2018-12-27 20:32:45', 'PICTURE_DELETE', 23),
-       (29, '菜单管理', '2018-12-28 17:34:31', 'MENU_ALL', 0),
-       (30, '菜单查询', '2018-12-28 17:34:41', 'MENU_SELECT', 29),
-       (31, '菜单创建', '2018-12-28 17:34:52', 'MENU_CREATE', 29),
-       (32, '菜单编辑', '2018-12-28 17:35:20', 'MENU_EDIT', 29),
-       (33, '菜单删除', '2018-12-28 17:35:29', 'MENU_DELETE', 29),
-       (35, '定时任务管理', '2019-01-08 14:59:57', 'JOB_ALL', 0),
-       (36, '任务查询', '2019-01-08 15:00:09', 'JOB_SELECT', 35),
-       (37, '任务创建', '2019-01-08 15:00:20', 'JOB_CREATE', 35),
-       (38, '任务编辑', '2019-01-08 15:00:33', 'JOB_EDIT', 35),
-       (39, '任务删除', '2019-01-08 15:01:13', 'JOB_DELETE', 35),
-       (40, '部门管理', '2019-03-29 17:06:55', 'DEPT_ALL', 0),
-       (41, '部门查询', '2019-03-29 17:07:09', 'DEPT_SELECT', 40),
-       (42, '部门创建', '2019-03-29 17:07:29', 'DEPT_CREATE', 40),
-       (43, '部门编辑', '2019-03-29 17:07:52', 'DEPT_EDIT', 40),
-       (44, '部门删除', '2019-03-29 17:08:14', 'DEPT_DELETE', 40),
-       (45, '岗位管理', '2019-03-29 17:08:52', 'USERJOB_ALL', 0),
-       (46, '岗位查询', '2019-03-29 17:10:27', 'USERJOB_SELECT', 45),
-       (47, '岗位创建', '2019-03-29 17:10:55', 'USERJOB_CREATE', 45),
-       (48, '岗位编辑', '2019-03-29 17:11:08', 'USERJOB_EDIT', 45),
-       (49, '岗位删除', '2019-03-29 17:11:19', 'USERJOB_DELETE', 45),
-       (50, '字典管理', '2019-04-10 16:24:51', 'DICT_ALL', 0),
-       (51, '字典查询', '2019-04-10 16:25:16', 'DICT_SELECT', 50),
-       (52, '字典创建', '2019-04-10 16:25:29', 'DICT_CREATE', 50),
-       (53, '字典编辑', '2019-04-10 16:27:19', 'DICT_EDIT', 50),
-       (54, '字典删除', '2019-04-10 16:27:30', 'DICT_DELETE', 50),
-       (55, '文件管理', '2019-09-08 12:31:54', 'LOCALSTORAGE_ALL', 0),
-       (56, '文件搜索', '2019-09-08 12:40:53', 'LOCALSTORAGE_SELECT', 55),
-       (57, '文件上传', '2019-09-08 12:41:05', 'LOCALSTORAGE_CREATE', 55),
-       (58, '文件编辑', '2019-09-08 12:41:19', 'LOCALSTORAGE_EDIT', 55),
-       (59, '文件删除', '2019-09-08 12:41:29', 'LOCALSTORAGE_DELETE', 55);
+VALUES (1, '超级管理员', '2019-10-22 18:06:22', 'ADMIN', 0),
+       (2, '用户管理', '2019-10-22 18:06:22', 'USER_ALL', 0),
+       (3, '用户查询', '2019-10-22 18:06:22', 'USER_SELECT', 2),
+       (4, '用户创建', '2019-10-22 18:06:22', 'USER_CREATE', 2),
+       (5, '用户编辑', '2019-10-22 18:06:22', 'USER_EDIT', 2),
+       (6, '用户删除', '2019-10-22 18:06:22', 'USER_DELETE', 2),
+       (7, '角色管理', '2019-10-22 18:06:22', 'ROLES_ALL', 0),
+       (8, '角色查询', '2019-10-22 18:06:22', 'ROLES_SELECT', 7),
+       (10, '角色创建', '2019-10-22 18:06:22', 'ROLES_CREATE', 7),
+       (11, '角色编辑', '2019-10-22 18:06:22', 'ROLES_EDIT', 7),
+       (12, '角色删除', '2019-10-22 18:06:22', 'ROLES_DELETE', 7),
+       (13, '权限管理', '2019-10-22 18:06:22', 'PERMISSION_ALL', 0),
+       (14, '权限查询', '2019-10-22 18:06:22', 'PERMISSION_SELECT', 13),
+       (15, '权限创建', '2019-10-22 18:06:22', 'PERMISSION_CREATE', 13),
+       (16, '权限编辑', '2019-10-22 18:06:22', 'PERMISSION_EDIT', 13),
+       (17, '权限删除', '2019-10-22 18:06:22', 'PERMISSION_DELETE', 13),
+       (18, '缓存管理', '2019-10-22 18:06:22', 'REDIS_ALL', 0),
+       (20, '缓存查询', '2019-10-22 18:06:22', 'REDIS_SELECT', 18),
+       (22, '缓存删除', '2019-10-22 18:06:22', 'REDIS_DELETE', 18),
+       (23, '图床管理', '2019-10-22 18:06:22', 'PICTURE_ALL', 0),
+       (24, '查询图片', '2019-10-22 18:06:22', 'PICTURE_SELECT', 23),
+       (25, '上传图片', '2019-10-22 18:06:22', 'PICTURE_UPLOAD', 23),
+       (26, '删除图片', '2019-10-22 18:06:22', 'PICTURE_DELETE', 23),
+       (29, '菜单管理', '2019-10-22 18:06:22', 'MENU_ALL', 0),
+       (30, '菜单查询', '2019-10-22 18:06:22', 'MENU_SELECT', 29),
+       (31, '菜单创建', '2019-10-22 18:06:22', 'MENU_CREATE', 29),
+       (32, '菜单编辑', '2019-10-22 18:06:22', 'MENU_EDIT', 29),
+       (33, '菜单删除', '2019-10-22 18:06:22', 'MENU_DELETE', 29),
+       (35, '定时任务管理', '2019-10-22 18:06:22', 'JOB_ALL', 0),
+       (36, '任务查询', '2019-10-22 18:06:22', 'JOB_SELECT', 35),
+       (37, '任务创建', '2019-10-22 18:06:22', 'JOB_CREATE', 35),
+       (38, '任务编辑', '2019-10-22 18:06:22', 'JOB_EDIT', 35),
+       (39, '任务删除', '2019-10-22 18:06:22', 'JOB_DELETE', 35),
+       (40, '部门管理', '2019-10-22 18:06:22', 'DEPT_ALL', 0),
+       (41, '部门查询', '2019-10-22 18:06:22', 'DEPT_SELECT', 40),
+       (42, '部门创建', '2019-10-22 18:06:22', 'DEPT_CREATE', 40),
+       (43, '部门编辑', '2019-10-22 18:06:22', 'DEPT_EDIT', 40),
+       (44, '部门删除', '2019-10-22 18:06:22', 'DEPT_DELETE', 40),
+       (45, '岗位管理', '2019-10-22 18:06:22', 'USERJOB_ALL', 0),
+       (46, '岗位查询', '2019-10-22 18:06:22', 'USERJOB_SELECT', 45),
+       (47, '岗位创建', '2019-10-22 18:06:22', 'USERJOB_CREATE', 45),
+       (48, '岗位编辑', '2019-10-22 18:06:22', 'USERJOB_EDIT', 45),
+       (49, '岗位删除', '2019-10-22 18:06:22', 'USERJOB_DELETE', 45),
+       (50, '字典管理', '2019-10-22 18:06:22', 'DICT_ALL', 0),
+       (51, '字典查询', '2019-10-22 18:06:22', 'DICT_SELECT', 50),
+       (52, '字典创建', '2019-10-22 18:06:22', 'DICT_CREATE', 50),
+       (53, '字典编辑', '2019-10-22 18:06:22', 'DICT_EDIT', 50),
+       (54, '字典删除', '2019-10-22 18:06:22', 'DICT_DELETE', 50),
+       (55, '文件管理', '2019-10-22 18:06:22', 'LOCALSTORAGE_ALL', 0),
+       (56, '文件搜索', '2019-10-22 18:06:22', 'LOCALSTORAGE_SELECT', 55),
+       (57, '文件上传', '2019-10-22 18:06:22', 'LOCALSTORAGE_CREATE', 55),
+       (58, '文件编辑', '2019-10-22 18:06:22', 'LOCALSTORAGE_EDIT', 55),
+       (59, '文件删除', '2019-10-22 18:06:22', 'LOCALSTORAGE_DELETE', 55);
 /*!40000 ALTER TABLE `permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,20 +454,10 @@ CREATE TABLE `picture`
     `width`       varchar(255) DEFAULT NULL COMMENT '图片宽度',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='图片表';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `picture`
---
-
-LOCK TABLES `picture` WRITE;
-/*!40000 ALTER TABLE `picture`
-    DISABLE KEYS */;
-/*!40000 ALTER TABLE `picture`
-    ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `quartz_job`
@@ -527,7 +533,7 @@ LOCK TABLES `quartz_log` WRITE;
 /*!40000 ALTER TABLE `quartz_log`
     DISABLE KEYS */;
 INSERT INTO `quartz_log`
-VALUES (51, 'testTask', '2019-10-22 15:03:13', '0/5 * * * * ?', NULL, '', '测试1', 'run1', 'test', 3);
+VALUES (1, 'testTask', '2019-10-22 15:03:13', '0/5 * * * * ?', NULL, '', '测试1', 'run1', 'test', 3);
 /*!40000 ALTER TABLE `quartz_log`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -560,9 +566,9 @@ CREATE TABLE `role` (
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 INSERT INTO `role`
-VALUES (1, '2018-11-23 11:04:37', '超级管理员', '啥也能干。', '全部', 1),
-       (2, '2018-11-23 13:09:06', '普通用户', '用于测试菜单与权限', '自定义', 3),
-       (4, '2019-05-13 14:16:15', '普通管理员', '普通管理员级别为2，使用该角色新增用户时只能赋予比普通管理员级别低的角色', '自定义', 2);
+VALUES (1, '2019-10-22 18:06:22', '超级管理员', '啥也能干', '全部', 1),
+       (2, '2019-10-22 18:06:22', '普通用户', '用于测试菜单与权限', '自定义', 3),
+       (4, '2019-10-22 18:06:22', '普通管理员', '普通管理员级别为2，使用该角色新增用户时只能赋予比普通管理员级别低的角色', '自定义', 2);
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -630,43 +636,37 @@ LOCK TABLES `roles_menus` WRITE;
 /*!40000 ALTER TABLE `roles_menus` DISABLE KEYS */;
 INSERT INTO `roles_menus`
 VALUES (1, 1),
-       (1, 2),
        (1, 4),
        (2, 1),
-       (2, 2),
        (2, 4),
        (3, 1),
-       (3, 2),
        (4, 1),
-       (4, 2),
        (5, 1),
-       (5, 2),
        (6, 1),
-       (6, 2),
        (7, 1),
        (8, 1),
-       (8, 2),
        (9, 1),
-       (9, 2),
        (10, 1),
-       (10, 2),
+       (10, 4),
        (14, 1),
        (14, 2),
+       (14, 4),
        (16, 1),
        (16, 2),
+       (16, 4),
        (18, 1),
        (18, 2),
+       (18, 4),
        (28, 1),
        (28, 2),
+       (28, 4),
        (32, 1),
        (35, 1),
-       (35, 2),
        (36, 1),
        (36, 2),
+       (36, 4),
        (37, 1),
-       (37, 2),
-       (39, 1),
-       (39, 2);
+       (39, 1);
 /*!40000 ALTER TABLE `roles_menus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -745,7 +745,7 @@ CREATE TABLE `user` (
                         CONSTRAINT `FKfftoc2abhot8f2wu6cl9a5iky` FOREIGN KEY (`job_id`) REFERENCES `job` (`id`),
                         CONSTRAINT `FKpq2dhypk2qgt68nauh2by22jb` FOREIGN KEY (`avatar_id`) REFERENCES `user_avatar` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 1
+  AUTO_INCREMENT = 7
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -757,10 +757,10 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user`
-VALUES (1, 3, '2019-10-17 20:04:12', 'zhangtianci@zhangtianci.cn', 1, 'e10adc3949ba59abbe56e057f20f883e', 'admin',
-        '2019-05-18 17:34:21', 2, '17614884176', 11),
-       (3, NULL, '2019-10-22 15:03:13', 'test@qq.com', 1, 'e10adc3949ba59abbe56e057f20f883e', 'test',
-        '2019-04-01 09:15:24', 2, '17777777777', 12),
+VALUES (1, 3, '2019-10-17 20:04:12', 'zhangtianci@zhangtianci.cn', 1, 'e10adc3949ba59abbe56e057f20f883e', 'admin', NULL,
+        2, '17614884176', 11),
+       (3, NULL, '2019-10-22 15:03:13', 'test@qq.com', 1, 'e10adc3949ba59abbe56e057f20f883e', 'test', NULL, 2,
+        '17777777777', 12),
        (5, NULL, '2019-10-22 15:03:13', 'hr@qq.com', 1, 'e10adc3949ba59abbe56e057f20f883e', 'hr', NULL, 11,
         '15555555555', 8),
        (6, NULL, '2019-10-22 15:03:13', '123@qq.com', 0, 'e10adc3949ba59abbe56e057f20f883e', '鸡哥', NULL, 2,
@@ -886,7 +886,7 @@ CREATE TABLE `visits`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `UK_11aksgq87euk9bcyeesfs4vtp` (`date`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 4
+  AUTO_INCREMENT = 1
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='访客表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -901,7 +901,7 @@ LOCK TABLES `visits` WRITE;
 INSERT INTO `visits`
 VALUES (1, '2019-10-19 17:17:27', '2019-10-19', 1, 2, 'Sat'),
        (2, '2019-10-21 14:55:43', '2019-10-21', 1, 9, 'Mon'),
-       (3, '2019-10-22 14:33:34', '2019-10-22', 1, 11, 'Tue');
+       (3, '2019-10-22 14:33:34', '2019-10-22', 1, 15, 'Tue');
 /*!40000 ALTER TABLE `visits`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -915,4 +915,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-22 16:54:41
+-- Dump completed on 2019-10-22 19:10:15
