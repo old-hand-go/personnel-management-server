@@ -145,7 +145,7 @@ public class PermissionServiceImpl implements PermissionService {
             }
         }
 
-        Integer totalElements = permissionDTOS != null ? permissionDTOS.size() : 0;
+        Integer totalElements = permissionDTOS.size();
 
         Map map = new HashMap();
         map.put("content", trees.size() == 0 ? permissionDTOS : trees);
