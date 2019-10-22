@@ -44,16 +44,16 @@ LOCK TABLES `dept` WRITE;
 /*!40000 ALTER TABLE `dept`
     DISABLE KEYS */;
 INSERT INTO `dept`
-VALUES (1, 'eladmin', 0, '2019-03-25 09:14:05', ''),
-       (2, '研发部', 7, '2019-03-25 09:15:32', ''),
-       (5, '运维部', 7, '2019-03-25 09:20:44', ''),
-       (6, '测试部', 8, '2019-03-25 09:52:18', ''),
-       (7, '华南分部', 1, '2019-03-25 11:04:50', ''),
-       (8, '华北分部', 1, '2019-03-25 11:04:53', ''),
-       (9, '财务部', 7, '2019-03-25 11:05:34', ''),
-       (10, '行政部', 8, '2019-03-25 11:05:58', ''),
-       (11, '人事部', 8, '2019-03-25 11:07:58', ''),
-       (12, '市场部', 7, '2019-03-25 11:10:24', '\0');
+VALUES (1, 'eladmin', 0, '2019-10-22 14:53:10', ''),
+       (2, '研发部', 7, '2019-10-22 14:53:41', ''),
+       (5, '运维部', 7, '2019-10-22 14:53:42', ''),
+       (6, '测试部', 8, '2019-10-22 14:53:45', ''),
+       (7, '华南分部', 1, '2019-10-22 14:53:46', ''),
+       (8, '华北分部', 1, '2019-10-22 14:53:47', ''),
+       (9, '财务部', 7, '2019-10-22 14:53:48', ''),
+       (10, '行政部', 8, '2019-10-22 14:53:49', ''),
+       (11, '人事部', 8, '2019-10-22 14:53:50', ''),
+       (12, '市场部', 7, '2019-10-22 14:53:50', '\0');
 /*!40000 ALTER TABLE `dept`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -189,12 +189,12 @@ CREATE TABLE `job` (
 LOCK TABLES `job` WRITE;
 /*!40000 ALTER TABLE `job` DISABLE KEYS */;
 INSERT INTO `job`
-VALUES (2, '董事长秘书', '', '2019-03-29 14:01:30', 2, 1),
-       (8, '人事专员', '', '2019-03-29 14:52:28', 3, 11),
-       (10, '产品经理', '\0', '2019-03-29 14:55:51', 4, 2),
-       (11, '全栈开发', '', '2019-03-31 13:39:30', 6, 2),
-       (12, '软件测试', '', '2019-03-31 13:39:43', 5, 2),
-       (19, '董事长', '', '2019-03-31 14:58:15', 1, 1);
+VALUES (2, '董事长秘书', '', '2019-10-22 14:54:29', 2, 1),
+       (8, '人事专员', '', '2019-10-22 14:54:30', 3, 11),
+       (10, '产品经理', '\0', '2019-10-22 14:54:30', 4, 2),
+       (11, '全栈开发', '', '2019-10-22 14:54:31', 6, 2),
+       (12, '软件测试', '', '2019-10-22 14:54:32', 5, 2),
+       (19, '董事长', '', '2019-10-22 14:54:33', 1, 1);
 /*!40000 ALTER TABLE `job` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,6 +256,7 @@ CREATE TABLE `log`
     `address`          varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
+  AUTO_INCREMENT = 39
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='日志表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -267,6 +268,21 @@ CREATE TABLE `log`
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log`
     DISABLE KEYS */;
+INSERT INTO `log`
+VALUES (35, '2019-10-22 15:06:31', '用户登录', NULL, 'INFO',
+        'com.oldhandgo.modules.security.rest.AuthenticationController.login()',
+        '{ authorizationUser: {username=admin, password= ******} }', '127.0.0.1', 28, 'admin', ''),
+       (36, '2019-10-22 15:06:47', '查询定时任务', NULL, 'INFO',
+        'com.oldhandgo.modules.quartz.rest.QuartzJobController.getJobs()',
+        '{ criteria: JobQueryCriteria(jobName=null, isSuccess=null) pageable: Page request [number: 0, size 10, sort: id: DESC] }',
+        '127.0.0.1', 23, 'admin', ''),
+       (37, '2019-10-22 15:06:52', '查询图片', NULL, 'INFO', 'com.oldhandgo.rest.PictureController.getRoles()',
+        '{ criteria: PictureQueryCriteria(filename=null, username=null) pageable: Page request [number: 0, size 10, sort: id: DESC] }',
+        '127.0.0.1', 19, 'admin', ''),
+       (38, '2019-10-22 15:07:01', '查询Redis缓存',
+        'com.alibaba.fastjson.JSONException: autoType is not support. me.zhengjie.modules.system.service.dto.DeptDTO\n	at com.alibaba.fastjson.parser.ParserConfig.checkAutoType(ParserConfig.java:1132)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:316)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseArray(DefaultJSONParser.java:1192)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:504)\n	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.deserialze(MapDeserializer.java:64)\n	at com.alibaba.fastjson.parser.deserializer.MapDeserializer.deserialze(MapDeserializer.java:41)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:386)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parse(DefaultJSONParser.java:1367)\n	at com.alibaba.fastjson.parser.deserializer.JavaObjectDeserializer.deserialze(JavaObjectDeserializer.java:51)\n	at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:671)\n	at com.alibaba.fastjson.JSON.parseObject(JSON.java:368)\n	at com.alibaba.fastjson.JSON.parseObject(JSON.java:272)\n	at com.alibaba.fastjson.JSON.parseObject(JSON.java:491)\n	at com.oldhandgo.redis.FastJsonRedisSerializer.deserialize(FastJsonRedisSerializer.java:42)\n	at org.springframework.data.redis.core.AbstractOperations.deserializeValue(AbstractOperations.java:335)\n	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:61)\n	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:225)\n	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:185)\n	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:96)\n	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:53)\n	at com.oldhandgo.modules.monitor.service.impl.RedisServiceImpl.findByKey(RedisServiceImpl.java:44)\n	at com.oldhandgo.modules.monitor.rest.RedisController.getRedis(RedisController.java:29)\n	at com.oldhandgo.modules.monitor.rest.RedisController$$FastClassBySpringCGLIB$$fd4efbd5.invoke(<generated>)\n	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)\n	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:750)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)\n	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:88)\n	at com.oldhandgo.aspect.LogAspect.logAround(LogAspect.java:51)\n	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n	at java.base/java.lang.reflect.Method.invoke(Method.java:566)\n	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)\n	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)\n	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)\n	at org.springframework.aop.aspectj.AspectJAfterThrowingAdvice.invoke(AspectJAfterThrowingAdvice.java:62)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)\n	at org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor.invoke(MethodSecurityInterceptor.java:69)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)\n	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:93)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)\n	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689)\n	at com.oldhandgo.modules.monitor.rest.RedisController$$EnhancerBySpringCGLIB$$148dde57.getRedis(<generated>)\n	at com.oldhandgo.modules.monitor.rest.RedisController$$FastClassBySpringCGLIB$$fd4efbd5.invoke(<generated>)\n	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)\n	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:750)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)\n	at org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor.invoke(MethodSecurityInterceptor.java:69)\n	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)\n	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:689)\n	at com.oldhandgo.modules.monitor.rest.RedisController$$EnhancerBySpringCGLIB$$dc31c008.getRedis(<generated>)\n	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)\n	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n	at java.base/java.lang.reflect.Method.invoke(Method.java:566)\n	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)\n	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)\n	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)\n	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:893)\n	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:798)\n	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)\n	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)\n	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)\n	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)\n	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)\n	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)\n	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)\n	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:113)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:124)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:320)\n	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:127)\n	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:91)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:170)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at com.oldhandgo.modules.security.security.JwtAuthorizationTokenFilter.doFilterInternal(JwtAuthorizationTokenFilter.java:68)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:74)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)\n	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:334)\n	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:215)\n	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:178)\n	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:358)\n	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:271)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)\n	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)\n	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)\n	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)\n	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)\n	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)\n	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:526)\n	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)\n	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)\n	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)\n	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)\n	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)\n	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)\n	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:860)\n	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1589)\n	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)\n	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)\n	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)\n	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)\n	at java.base/java.lang.Thread.run(Thread.java:834)\n',
+        'ERROR', 'com.oldhandgo.modules.monitor.rest.RedisController.getRedis()',
+        '{ key: * pageable: Page request [number: 0, size 10, sort: UNSORTED] }', '127.0.0.1', 95, 'admin', '');
 /*!40000 ALTER TABLE `log`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -306,48 +322,30 @@ CREATE TABLE `menu` (
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu`
-VALUES (1, '2018-12-18 15:11:29', '\0', '系统管理', NULL, 0, 1, 'system', 'system', '\0', '\0', NULL),
-       (2, '2018-12-18 15:14:44', '\0', '用户管理', 'system/user/index', 1, 2, 'peoples', 'user', '\0', '\0', 'User'),
-       (3, '2018-12-18 15:16:07', '\0', '角色管理', 'system/role/index', 1, 3, 'role', 'role', '\0', '\0', 'Role'),
-       (4, '2018-12-18 15:16:45', '\0', '权限管理', 'system/permission/index', 1, 4, 'permission', 'permission', '\0', '\0',
+VALUES (1, '2019-10-22 14:58:40', '\0', '系统管理', NULL, 0, 1, 'system', 'system', '\0', '\0', NULL),
+       (2, '2019-10-22 14:58:40', '\0', '用户管理', 'system/user/index', 1, 2, 'peoples', 'user', '\0', '\0', 'User'),
+       (3, '2019-10-22 14:58:40', '\0', '角色管理', 'system/role/index', 1, 3, 'role', 'role', '\0', '\0', 'Role'),
+       (4, '2019-10-22 14:58:40', '\0', '权限管理', 'system/permission/index', 1, 4, 'permission', 'permission', '\0', '\0',
         'Permission'),
-       (5, '2018-12-18 15:17:28', '\0', '菜单管理', 'system/menu/index', 1, 5, 'menu', 'menu', '\0', '\0', 'Menu'),
-       (6, '2018-12-18 15:17:48', '\0', '系统监控', NULL, 0, 10, 'monitor', 'monitor', '\0', '\0', NULL),
-       (7, '2018-12-18 15:18:26', '\0', '操作日志', 'monitor/log/index', 6, 11, 'log', 'logs', '', '\0', 'Log'),
-       (8, '2018-12-18 15:19:01', '\0', '系统缓存', 'monitor/redis/index', 6, 13, 'redis', 'redis', '\0', '\0', 'Redis'),
-       (9, '2018-12-18 15:19:34', '\0', 'SQL监控', 'monitor/sql/index', 6, 14, 'sqlMonitor', 'druid', '\0', '\0', 'Sql'),
-       (10, '2018-12-19 13:38:16', '\0', '组件管理', NULL, 0, 50, 'zujian', 'components', '\0', '\0', NULL),
-       (11, '2018-12-19 13:38:49', '\0', '图标库', 'components/IconSelect', 10, 51, 'icon', 'icon', '\0', '\0', 'Icons'),
-       (14, '2018-12-27 10:13:09', '\0', '邮件工具', 'tools/email/index', 36, 24, 'email', 'email', '\0', '\0', 'Email'),
-       (15, '2018-12-27 11:58:25', '\0', '富文本', 'components/Editor', 10, 52, 'fwb', 'tinymce', '\0', '\0', 'Editor'),
-       (16, '2018-12-28 09:36:53', '\0', '图床管理', 'tools/picture/index', 36, 25, 'image', 'pictures', '\0', '\0',
+       (5, '2019-10-22 14:58:40', '\0', '菜单管理', 'system/menu/index', 1, 5, 'menu', 'menu', '\0', '\0', 'Menu'),
+       (6, '2019-10-22 14:58:40', '\0', '系统监控', NULL, 0, 10, 'monitor', 'monitor', '\0', '\0', NULL),
+       (7, '2019-10-22 14:58:40', '\0', '操作日志', 'monitor/log/index', 6, 11, 'log', 'logs', '', '\0', 'Log'),
+       (8, '2019-10-22 14:58:40', '\0', '系统缓存', 'monitor/redis/index', 6, 13, 'redis', 'redis', '\0', '\0', 'Redis'),
+       (9, '2019-10-22 14:58:40', '\0', 'SQL监控', 'monitor/sql/index', 6, 14, 'sqlMonitor', 'druid', '\0', '\0', 'Sql'),
+       (10, '2019-10-22 14:58:40', '\0', '组件管理', NULL, 0, 50, 'zujian', 'components', '\0', '\0', NULL),
+       (14, '2019-10-22 14:58:40', '\0', '邮件工具', 'tools/email/index', 36, 24, 'email', 'email', '\0', '\0', 'Email'),
+       (16, '2019-10-22 14:58:40', '\0', '图床管理', 'tools/picture/index', 36, 25, 'image', 'pictures', '\0', '\0',
         'Pictures'),
-       (17, '2018-12-28 15:09:49', '', '项目地址', '', 0, 0, 'github', 'https://github.com/elunez/eladmin', '\0', '\0',
-        NULL),
-       (18, '2018-12-31 11:12:15', '\0', '存储管理', 'tools/storage/index', 36, 23, 'qiniu', 'storage', '\0', '\0',
+       (18, '2019-10-22 14:58:40', '\0', '存储管理', 'tools/storage/index', 36, 23, 'qiniu', 'storage', '\0', '\0',
         'Storage'),
-       (19, '2018-12-31 14:52:38', '\0', '支付宝工具', 'tools/aliPay/index', 36, 27, 'alipay', 'aliPay', '\0', '\0',
-        'AliPay'),
-       (21, '2019-01-04 16:22:03', '\0', '多级菜单', '', 0, 900, 'menu', 'nested', '\0', '\0', NULL),
-       (22, '2019-01-04 16:23:29', '\0', '二级菜单1', 'nested/menu1/index', 21, 999, 'menu', 'menu1', '\0', '\0', NULL),
-       (23, '2019-01-04 16:23:57', '\0', '二级菜单2', 'nested/menu2/index', 21, 999, 'menu', 'menu2', '\0', '\0', NULL),
-       (24, '2019-01-04 16:24:48', '\0', '三级菜单1', 'nested/menu1/menu1-1', 22, 999, 'menu', 'menu1-1', '\0', '\0', NULL),
-       (28, '2019-01-07 20:34:40', '\0', '定时任务', 'system/timing/index', 36, 21, 'timing', 'timing', '\0', '\0',
+       (28, '2019-10-22 14:58:40', '\0', '定时任务', 'system/timing/index', 36, 21, 'timing', 'timing', '\0', '\0',
         'Timing'),
-       (30, '2019-01-11 15:45:55', '\0', '代码生成', 'generator/index', 36, 22, 'dev', 'generator', '\0', '\0',
-        'GeneratorIndex'),
-       (32, '2019-01-13 13:49:03', '\0', '异常日志', 'monitor/log/errorLog', 6, 12, 'error', 'errorLog', '\0', '\0',
+       (32, '2019-10-22 14:58:40', '\0', '异常日志', 'monitor/log/errorLog', 6, 12, 'error', 'errorLog', '\0', '\0',
         'ErrorLog'),
-       (33, '2019-03-08 13:46:44', '\0', 'Markdown', 'components/MarkDown', 10, 53, 'markdown', 'markdown', '\0', '\0',
-        'Markdown'),
-       (34, '2019-03-08 15:49:40', '\0', 'Yaml编辑器', 'components/YamlEdit', 10, 54, 'dev', 'yaml', '\0', '\0',
-        'YamlEdit'),
-       (35, '2019-03-25 09:46:00', '\0', '部门管理', 'system/dept/index', 1, 6, 'dept', 'dept', '\0', '\0', 'Dept'),
-       (36, '2019-03-29 10:57:35', '\0', '系统工具', '', 0, 20, 'sys-tools', 'sys-tools', '\0', '\0', NULL),
-       (37, '2019-03-29 13:51:18', '\0', '岗位管理', 'system/job/index', 1, 7, 'Steve-Jobs', 'job', '\0', '\0', 'Job'),
-       (38, '2019-03-29 19:57:53', '\0', '接口文档', 'tools/swagger/index', 36, 26, 'swagger', 'swagger2', '\0', '\0',
-        'Swagger'),
-       (39, '2019-04-10 11:49:04', '\0', '字典管理', 'system/dict/index', 1, 8, 'dictionary', 'dict', '\0', '\0', 'Dict');
+       (35, '2019-10-22 14:58:40', '\0', '部门管理', 'system/dept/index', 1, 6, 'dept', 'dept', '\0', '\0', 'Dept'),
+       (36, '2019-10-22 14:58:40', '\0', '系统工具', '', 0, 20, 'sys-tools', 'sys-tools', '\0', '\0', NULL),
+       (37, '2019-10-22 14:58:40', '\0', '岗位管理', 'system/job/index', 1, 7, 'Steve-Jobs', 'job', '\0', '\0', 'Job'),
+       (39, '2019-10-22 14:58:40', '\0', '字典管理', 'system/dict/index', 1, 8, 'dictionary', 'dict', '\0', '\0', 'Dict');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -502,9 +500,9 @@ LOCK TABLES `quartz_job` WRITE;
 /*!40000 ALTER TABLE `quartz_job`
     DISABLE KEYS */;
 INSERT INTO `quartz_job`
-VALUES (1, 'visitsTask', '0 0 0 * * ?', '\0', '更新访客记录', 'run', NULL, '每日0点创建新的访客记录', '2019-01-08 14:53:31'),
-       (2, 'testTask', '0/5 * * * * ?', '', '测试1', 'run1', 'test', '带参测试，多参使用json', '2019-08-22 14:08:29'),
-       (3, 'testTask', '0/5 * * * * ?', '', '测试', 'run', '', '不带参测试', '2019-09-26 16:44:39');
+VALUES (1, 'visitsTask', '0 0 0 * * ?', '\0', '更新访客记录', 'run', NULL, '每日0点创建新的访客记录', '2019-10-22 15:03:13'),
+       (2, 'testTask', '0/5 * * * * ?', '', '测试1', 'run1', 'test', '带参测试，多参使用json', '2019-10-22 15:03:13'),
+       (3, 'testTask', '0/5 * * * * ?', '', '测试', 'run', '', '不带参测试', '2019-10-22 15:03:13');
 /*!40000 ALTER TABLE `quartz_job`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -543,7 +541,7 @@ LOCK TABLES `quartz_log` WRITE;
 /*!40000 ALTER TABLE `quartz_log`
     DISABLE KEYS */;
 INSERT INTO `quartz_log`
-VALUES (51, 'testTask', '2019-10-19 17:20:54', '0/5 * * * * ?', NULL, '', '测试1', 'run1', 'test', 3);
+VALUES (51, 'testTask', '2019-10-22 15:03:13', '0/5 * * * * ?', NULL, '', '测试1', 'run1', 'test', 3);
 /*!40000 ALTER TABLE `quartz_log`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -576,7 +574,7 @@ CREATE TABLE `role` (
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 INSERT INTO `role`
-VALUES (1, '2018-11-23 11:04:37', '超级管理员', '·', '全部', 1),
+VALUES (1, '2018-11-23 11:04:37', '超级管理员', '啥也能干。', '全部', 1),
        (2, '2018-11-23 13:09:06', '普通用户', '用于测试菜单与权限', '自定义', 3),
        (4, '2019-05-13 14:16:15', '普通管理员', '普通管理员级别为2，使用该角色新增用户时只能赋予比普通管理员级别低的角色', '自定义', 2);
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
@@ -666,45 +664,21 @@ VALUES (1, 1),
        (9, 2),
        (10, 1),
        (10, 2),
-       (11, 1),
-       (11, 2),
        (14, 1),
        (14, 2),
-       (15, 1),
-       (15, 2),
        (16, 1),
        (16, 2),
-       (17, 1),
-       (17, 2),
        (18, 1),
        (18, 2),
-       (19, 1),
-       (19, 2),
-       (21, 1),
-       (21, 2),
-       (22, 1),
-       (22, 2),
-       (23, 1),
-       (23, 2),
-       (24, 1),
-       (24, 2),
        (28, 1),
        (28, 2),
-       (30, 1),
-       (30, 2),
        (32, 1),
-       (33, 1),
-       (33, 2),
-       (34, 1),
-       (34, 2),
        (35, 1),
        (35, 2),
        (36, 1),
        (36, 2),
        (37, 1),
        (37, 2),
-       (38, 1),
-       (38, 2),
        (39, 1),
        (39, 2);
 /*!40000 ALTER TABLE `roles_menus` ENABLE KEYS */;
@@ -797,14 +771,14 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user`
-VALUES (1, 2, '2018-08-23 09:11:56', 'admin@eladmin.net', 1, 'e10adc3949ba59abbe56e057f20f883e', 'admin',
-        '2019-05-18 17:34:21', 2, '18888888888', 11),
-       (3, NULL, '2018-12-27 20:05:26', 'test@eladmin.net', 1, 'e10adc3949ba59abbe56e057f20f883e', 'test',
+VALUES (1, NULL, '2019-10-17 20:04:12', 'zhangtianci@zhangtianci.cn', 1, 'e10adc3949ba59abbe56e057f20f883e', 'admin',
+        '2019-05-18 17:34:21', 2, '17614884176', 11),
+       (3, NULL, '2019-10-22 15:03:13', 'test@qq.com', 1, 'e10adc3949ba59abbe56e057f20f883e', 'test',
         '2019-04-01 09:15:24', 2, '17777777777', 12),
-       (5, NULL, '2019-04-02 10:07:12', 'hr@eladmin.net', 1, 'e10adc3949ba59abbe56e057f20f883e', 'hr', NULL, 11,
+       (5, NULL, '2019-10-22 15:03:13', 'hr@qq.com', 1, 'e10adc3949ba59abbe56e057f20f883e', 'hr', NULL, 11,
         '15555555555', 8),
-       (6, NULL, '2019-10-21 21:27:38', '123@qq.com', 0, 'e10adc3949ba59abbe56e057f20f883e', '鸡歌', NULL, 2,
-        '17614884176', 11);
+       (6, NULL, '2019-10-22 15:03:13', '123@qq.com', 0, 'e10adc3949ba59abbe56e057f20f883e', '鸡哥', NULL, 2,
+        '15555555555', 10);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -835,9 +809,6 @@ CREATE TABLE `user_avatar`
 LOCK TABLES `user_avatar` WRITE;
 /*!40000 ALTER TABLE `user_avatar`
     DISABLE KEYS */;
-INSERT INTO `user_avatar`
-VALUES (2, 'avatar灯泡-20191021093418389.png',
-        '/home/dormirr/IdeaProjects/personnel-management-server/avatar灯泡-20191021093418389.png', '24.38KB   ');
 /*!40000 ALTER TABLE `user_avatar`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -926,7 +897,7 @@ CREATE TABLE `visits`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `UK_11aksgq87euk9bcyeesfs4vtp` (`date`) USING BTREE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 98
+  AUTO_INCREMENT = 99
   DEFAULT CHARSET = utf8
   ROW_FORMAT = COMPACT COMMENT ='访客表';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -940,7 +911,8 @@ LOCK TABLES `visits` WRITE;
     DISABLE KEYS */;
 INSERT INTO `visits`
 VALUES (96, '2019-10-19 17:17:27', '2019-10-19', 1, 2, 'Sat'),
-       (97, '2019-10-21 14:55:43', '2019-10-21', 1, 9, 'Mon');
+       (97, '2019-10-21 14:55:43', '2019-10-21', 1, 9, 'Mon'),
+       (98, '2019-10-22 14:33:34', '2019-10-22', 1, 4, 'Tue');
 /*!40000 ALTER TABLE `visits`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -954,4 +926,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-22 14:31:35
+-- Dump completed on 2019-10-22 15:07:20
