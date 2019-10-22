@@ -42,7 +42,6 @@
 			font-family: Microsoft YaHei;">
             Copyright &copy;${.now?string("yyyy")} 企业人员管理系统 All Rights Reserved.
         </div>
-
     </div>
 </div>
 </body>
