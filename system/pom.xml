@@ -19,7 +19,7 @@
     <properties>
         <java.version>11</java.version>
         <jjwt.version>0.9.1</jjwt.version>
-        <quartz.version>2.3.1</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
     </properties>
 
     <dependencies>
